@@ -2,7 +2,9 @@ var fs = require('fs');
 
 // Options
 
-var CONFIDENCE_THRESHOLD = 0.7;
+var CONFIDENCE_THRESHOLD = 0.1;
+var PITCH_THRESHOLD = 0.1;
+var LOUDNESS_THRESHOLD = -50;
 
 // Files
 
@@ -22,23 +24,20 @@ console.log("\n\nTotal segments: " + segments.length);
 
 console.log("\n\nFiltering segments to keys:\n");
 var song = { keys: [] };
-var new_key, pitch, level;
+var new_key;
 segments.forEach(function(segment) {
-  if (segment.confidence > CONFIDENCE_THRESHOLD) {
+  if (segment.confidence > CONFIDENCE_THRESHOLD && segment.loudness_max > LOUDNESS_THRESHOLD) {
     // Find the single pitch that is represented most strongly by this segment
-    pitch = -1, level = 0;
-    segment.pitches.forEach(function(pitch_level, index) {
-      if (pitch_level > level) {
-        pitch = index;
-        level = pitch_level;
+    segment.pitches.forEach(function(pitch, index) {
+      if (pitch > PITCH_THRESHOLD) {
+        new_key = {
+          pitch: index,
+          start: segment.start * 1000,
+          stop: (segment.start + segment.duration) * 1000
+        };
+        song.keys.push(new_key); 
       }
     });
-    new_key = {
-      pitch: pitch,
-      start: segment.start * 1000,
-      stop: (segment.start + segment.duration) * 1000
-    };
-    song.keys.push(new_key);
   }
 });
 console.log(song.keys);
