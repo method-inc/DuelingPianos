@@ -1,14 +1,18 @@
 h1 YouTube Tester
 
 #videoPlayer
+#time
 
 script
   var player;
+  var playerPosition;
   function onYouTubePlayerAPIReady() {
     player = new YT.Player('videoPlayer', 
-    {height: '390', width: '640', videoId: '0nerqy_da30', playerVars: {'start': 10, controls: '0'},events: {'onReady': onReady}});
+    {height: '390', width: '640', videoId: '0nerqy_da30', playerVars: {'start': 10, controls: '0'} });
   }
 
-  function onReady() {
-    console.log("video ready!");
-  };
+  setInterval(function() {
+    var p = player.getCurrentTime() || 0;
+    position = Math.round(p * 1000);
+    $("#time").html(position);
+  }, 100)
