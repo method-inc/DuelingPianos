@@ -2,17 +2,27 @@ h1 YouTube Tester
 
 #videoPlayer
 #time
+#vis
+
+script(src='/js/modules/songvis.js', type='text/javascript')
 
 script
+  var vis = new SongVis({
+    container: 'vis',
+    ratio: 0.03
+  });
+  vis.load_song('/songdata/1_full.keys.json');
+  
   var player;
   var playerPosition;
   function onYouTubePlayerAPIReady() {
     player = new YT.Player('videoPlayer', 
-    {height: '390', width: '640', videoId: '0nerqy_da30', playerVars: {'start': 10, controls: '0'} });
+    {height: '390', width: '640', videoId: '0nerqy_da30', playerVars: {'start': 5, controls: '0'} });
   }
 
   setInterval(function() {
     var p = player.getCurrentTime() || 0;
     position = Math.round(p * 1000);
     $("#time").html(position);
+    vis.seek(position);
   }, 100)
