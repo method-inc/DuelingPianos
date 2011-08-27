@@ -53,7 +53,7 @@ Performance.prototype.press_key = function(pitch, ms, callback) {
       key.available = false;
       this.last_key_index = i;
       this.update_streak(1);
-      return callback();
+      return callback(undefined, i);
     }
   } while (key_ms < furthest_ms)
   // Key pressed doesn't have a match at that point in the song
