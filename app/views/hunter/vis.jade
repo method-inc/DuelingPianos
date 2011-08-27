@@ -1,13 +1,22 @@
-h1 Visualization test
-
+#vis
+  h1 Visualization test
+  
+  #keyroll
+    - for (var i = 0; i < 12; i++)
+      .pitch
+    
 script
-  var song = $.ajax({
+  
+  $.ajax({
     url: '/songdata/1_full.keys.json',
     dataType: 'json',
-    success: function(data) {
-      console.dir(data);
-    },
+    success: show_song,
     error: function(xhr, error, msg) {
       console.log("Error pulling song data");
     }
   });
+  
+  function show_song(song) {
+    var keyroll = $('#keyroll');
+    
+  }
