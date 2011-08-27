@@ -12,5 +12,9 @@ exports = module.exports = {
     var songs = [song];
     
     res.render('home/club', {songs: songs, layout: 'layout'})
+  },
+  
+  test: function(req, res) {
+    res.render('home/test', {layout: 'layout'})
   }
 }
