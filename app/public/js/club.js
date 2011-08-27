@@ -75,6 +75,7 @@
         console.log('pressed key ' + mapping + ' at ' + this.time());
         
         game.keyPress(mapping, this.time(), function(err, res) {
+          console.log('result for key ' + mapping, err, res);
           if(err) self.fuckup(mapping);
           else self.vis.activate_key(res);
         });
