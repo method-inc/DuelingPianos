@@ -5,7 +5,13 @@ html
     title NKO2 - Skookum
     link(rel='stylesheet', href='/styles/layout.css' )
     link(rel='stylesheet', href='/styles/vis.css' )
+    
     script(src='/js/lib/jquery-1.6.2.min.js', type='text/javascript')
     script(src='/now/now.js', type='text/javascript')
     script(src='http://www.youtube.com/player_api', type='text/javascript')
-  body!= body
+    
+    script(src="/js/club.js")
+    
+  body
+    #wrap!= body
+    

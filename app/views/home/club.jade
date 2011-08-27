@@ -1,5 +1,9 @@
-h1 Welcome to the Stinky Squirrel
-
-ul
-  li= songs[0].name
-  li= songs[0].ytid
+#club
+  #crowd
+    #chooser.modal
+      h2 Choose a song:
+      ul
+        li
+          a(href="javascript:club.chooseSong('#{songs[0].ytid}')") #{songs[0].name}
+  #stage
+    p This is the stage

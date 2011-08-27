@@ -1,12 +1,119 @@
 @import "reset.css";
+@import url('http://fonts.googleapis.com/css?family=Gloria+Hallelujah');
+@import url('http://fonts.googleapis.com/css?family=Andika');
 html {
-  background-color: #ddd;
+  background: #000;
+  color: #fff;
+  height: 100%;
+  font-size: 62.5%;
 }
 body {
-  width: 800px;
-  margin: 10px auto;
-  background-color: #fff;
-  border: 1px solid #999;
-  border-radius: 5px;
+  height: 100%;
+  font: 1.2em "Andika", sans-serif;
+  text-rendering: optimizeLegibility;
+}
+ul,
+li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Gloria Hallelujah", cursive;
+}
+a {
+  color: #fff;
+}
+h1 {
+  font-size: 2em;
+  margin-bottom: 1em;
+}
+h2 {
+  font-size: 1.5em;
+  margin-bottom: 1em;
+}
+#wrap {
+  overflow: hidden;
+  height: 100%;
+}
+.modal {
+  position: absolute;
+  width: 260px;
+  height: 260px;
   padding: 20px;
+  left: 50%;
+  top: 50%;
+  margin-left: -150px;
+  margin-top: -150px;
+  background: -moz-linear-gradient(top, rgba(255,255,255,0.40), rgba(255,255,255,0.20) 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(255,255,255,0.40)), color-stop(100%, rgba(255,255,255,0.20)));
+  background: -webkit-linear-gradient(top, rgba(255,255,255,0.40) 0%, rgba(255,255,255,0.20) 100%);
+  background: -o-linear-gradient(top, rgba(255,255,255,0.40) 0%, rgba(255,255,255,0.20) 100%);
+  background: -ms-linear-gradient(top, rgba(255,255,255,0.40) 0%, rgba(255,255,255,0.20) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='rgba(255,255,255,0.40)', endColorstr='rgba(255,255,255,0.20)',GradientType=0 );
+  background: linear-gradient(top, rgba(255,255,255,0.40) 0%, rgba(255,255,255,0.40) 100%);
+  background: /* W3C */;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -o-border-radius: 10px;
+  border-radius: 10px;
+  -webkit-box-shadow: 0 0 30px rgba(255,255,255,0.60);
+  -moz-box-shadow: 0 0 30px rgba(255,255,255,0.60);
+  -o-box-shadow: 0 0 30px rgba(255,255,255,0.60);
+  box-shadow: 0 0 30px rgba(255,255,255,0.60);
+  overflow-y: auto;
+}
+.modal ul {
+  margin: 0 -20px;
+}
+.modal ul li a {
+  background: -moz-linear-gradient(top, rgba(255,255,255,0.30), rgba(255,255,255,0.20) 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(255,255,255,0.30)), color-stop(100%, rgba(255,255,255,0.20)));
+  background: -webkit-linear-gradient(top, rgba(255,255,255,0.30) 0%, rgba(255,255,255,0.20) 100%);
+  background: -o-linear-gradient(top, rgba(255,255,255,0.30) 0%, rgba(255,255,255,0.20) 100%);
+  background: -ms-linear-gradient(top, rgba(255,255,255,0.30) 0%, rgba(255,255,255,0.20) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='rgba(255,255,255,0.30)', endColorstr='rgba(255,255,255,0.20)',GradientType=0 );
+  background: linear-gradient(top, rgba(255,255,255,0.30) 0%, rgba(255,255,255,0.30) 100%);
+  background: /* W3C */;
+  border-bottom: 1px solid rgba(255,255,255,0.20);
+  padding: 0 20px;
+  display: block;
+  padding: 1em 20px;
+  font-size: 1.25em;
+}
+.modal ul li a:active {
+  background: -moz-linear-gradient(top, rgba(255,255,255,0.20), rgba(255,255,255,0.30) 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(255,255,255,0.20)), color-stop(100%, rgba(255,255,255,0.30)));
+  background: -webkit-linear-gradient(top, rgba(255,255,255,0.20) 0%, rgba(255,255,255,0.30) 100%);
+  background: -o-linear-gradient(top, rgba(255,255,255,0.20) 0%, rgba(255,255,255,0.30) 100%);
+  background: -ms-linear-gradient(top, rgba(255,255,255,0.20) 0%, rgba(255,255,255,0.30) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='rgba(255,255,255,0.20)', endColorstr='rgba(255,255,255,0.30)',GradientType=0 );
+  background: linear-gradient(top, rgba(255,255,255,0.20) 0%, rgba(255,255,255,0.20) 100%);
+  background: /* W3C */;
+}
+#club {
+  width: 200%;
+  height: 100%;
+  -webkit-transition: all 1s cubic-bezier(0.77, 0, 0.2, 1);
+  -moz-transition: all 1s cubic-bezier(0.77, 0, 0.2, 1);
+  -o-transition: all 1s cubic-bezier(0.77, 0, 0.2, 1);
+  transition: all 1s cubic-bezier(0.77, 0, 0.2, 1);
+}
+#club.stage {
+  -webkit-transform: translateX(-50%);
+  -moz-transform: translateX(-50%);
+  -o-transform: translateX(-50%);
+  transform: translateX(-50%);
+}
+#club > div {
+  width: 50%;
+  display: inline-block;
+  position: relative;
+  height: 100%;
+  vertical-align: top;
 }
