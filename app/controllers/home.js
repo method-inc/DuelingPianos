@@ -10,9 +10,11 @@ exports = module.exports = {
     })
   },
   
-  test: function(req, res) {
-    require("../models/songs").listAll(function(songs) {
-      res.render('home/test', {songs: songs, layout: 'layout'})
-    })
+  nowjs: function(req, res) {
+    res.render('home/nowjs', {layout: 'layout'})
+  },
+  
+  youtube: function(req, res) {
+    res.render('home/youtube', {layout: 'layout'})
   }
 }

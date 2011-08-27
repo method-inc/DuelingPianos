@@ -1,0 +1,14 @@
+h1 YouTube Tester
+
+#videoPlayer
+
+script
+  var player;
+  function onYouTubePlayerAPIReady() {
+    player = new YT.Player('videoPlayer', 
+    {height: '390', width: '640', videoId: '0nerqy_da30', playerVars: {'start': 10, controls: '0'},events: {'onReady': onReady}});
+  }
+
+  function onReady() {
+    console.log("video ready!");
+  };
