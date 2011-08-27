@@ -6,8 +6,6 @@ var song_dir = GLOBAL.app.set('app root') + '/public/songdata/';
 
 //var song_dir = '/Users/hunter/skookum/app/public/songdata/';
 
-exports = Performance;
-
 
 function Performance(options) {
   this.player_id = options.player_id;
@@ -106,6 +104,8 @@ Performance.prototype.send_streak = function() {
 Performance.prototype.send_tips = function() {
   this.emit('updatedTips', this.player_id, this.tips);
 };
+
+exports = module.exports = Performance;
 
 
 // Quick test
