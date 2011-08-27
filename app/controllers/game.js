@@ -4,8 +4,14 @@ exports = module.exports = function(server) {
   
   var game = nowjs.initialize(server);
   
-  
-  game.now.testVar = "my test var";
+  var obj = {
+    lobby: {
+      players: []
+    },
+    clubs: [
+      {name:"The Stinky Squirrel", players: [], spectators: []}
+    ]
+  }
   
   game.now.logstuff = function(msg, callback) {
     console.log(msg);
