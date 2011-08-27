@@ -66,7 +66,7 @@ exports = module.exports = (function() {
     
     // Nowjs game controller
     
-    //require('./controllers/game')(server)
+    require('./controllers/game')(server)
     
     // Helpers
     
