@@ -231,6 +231,8 @@ h2 {
   -moz-transform-origin: 0 100%;
   -o-transform-origin: 0 100%;
   transform-origin: 0 100%;
+  z-index: 0;
+  overflow: hidden;
 }
 #club #stage #play-area .keyroll {
   -webkit-transition: all 1s linear;
@@ -252,18 +254,20 @@ h2 {
   overflow: hidden;
 }
 .keyroll {
-  display: -webkit-box;
+  display: table;
   border: solid 1px #000;
   width: 100%;
+  background: #eee;
   height: 0;
   position: absolute;
   bottom: 0;
   left: 0;
 }
 .pitch {
-  -webkit-box-flex: 1;
-  background: #eee;
+  display: table-cell;
   height: 100%;
+}
+.pitch > div {
   position: relative;
   border-left: solid 2px #ddd;
   border-right: solid 2px #999;
