@@ -9,7 +9,7 @@
     this.lookahead = options.lookahead || 0;
     this.falloff = options.falloff || 50;
     for(var i = 0; i < 12; i++) {
-      var new_pitch = $('<div></div>').addClass('pitch');
+      var new_pitch = $('<div><div></div></div>').addClass('pitch');
       new_pitch.appendTo(this.keyroll);
     }
     this.playhead = $('<div></div>').addClass('playhead');
@@ -38,7 +38,7 @@
     render: function(song) {
       var ms_to_px = this.mx_to_px;
       var keyroll = this.keyroll;
-      var pitches = keyroll.find('.pitch');
+      var pitches = keyroll.find('.pitch > div');
       var pitch, pitch_el, key, key_el, top, i;
       i = song.keys.length;
       var bottom = song.keys[song.keys.length - 1].stop * ms_to_px;
@@ -60,7 +60,7 @@
       ms += this.lookahead;
       this.position = ms * this.mx_to_px;
       var bottom = this.position - this.falloff;
-      this.keyroll.css({ 'webkitTransform': 'translateY(' + (bottom) + 'px)' });
+      this.keyroll.css({ 'webkitTransform': 'translateY(' + (bottom) + 'px)',  '-moz-transform': 'translateY(' + (bottom) + 'px)' });
       var i = this.keys.length;
     }
   };

@@ -12,22 +12,23 @@
   overflow hidden
   
 .keyroll
-  display -webkit-box
+  display table
   border solid 1px #000
   width 100%
+  background #eee
   height 0
   position absolute
   bottom 0
   left 0
   
 .pitch
-  -webkit-box-flex 1
-  background #eee
+  display table-cell
   height 100%
-  position relative
-  border-left solid 2px #ddd
-  border-right solid 2px #999
-  
+  > div
+    position relative
+    border-left solid 2px #ddd
+    border-right solid 2px #999
+
 .key
   background #777
   background -webkit-gradient(linear, left top, right top, color-stop(0%,#ddd), color-stop(100%,#777))
