@@ -35,8 +35,8 @@ segments.forEach(function(segment) {
     });
     new_key = {
       pitch: pitch,
-      start: segment.start,
-      stop: segment.start + segment.duration
+      start: segment.start * 1000,
+      stop: (segment.start + segment.duration) * 1000
     };
     song.keys.push(new_key);
   }
