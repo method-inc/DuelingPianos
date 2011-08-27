@@ -3,10 +3,26 @@
     #chooser.modal
       h2 Choose a song:
       ul
-        li
-          a(href="javascript:club.chooseSong('#{songs[0].ytid}')") #{songs[0].name}
+        - for(var i in songs)
+          li
+            a(href="javascript:club.chooseSong('#{songs[i].ytid}')") #{songs[i].name}
   #stage
+    #videoPlayer(style="display:none")
+    #time
     #play-area
-      #keyroll
-        - for (var i = 0; i < 12; i++)
-          .pitch
+      #vis
+
+script(src='/js/modules/songvis.js', type='text/javascript')
+
+script
+  var vis = new SongVis({
+    container: 'vis',
+    ratio: 0.03,
+    lookahead: 100
+  });
+  
+  var player;
+  var playerPosition;
+  function onYouTubePlayerAPIReady() {
+    console.log('ready');
+  }

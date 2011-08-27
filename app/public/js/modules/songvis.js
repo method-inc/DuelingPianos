@@ -61,14 +61,7 @@
       var bottom = -this.position + 30;
       this.keyroll.css({ 'bottom': -this.position + 'px' });
       var i = this.keys.length;
-      while(i--) {
-        if (ms > this.keys[i].start && ms < this.keys[i].stop) {
-          this.keys[i].el.addClass('active');
-        }
-        else {
-          this.keys[i].el.removeClass('active');
-        }
-      }
+      
     }
   };
   
