@@ -14,11 +14,14 @@ var key_map = {
     loudness: -60
   },
   'red': {
-    confidence: 0.9,
+    confidence: 0.5,
     pitch: 0.7,
     loudness: -30
   }
 };
+
+var largest_chord = 1;
+var noisy = 8;
 
 function map(segment) {
   var keys = [], type, thresholds;
@@ -29,7 +32,8 @@ function map(segment) {
       type: undefined,
       pitch: -1,
       start: segment.start * 1000,
-      stop: (segment.start + segment.duration) * 1000
+      stop: (segment.start + segment.duration) * 1000,
+      strength: 0
     };
     for (var key_type in key_map) {
       thresholds = key_map[key_type];
@@ -39,6 +43,7 @@ function map(segment) {
         // Update our best match information
         new_key.type = key_type;
         new_key.pitch = index;
+        new_key.strength = pitch;
       }
     }
     // Add the best match to our keys array
@@ -46,6 +51,19 @@ function map(segment) {
       keys.push(new_key);
     }
   });
+  // Limit complexity
+  var complexity = (keys.length - largest_chord);
+  if (complexity > 0) {
+    if (complexity >= noisy) {
+      keys = [];
+    }
+    else {
+      keys.sort(function(a, b) {
+        return a.strength - b.strength;
+      });
+      keys.splice(largest_chord, complexity);
+    }
+  }
   // Return all the keys we found in this segment
   return keys;
 }

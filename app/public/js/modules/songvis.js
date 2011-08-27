@@ -7,12 +7,14 @@
     this.keyroll.appendTo(this.container);
     this.mx_to_px = options.ratio || 0.01;
     this.lookahead = options.lookahead || 0;
+    this.falloff = options.falloff || 50;
     for(var i = 0; i < 12; i++) {
       var new_pitch = $('<div></div>').addClass('pitch');
       new_pitch.appendTo(this.keyroll);
     }
     this.playhead = $('<div></div>').addClass('playhead');
     this.playhead.appendTo(this.container);
+    this.playhead.css({ 'bottom': (this.falloff + 1) + 'px' });
     this.keys = [];
     this.seek(0);      
   }
@@ -57,18 +59,9 @@
     seek: function(ms) {
       ms += this.lookahead;
       this.position = ms * this.mx_to_px;
-      //this.playhead && this.playhead.css({ 'top': this.position + 'px' });
-      var bottom = -this.position + 30;
-      this.keyroll.css({ 'webkitTransform': 'translateY(' + (this.position) + 'px)' });
+      var bottom = this.position - this.falloff;
+      this.keyroll.css({ 'webkitTransform': 'translateY(' + (bottom) + 'px)' });
       var i = this.keys.length;
-      /*while(i--) {
-        if (ms - this.lookahead > this.keys[i].start && ms - this.lookahead < this.keys[i].stop) {
-          this.keys[i].el.addClass('active');
-        }
-        else {
-          this.keys[i].el.removeClass('active');
-        }
-      }*/
     }
   };
   
