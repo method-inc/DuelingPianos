@@ -117,3 +117,37 @@ h2 {
   height: 100%;
   vertical-align: top;
 }
+#club #stage {
+  -webkit-perspective: 50;
+  -moz-perspective: 50;
+  -o-perspective: 50;
+  perspective: 50;
+}
+#club #stage #play-area {
+  position: absolute;
+  bottom: 25%;
+  top: -150%;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  -webkit-perspective-origin: 0 100%;
+  -moz-perspective-origin: 0 100%;
+  -o-perspective-origin: 0 100%;
+  perspective-origin: 0 100%;
+  -webkit-transform: rotateX(5deg);
+  -moz-transform: rotateX(5deg);
+  -o-transform: rotateX(5deg);
+  transform: rotateX(5deg);
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  -o-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  -webkit-transform-origin: 0 100%;
+  -moz-transform-origin: 0 100%;
+  -o-transform-origin: 0 100%;
+  transform-origin: 0 100%;
+}
+#club #stage #play-area #keyroll {
+  height: 100%;
+  width: 100%;
+}
