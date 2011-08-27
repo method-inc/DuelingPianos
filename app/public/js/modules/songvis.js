@@ -59,9 +59,16 @@
       this.position = ms * this.mx_to_px;
       //this.playhead && this.playhead.css({ 'top': this.position + 'px' });
       var bottom = -this.position + 30;
-      this.keyroll.css({ 'bottom': -this.position + 'px' });
+      this.keyroll.css({ 'webkitTransform': 'translateY(' + (this.position) + 'px)' });
       var i = this.keys.length;
-      
+      /*while(i--) {
+        if (ms - this.lookahead > this.keys[i].start && ms - this.lookahead < this.keys[i].stop) {
+          this.keys[i].el.addClass('active');
+        }
+        else {
+          this.keys[i].el.removeClass('active');
+        }
+      }*/
     }
   };
   
