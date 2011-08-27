@@ -26,6 +26,8 @@
   background: #eee;
   height: 100%;
   position: relative;
+  border-left: solid 2px #000;
+  border-right: solid 2px #000;
 }
 .key {
   background: #333;
