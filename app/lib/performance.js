@@ -42,20 +42,26 @@ Performance.prototype.press_key = function(pitch, ms, callback) {
   // Find the next available keys
   var i = this.last_key_index + 1,
       keys = this.song.keys,
-      furthest_ms = ms + this.range,
+      past_boundary_ms = ms - this.range,
+      future_boundary_ms = ms + this.range,
       key, key_ms;
   if (i >= keys.length) return callback('end of song');
   do {
     key = keys[i];
     key_ms = key.start;
-    if (key.available && key.pitch === pitch) {
+    // If they haven't pressed a key in a while we need to invalidate really old keys
+    if (key_ms < past_boundary_ms) {
+      this.last_key_index = i;
+      key.available = false;
+    }
+    else if (key.available && key.pitch === pitch) {
       // Key was correct (correct pitch within the allowed range of time)
       key.available = false;
       this.last_key_index = i;
       this.update_streak(1);
       return callback(undefined, i);
     }
-  } while (key_ms < furthest_ms)
+  } while (key_ms <= future_boundary_ms)
   // Key pressed doesn't have a match at that point in the song
   //this.send_fuckup(pitch);
   this.update_streak(-1);
