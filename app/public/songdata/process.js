@@ -27,10 +27,10 @@ segments.forEach(function(segment) {
   if (segment.confidence > CONFIDENCE_THRESHOLD) {
     // Find the single pitch that is represented most strongly by this segment
     pitch = -1, level = 0;
-    segment.pitches.forEach(function(p, index) {
-      if (p.level > level) {
+    segment.pitches.forEach(function(pitch_level, index) {
+      if (pitch_level > level) {
         pitch = index;
-        level = p.level;
+        level = pitch_level;
       }
     });
     new_key = {
