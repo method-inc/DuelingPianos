@@ -27,8 +27,6 @@
       var self = this;
       function onReady() {
         if(self.vis) {
-          now.startSong(id);
-          
           game.loadSong(id, function() {
             
             self.vis.load_song('/songdata/'+id+'.keys.json', function() {
