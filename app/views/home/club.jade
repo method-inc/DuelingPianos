@@ -7,13 +7,14 @@
           li
             a(href="javascript:club.chooseSong('#{songs[i].ytid}')") #{songs[i].name}
   #stage
-    #videoPlayer(style="display:none")
+    #videoPlayer(style="visibility: hidden")
     #time
     #play-area
       #vis
     div(style="position:absolute")
       button(onclick="player.playVideo()") Play
       button(onclick="player.pauseVideo()") Stop
+      button(onclick="player.seekTo(5)") Stop
 
 script(src='/js/modules/songvis.js', type='text/javascript')
 
