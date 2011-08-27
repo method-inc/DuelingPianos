@@ -1,4 +1,5 @@
 #club
+  button#goToCrowd Select New Song
   #crowd
     #chooser.modal
       h2 Choose a song:
@@ -12,10 +13,38 @@
     #play-area
       #vis
     div(style="position:absolute")
+<<<<<<< HEAD
       button(onclick="club.player.playVideo()") Play
       button(onclick="club.player.pauseVideo()") Stop
       button(onclick="club.player.seekTo(5)") Stop
+=======
+      button(onclick="player.playVideo()") Play
+      button(onclick="player.pauseVideo()") Stop
+      button(onclick="player.seekTo(5)") Go back to 5
+      button(onclick="player.seekTo(45)") Jump into the middle
+>>>>>>> c695ab35d7316f75767c1d37c72ddda33bf55865
 
 script(src='/js/modules/songvis.js', type='text/javascript')
 script
+<<<<<<< HEAD
   club.init();
+=======
+  var vis = new SongVis({
+    container: 'vis',
+    ratio: 0.03,
+    lookahead: 1300
+  });
+  
+  var player;
+  var playerPosition;
+  function onYouTubePlayerAPIReady() {
+    console.log('ready');
+  }
+  
+
+  $("#goToCrowd").click(function(){
+    player.pauseVideo();
+    $('#club').removeClass('stage');
+  })
+  
+>>>>>>> c695ab35d7316f75767c1d37c72ddda33bf55865

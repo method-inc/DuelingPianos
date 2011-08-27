@@ -13,11 +13,12 @@
       this.vis = new SongVis({
         container: 'vis',
         ratio: 0.03,
-        lookahead: 1150
+        lookahead: 1300
       });
     },
     
     chooseSong: function(id) {
+      $("#videoPlayer").html("")
       this.player = new YT.Player('videoPlayer', 
       {height: '390', width: '640', videoId: id, playerVars: {'start': 0, controls: '0'},
         events: {'onReady': onReady} });

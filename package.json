@@ -14,7 +14,7 @@
     "socket.io":"latest",
     "nko":"latest",
     "async":"latest",
-    "now":"https://github.com/Skookum/now/tarball/master"
+    "now":"latest"
   },
   "directories":{}
 }

@@ -182,6 +182,16 @@ h2 {
   -moz-transition: all 1s cubic-bezier(0.77, 0, 0.2, 1);
   -o-transition: all 1s cubic-bezier(0.77, 0, 0.2, 1);
   transition: all 1s cubic-bezier(0.77, 0, 0.2, 1);
+  position: relative;
+}
+#club #goToCrowd {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 9999;
+}
+#club #crowd {
+  background: #333;
 }
 #club.stage {
   -webkit-transform: translateX(-50%);
@@ -278,6 +288,15 @@ h2 {
   -moz-border-radius: 10px 10px 5px 5px;
   -o-border-radius: 10px 10px 5px 5px;
   border-radius: 10px 10px 5px 5px;
+}
+.key.red {
+  background: #700;
+}
+.key.yellow {
+  background: #770;
+}
+.key.blue {
+  background: #007;
 }
 .key.active {
   background: #f00;
