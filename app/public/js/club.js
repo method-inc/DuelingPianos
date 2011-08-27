@@ -43,7 +43,7 @@
             update();
           });
         }
-        this.initKeyPressListener();
+        self.initKeyPressListener();
       }
     },
     
