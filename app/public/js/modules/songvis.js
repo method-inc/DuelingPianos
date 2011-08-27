@@ -39,6 +39,7 @@
       var ms_to_px = this.mx_to_px;
       var keyroll = this.keyroll;
       var pitches = keyroll.find('.pitch > div');
+      pitches.html('');
       var pitch, pitch_el, key, key_el, top, i;
       i = song.keys.length;
       var bottom = song.keys[song.keys.length - 1].stop * ms_to_px;
