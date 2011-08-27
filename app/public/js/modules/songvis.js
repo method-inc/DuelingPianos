@@ -9,6 +9,7 @@
     }
     this.playhead = $('<div></div>').addClass('playhead');
     this.playhead.appendTo(this.keyroll);
+    this.keys = [];
     this.seek(0);      
   }
   SongVis.prototype = {
@@ -38,11 +39,12 @@
       while(i--) {
         key = song.keys[i];
         pitch_el = pitches[key.pitch];
-        key_el = $('<div></div>').addClass('key');
-        key_el.appendTo(pitch_el);
+        key.el = $('<div></div>').addClass('key');
+        key.el.appendTo(pitch_el);
+        this.keys.push(key);
         top = key.start * ms_to_px;
         height = (key.stop - key.start) * ms_to_px;
-        key_el.css({ 'left': 0, 'top': top + 'px', 'height': height + 'px' });
+        key.el.css({ 'left': 0, 'top': top + 'px', 'height': height + 'px' });
       }
       var last_top = song.keys[song.keys.length - 1].stop * ms_to_px;
       keyroll.css({ 'height': last_top + 'px' });
@@ -51,6 +53,15 @@
     seek: function(ms) {
       this.position = ms * this.mx_to_px;
       this.playhead && this.playhead.css({ 'top': this.position + 'px' });
+      var i = this.keys.length;
+      while(i--) {
+        if (ms > this.keys[i].start && ms < this.keys[i].stop) {
+          this.keys[i].el.addClass('active');
+        }
+        else {
+          this.keys[i].el.removeClass('active');
+        }
+      }
     }
   };
   

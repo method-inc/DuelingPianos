@@ -23,6 +23,9 @@
   display: block;
   position: absolute;
 }
+.key.active {
+  background: #f00;
+}
 .playhead {
   width: 100%;
   height: 2px;
