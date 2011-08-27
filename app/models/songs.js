@@ -9,5 +9,6 @@ Songs.prototype.listAll = function(callback) {
 
 
 var songs = [
-  {name: '"Lighters" (piano version) mixed with "The Lazy Song" and "Billionaire"', ytid: '0nerqy_da30', data: '/1_full.keys.json'}
+  {name: '"Lighters" (piano version) mixed with "The Lazy Song" and "Billionaire"', ytid: '0nerqy_da30'},
+  {name: "Stand By Me", ytid: 'zuqJ1Q_px5k'}
 ]
