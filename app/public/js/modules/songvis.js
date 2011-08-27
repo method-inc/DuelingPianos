@@ -25,16 +25,15 @@
         dataType: 'json',
         success: function(song) {
           self.render(song);
-          callback(undefined);
+          callback && callback(undefined);
         },
         error: function(xhr, error, msg) {
           console.log("Error pulling song data");
-          callback("Couldn't load song");
+          callback && callback("Couldn't load song");
         }
       });
     },
     render: function(song) {
-      console.log('render');
       var ms_to_px = this.mx_to_px;
       var keyroll = this.keyroll;
       var pitches = keyroll.find('.pitch');
