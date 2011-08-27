@@ -1,4 +1,4 @@
-(function(now) {
+(function(game) {
   
   function ClubController() {
     
@@ -29,18 +29,22 @@
         if(self.vis) {
           now.startSong(id);
           
-          self.vis.load_song('/songdata/'+id+'.keys.json', function() {
-            $('#club').addClass('stage');
-            var t = 0;
-            window.setTimeout(function() { self.player.playVideo(); }, 1000);
-            var position;
-            function update() {
-              var position = self.time();
-              $("#time").html(position);
-              self.vis.seek(position);
-              setTimeout(update, 1000);
-            }
-            update();
+          game.loadSong(id, function() {
+            
+            self.vis.load_song('/songdata/'+id+'.keys.json', function() {
+              $('#club').addClass('stage');
+              var t = 0;
+              window.setTimeout(function() { self.player.playVideo(); }, 1000);
+              var position;
+              function update() {
+                var position = self.time();
+                $("#time").html(position);
+                self.vis.seek(position);
+                setTimeout(update, 1000);
+              }
+              update();
+            });
+            
           });
         }
         self.initKeyPressListener();
@@ -66,14 +70,16 @@
     // keep track of which keys are down to prevent repeating key events before the key is released
     _keys_down: {},
     onKeyPress: function(e) {
+      var self = this;
       if(this.playing && !(e.which in this._keys_down) && (e.which in this.key_mappings)) {
         this._keys_down[e.which] = true;
-        console.log('pressed key ' + this.key_mappings[e.which] + ' at ' + this.time());
-        now.keyPress(this.key_mappings[e.which], this.time());
-        $($('#vis .keyroll > div')[this.key_mappings[e.which]]).addClass('highlight');
-        _.delay(_.bind(function() {
-          $($('#vis .keyroll > div')[this.key_mappings[e.which]]).removeClass('highlight');
-        }, this), 750);
+        var mapping = this.key_mappings[e.which];
+        console.log('pressed key ' + mapping + ' at ' + this.time());
+        
+        game.keyPress(mapping, this.time(), function(err, res) {
+          if(err) self.fuckup(mapping);
+          else self.vis.activate_key(res);
+        });
       }
     },
     onKeyUp: function(e) {
@@ -88,10 +94,7 @@
     
   };
   
-  now.startSong = now.startSong || function() {};
-  now.keyPress = now.keyPress || function() {};
-  
   window.club = new ClubController();
 
   function onYouTubePlayerAPIReady() { };
-})(now);
+})(game);
