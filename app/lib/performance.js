@@ -38,13 +38,13 @@ Performance.prototype.load_song = function(id, callback) {
 };
 
 // Client can tell the server the user just pressed a key
-Performance.prototype.press_key = function(pitch, ms) {
+Performance.prototype.press_key = function(pitch, ms, callback) {
   // Find the next available keys
   var i = this.last_key_index + 1,
       keys = this.song.keys,
       furthest_ms = ms + this.range,
       key, key_ms;
-  if (i >= keys.length) return;
+  if (i >= keys.length) return callback('end of song');
   do {
     key = keys[i];
     key_ms = key.start;
@@ -53,12 +53,13 @@ Performance.prototype.press_key = function(pitch, ms) {
       key.available = false;
       this.last_key_index = i;
       this.update_streak(1);
-      return;
+      return callback();
     }
   } while (key_ms < furthest_ms)
   // Key pressed doesn't have a match at that point in the song
-  this.send_fuckup(pitch);
+  //this.send_fuckup(pitch);
   this.update_streak(-1);
+  return callback('fuckup');
 };
 
 // Client can request the current state of this performance at any time
