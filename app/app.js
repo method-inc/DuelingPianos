@@ -41,7 +41,7 @@ exports = module.exports = (function() {
     server.use(stylus.middleware({
       src: server.set('views'),
       dest: server.set('public'),
-      debug: true,
+      debug: false,
       compileMethod: function(str) {
         return stylus(str, path)
           .set('compress', options.compressCss)
@@ -63,6 +63,10 @@ exports = module.exports = (function() {
     server.use(context);
     server.use(server.router)
     server.use(express.errorHandler({ dumpExceptions: options.dumpExceptions, showStack: options.showStack}));
+    
+    // Nowjs
+    
+    require('./config/nowfunctions')(server)
     
     // Helpers
     

@@ -14,8 +14,7 @@
     "socket.io":"latest",
     "nko":"latest",
     "async":"latest",
-    "mongodb":"=0.9.6-8",
-    "mongoose":"=1.7.4"
+    "now":"latest"
   },
   "directories":{}
 }
