@@ -6,14 +6,18 @@ var LOUDNESS = -60;
 var CONFIDENCE = 0.3;
 
 function map(segment) {
-  var average = 0, keys = [];
+  var average = 0, keys = [], strongest_pitch = 0;
   if (segment.confidence >= CONFIDENCE) {
     segment.pitches.forEach(function(pitch_level, pitch_index) {
-      average += (pitch_level * pitch_index);
+      //average += (pitch_level * pitch_index);
+      if (pitch_level > strongest_pitch) {
+        average = pitch_index;
+        strongest_pitch = pitch_level;
+      }
     });
     average = Math.round(average / segment.pitches.length);
     var new_key = {
-      type: 'blue',
+      type: 'yellow',
       pitch: average,
       start: segment.start * 1000,
       stop: (segment.start + segment.duration) * 1000,
