@@ -45,7 +45,7 @@
       while(i--) {
         key = song.keys[i];
         pitch_el = pitches[key.pitch];
-        key.el = $('<div></div>').addClass('key').addClass(key.type);
+        key.el = $('<div></div>').addClass('key').addClass(key.type).css({ 'opacity': (key.strength * key.strength * key.strength * key.strength) });
         key.el.appendTo(pitch_el);
         this.keys.push(key);
         height = (key.stop - key.start) * ms_to_px;
