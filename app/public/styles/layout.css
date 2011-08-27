@@ -67,6 +67,7 @@ h2 {
   -o-box-shadow: 0 0 30px rgba(255,255,255,0.60);
   box-shadow: 0 0 30px rgba(255,255,255,0.60);
   overflow-y: auto;
+  z-index: 999;
 }
 .modal ul {
   margin: 0 -20px;
@@ -109,7 +110,24 @@ h2 {
   height: 100%;
   display: block;
   position: relative;
-  z-index: 1;
+}
+#citybackdrop #playername {
+  background: none;
+  border: 1px solid #2a2f5c;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -o-border-radius: 10px;
+  border-radius: 10px;
+  padding: 5px;
+  color: #eee;
+  font-size: 14px;
+  text-align: center;
+}
+#citybackdrop #playername:hover {
+  border: 1px solid #eee;
 }
 #citybackdrop #club1 {
   background: #595;
