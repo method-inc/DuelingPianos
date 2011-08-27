@@ -286,6 +286,15 @@ h2 {
   -o-border-radius: 10px 10px 5px 5px;
   border-radius: 10px 10px 5px 5px;
 }
+.key.red {
+  background: #700;
+}
+.key.yellow {
+  background: #770;
+}
+.key.blue {
+  background: #007;
+}
 .key.active {
   background: #f00;
 }

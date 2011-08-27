@@ -15,7 +15,8 @@
     div(style="position:absolute")
       button(onclick="player.playVideo()") Play
       button(onclick="player.pauseVideo()") Stop
-      button(onclick="player.seekTo(5)") Stop
+      button(onclick="player.seekTo(5)") Go back to 5
+      button(onclick="player.seekTo(45)") Jump into the middle
 
 script(src='/js/modules/songvis.js', type='text/javascript')
 
@@ -23,7 +24,7 @@ script
   var vis = new SongVis({
     container: 'vis',
     ratio: 0.03,
-    lookahead: 1150
+    lookahead: 1300
   });
   
   var player;
