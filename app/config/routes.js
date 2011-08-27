@@ -8,6 +8,7 @@ exports = module.exports = function(server) {
 
   // Tests
   
-  server.all('/test', home.test);
+  server.all('/nowjs', home.nowjs);
+  server.all('/youtube', home.youtube);
   server.all('/vis', hunter.vis);
 }
