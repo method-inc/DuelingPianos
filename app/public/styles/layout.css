@@ -181,6 +181,8 @@ h2 {
 }
 .key {
   background: #777;
+  background: -webkit-gradient(linear, left top, right top, color-stop(0%, #ddd), color-stop(100%, #777));
+  background: -webkit-linear-gradient(left, #ddd 0%, #777 100%);
   width: 100%;
   height: 20px;
   display: block;
