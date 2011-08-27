@@ -80,11 +80,13 @@ exports = module.exports = function(server) {
   
   // load a song
   everyone.now.loadSong = function(player_id, song_id, callback) {
+    console.log("loaded a song on server")
     game.players[player_id].performance.load_song(song_id, callback);
   };
   
   // send a keypress
   everyone.now.keyPress = function(player_id, pitch, ms) {
+    console.log("pressed a key on server")
     game.players[player_id].performance.press_key(pitch, ms);
   };
   

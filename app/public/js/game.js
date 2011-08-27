@@ -7,7 +7,15 @@
   GameController.prototype = {
     
     // player object
-    player: {}
+    player: {},
+    
+    keyPress: function(player_id, pitch, ms) {
+      now.keyPress (player_id, pitch, ms)
+    },
+    
+    loadSong: function(player_id, song_id, callback) {
+      now.loadSong(player_id, song_id, callback)
+    }
     
   };
   
