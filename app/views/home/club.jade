@@ -1,4 +1,5 @@
 #club
+  button#goToCrowd Select New Song
   #crowd
     #chooser.modal
       h2 Choose a song:
@@ -30,3 +31,10 @@ script
   function onYouTubePlayerAPIReady() {
     console.log('ready');
   }
+  
+
+  $("#goToCrowd").click(function(){
+    player.pauseVideo();
+    $('#club').removeClass('stage');
+  })
+  

@@ -7,6 +7,7 @@
   ClubController.prototype = {
     
     chooseSong: function(id) {
+      $("#videoPlayer").html("")
       console.log('playing song ' + id);
       $('#club').addClass('stage');
       player = new YT.Player('videoPlayer', 
