@@ -9,7 +9,7 @@ var express = require('express'),
     stylus = require('stylus'),
     context = require('../lib/context');
 
-require('../lib/math.uuid');
+require('../lib/uuidstuff');
 
 // Server export
 
