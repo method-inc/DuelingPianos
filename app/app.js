@@ -20,6 +20,8 @@ exports = module.exports = (function() {
   var server = express.createServer(),
       options = require('./config/constants')([server.set('env')]);
 
+  GLOBAL.app = server;
+
   console.log("Environment: " + server.set('env'));
   
   // Config (all)

@@ -1,7 +1,7 @@
 var fs = require('fs');
 var EventEmitter = require('events').EventEmitter;
 
-var song_dir = global.app.set('app root') + '/public/songdata/';
+var song_dir = GLOBAL.app.set('app root') + '/public/songdata/';
 
 
 //var song_dir = '/Users/hunter/skookum/app/public/songdata/';
