@@ -3,25 +3,25 @@ var fs = require('fs');
 // Options
 
 var key_map = {
-  'blue': {
+  'yellow': {
     confidence: 0.3,
     pitch: 0.7,
-    loudness: -30
+    loudness: -60
   },
-  'yellow': {
-    confidence: 0.9,
+  'blue': {
+    confidence: 0.6,
     pitch: 0.7,
     loudness: -60
   },
   'red': {
-    confidence: 0.5,
+    confidence: 0.9,
     pitch: 0.7,
-    loudness: -30
+    loudness: -60
   }
 };
 
 var largest_chord = 1;
-var noisy = 8;
+var noisy = 5;
 
 function map(segment) {
   var keys = [], type, thresholds;
