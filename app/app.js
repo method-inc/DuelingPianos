@@ -64,9 +64,9 @@ exports = module.exports = (function() {
     server.use(server.router)
     server.use(express.errorHandler({ dumpExceptions: options.dumpExceptions, showStack: options.showStack}));
     
-    // Nowjs
+    // Nowjs game controller
     
-    require('./config/nowfunctions')(server)
+    require('./controllers/game')(server)
     
     // Helpers
     

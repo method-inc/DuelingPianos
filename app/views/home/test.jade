@@ -3,4 +3,8 @@ h1 Tester
 script(src="/nowjs/now.js")
 
 script
-  console.log(now.testVar)
+  now.ready(function(){
+    now.logstuff("I'm connected.")
+    alert(now.testVar)
+  })
+  
