@@ -9,10 +9,11 @@
   height: 100%;
   position: relative;
   width: 100%;
+  overflow: visible;
 }
 .keyroll {
   display: block;
-  background: #000;
+  background: #fff;
   border: solid 1px #000;
   width: 100%;
   height: 0;
@@ -22,12 +23,10 @@
 }
 .pitch {
   display: inline-block;
-  width: 8.2%;
+  width: 8.3%;
   background: #eee;
   height: 100%;
   position: relative;
-  border-left: solid 2px #000;
-  border-right: solid 2px #000;
 }
 .key {
   background: #333;
