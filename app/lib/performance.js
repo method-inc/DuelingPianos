@@ -80,22 +80,24 @@ Performance.prototype.update_streak = function(delta) {
     if (delta < 0) this.streak += delta;
     else this.streak = delta;
   }
+  if (this.streak > 10) send_tips(+3);
+  else send_tips(+1);
   send_streak();
 };
 
 // Server can tell the client the user fucked up
 Performance.prototype.send_fuckup = function(pitch) {
-  this.emit('fuckedUp', pitch);
+  this.emit('fuckedUp', this.player_id, pitch);
 };
 
 // Server can tell the client to update to user's streak
 Performance.prototype.send_streak = function() {
-  this.emit('updatedStreak', this.streak);
+  this.emit('updatedStreak', this.player_id, this.streak);
 };
 
 // Server can tell the client to update the user's tips
 Performance.prototype.send_tips = function() {
-  this.emit('updatedTips', this.tips);
+  this.emit('updatedTips', this.player_id, this.tips);
 };
 
 

@@ -1,4 +1,6 @@
 var nowjs = require("now")
+var Performance = require('../lib/performance');
+
 
 require('../../lib/uuidstuff');
 
@@ -45,6 +47,21 @@ exports = module.exports = function(server) {
         playername:'Mr. Anonymous',
         score: 0
       };
+      player.performance = new Performance({ player_id: player.id });
+      
+      // create event listeners
+      player.performance.on('fuckedUp', function(player_id, pitch) {
+        everyone.now.fuckedUp(player_id, pitch);
+      });
+      
+      player.performance.on('updatedTips', function(player_id, tips) {
+        everyone.now.updatedTips(player_id, tips);
+      });
+      
+      player.performance.on('updatedStreak', function(player_id, streak) {
+        everyone.now.updatedStreak(player_id, streak);
+      });
+      
       game.players[player.id] = player;
     }
     
@@ -60,6 +77,16 @@ exports = module.exports = function(server) {
     
     if (callback) callback(value)
   }
+  
+  // load a song
+  everyone.now.loadSong = function(player_id, song_id, callback) {
+    game.players[player_id].performance.load_song(song_id, callback);
+  };
+  
+  // send a keypress
+  everyone.now.keyPress = function(player_id, pitch, ms) {
+    game.players[player_id].performance.press_key(pitch, ms);
+  };
   
   // set a players location
   everyone.now.setLocation = function(id, value, callback) {
