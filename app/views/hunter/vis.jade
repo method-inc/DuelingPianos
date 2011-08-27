@@ -1,0 +1,22 @@
+#vis
+  h1 Visualization test
+  
+  #keyroll
+    - for (var i = 0; i < 12; i++)
+      .pitch
+    
+script
+  
+  $.ajax({
+    url: '/songdata/1_full.keys.json',
+    dataType: 'json',
+    success: show_song,
+    error: function(xhr, error, msg) {
+      console.log("Error pulling song data");
+    }
+  });
+  
+  function show_song(song) {
+    var keyroll = $('#keyroll');
+    
+  }

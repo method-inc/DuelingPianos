@@ -4,8 +4,6 @@
       h2 Choose a song:
       ul
         li
-          a(href="javascript:club.chooseSong('track1')") A song name
-        li
-          a(href="javascript:club.chooseSong('track1')") Another song name
+          a(href="javascript:club.chooseSong('#{songs[0].ytid}')") #{songs[0].name}
   #stage
     p This is the stage

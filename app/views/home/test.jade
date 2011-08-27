@@ -1,0 +1,15 @@
+h1 Tester
+
+script(src="/nowjs/now.js")
+
+script
+  now.ready(function(){
+    now.logstuff("I'm connected.")
+    now.logstuff("This is how we send game messages!");
+    now.logstuff("callmeback", function(msg) {
+      console.log("server: " + msg);
+    });
+    now.logstuff("don'tcallme");
+    //alert(now.testVar)
+  })
+  
