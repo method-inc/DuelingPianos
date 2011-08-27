@@ -1,4 +1,4 @@
-(function() {
+(function(now) {
   
   function ClubController() {
     
@@ -9,6 +9,7 @@
     
     player: null,
     vis: null,
+    playing: false,
     init: function() {
       this.vis = new SongVis({
         container: 'vis',
@@ -21,21 +22,20 @@
       $("#videoPlayer").html("")
       this.player = new YT.Player('videoPlayer', 
       {height: '390', width: '640', videoId: id, playerVars: {'start': 0, controls: '0'},
-        events: {'onReady': onReady} });
+        events: {'onReady': onReady, 'onStateChange': onStateChanged} });
       
       var self = this;
       function onReady() {
         if(self.vis) {
+          now.startSong(id);
+          
           self.vis.load_song('/songdata/'+id+'.keys.json', function() {
-            
             $('#club').addClass('stage');
-
             var t = 0;
             window.setTimeout(function() { self.player.playVideo(); }, 1000);
             var position;
             function update() {
-              var p = self.player.getCurrentTime() || 0;
-              position = Math.round(p * 1000);
+              var position = self.time();
               $("#time").html(position);
               self.vis.seek(position);
               setTimeout(update, 1000);
@@ -45,25 +45,46 @@
         }
         self.initKeyPressListener();
       }
+      
+      function onStateChanged(state) {
+        if(state.data == 1) self.playing = true;
+        else self.playing = false;
+        console.log(self.playing);
+      }
+      
+    },
+    
+    time: function() {
+      return Math.round((this.player.getCurrentTime() || 0) * 1000);
     },
     
     initKeyPressListener: function() {
       $(document).keydown(_.bind(this.onKeyPress, this));
+      $(document).keyup(_.bind(this.onKeyUp, this));
     },
     
+    _keys_down: {},
     onKeyPress: function(e) {
-      if(e.keyCode in this.key_mappings) {
-        console.log('pressed key ' + this.key_mappings[e.keyCode]);
-        $($('#vis .keyroll > div')[this.key_mappings[e.keyCode]]).addClass('highlight');
+      if(this.playing && !(e.which in this._keys_down) && (e.which in this.key_mappings)) {
+        this._keys_down[e.which] = true;
+        console.log('pressed key ' + this.key_mappings[e.which] + ' at ' + this.time());
+        now.keyPress(this.key_mappings[e.which], this.time());
+        $($('#vis .keyroll > div')[this.key_mappings[e.which]]).addClass('highlight');
         _.delay(_.bind(function() {
-          $($('#vis .keyroll > div')[this.key_mappings[e.keyCode]]).removeClass('highlight');
+          $($('#vis .keyroll > div')[this.key_mappings[e.which]]).removeClass('highlight');
         }, this), 750);
       }
+    },
+    onKeyUp: function(e) {
+      if(this._keys_down[e.which]) delete this._keys_down[e.which];
     }
     
   };
   
+  now.startSong = now.startSong || function() {};
+  now.keyPress = now.keyPress || function() {};
+  
   window.club = new ClubController();
 
   function onYouTubePlayerAPIReady() { };
-})();
+})(now);
