@@ -5,16 +5,14 @@ exports = module.exports = {
   },
   
   club: function(req, res) {
-    
-    var song = {name: '"Lighters" (piano version) mixed with "The Lazy Song" and "Billionaire"',
-                ytid: '0nerqy_da30'};
-    
-    var songs = [song];
-    
-    res.render('home/club', {songs: songs, layout: 'layout'})
+    require("../models/songs").listAll(function(songs) {
+      res.render('home/club', {songs: songs, layout: 'layout'})
+    })
   },
   
   test: function(req, res) {
-    res.render('home/test', {layout: 'layout'})
+    require("../models/songs").listAll(function(songs) {
+      res.render('home/test', {songs: songs, layout: 'layout'})
+    })
   }
 }
