@@ -15,9 +15,23 @@
   
 })();
 
+function isPLayer(id) {
+  return game.player.id === id;
+}
+
+now.fuckedUp = function (player_id, pitch) {
+  if (isPLayer) console.log("you fucked up!")
+}
+
+now.updatedTips = function (player_id, tips) {
+  if (isPLayer) console.log("new tips: $" + tips)
+}
+
+now.updatedStreak = function (player_id, streak) {
+  if (isPLayer) console.log("new streak: " + streak)
+}
 
 now.ready(function(){
-  
   var playerid = amplify.store("playerid");
   
   // get player from server and put into local object
@@ -39,6 +53,4 @@ now.ready(function(){
       })
     })
   })
-  
-
 })
