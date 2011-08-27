@@ -63,6 +63,7 @@
       $(document).keyup(_.bind(this.onKeyUp, this));
     },
     
+    // keep track of which keys are down to prevent repeating key events before the key is released
     _keys_down: {},
     onKeyPress: function(e) {
       if(this.playing && !(e.which in this._keys_down) && (e.which in this.key_mappings)) {
@@ -77,6 +78,12 @@
     },
     onKeyUp: function(e) {
       if(this._keys_down[e.which]) delete this._keys_down[e.which];
+    },
+    
+    fuckup: function(chord) {
+      var a = document.getElementById('fuckup_chord'+chord);
+      a.currentPosition = 0;
+      a.play();
     }
     
   };
