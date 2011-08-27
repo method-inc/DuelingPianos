@@ -63,6 +63,9 @@
       var bottom = this.position - this.falloff;
       this.keyroll.css({ 'webkitTransform': 'translateY(' + (bottom) + 'px)',  '-moz-transform': 'translateY(' + (bottom) + 'px)' });
       var i = this.keys.length;
+    },
+    activate_key: function(key_index) {
+      this.keys[key_index].el.addClass('active');
     }
   };
   

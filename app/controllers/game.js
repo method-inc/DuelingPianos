@@ -85,9 +85,9 @@ exports = module.exports = function(server) {
   };
   
   // send a keypress
-  everyone.now.keyPress = function(player_id, pitch, ms) {
+  everyone.now.keyPress = function(player_id, pitch, ms, callback) {
     console.log("pressed a key on server")
-    game.players[player_id].performance.press_key(pitch, ms);
+    game.players[player_id].performance.press_key(pitch, ms, callback);
   };
   
   // set a players location
