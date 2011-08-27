@@ -7,7 +7,15 @@
     "stylus":">=0.13.7",
     "connect-timeout":">=0.0.1",
     "cluster":">=0.4.2",
-    "express-messages":">=0.0.1"
+    "express-messages":">=0.0.1",
+    "connect":"=1.6.0",
+    "connect-redis":"=1.0.6",
+    "redis":"=0.6.7",
+    "socket.io":"latest",
+    "nko":"latest",
+    "async":"latest",
+    "mongodb":"=0.9.6-8",
+    "mongoose":"=1.7.4"
   },
   "directories":{}
 }

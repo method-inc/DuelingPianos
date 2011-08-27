@@ -13,11 +13,7 @@ console.log("Opening server on port " + port + "...");
 
 
 cluster('./app/app')
+  .set('workers', 1)
   .use(cluster.debug())
   .use(cluster.reload())
-  .use(cluster.logger('logs', 'debug'))
-  .use(cluster.stats())
-  .use(cluster.pidfiles('pids'))
-  .use(cluster.cli())
-  .use(cluster.repl(8888))
   .listen(port);

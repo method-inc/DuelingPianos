@@ -15,6 +15,8 @@ require('../lib/math.uuid');
 
 exports = module.exports = (function() {
   
+  var nko = require("nko")("1+I/76dAh/RtGchg")
+  
   var server = express.createServer(),
       options = require('./config/constants')([server.set('env')]);
 
