@@ -9,12 +9,12 @@
     // player object
     player: {},
     
-    keyPress: function(player_id, pitch, ms, callback) {
-      now.keyPress (player_id, pitch, ms, callback)
+    keyPress: function(pitch, ms, callback) {
+      now.keyPress (this.player.id, pitch, ms, callback)
     },
     
-    loadSong: function(player_id, song_id, callback) {
-      now.loadSong(player_id, song_id, callback)
+    loadSong: function(song_id, callback) {
+      now.loadSong(this.player.id, song_id, callback)
     }
     
   };
