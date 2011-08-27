@@ -12,21 +12,10 @@
     #play-area
       #vis
     div(style="position:absolute")
-      button(onclick="player.playVideo()") Play
-      button(onclick="player.pauseVideo()") Stop
-      button(onclick="player.seekTo(5)") Stop
+      button(onclick="club.player.playVideo()") Play
+      button(onclick="club.player.pauseVideo()") Stop
+      button(onclick="club.player.seekTo(5)") Stop
 
 script(src='/js/modules/songvis.js', type='text/javascript')
-
 script
-  var vis = new SongVis({
-    container: 'vis',
-    ratio: 0.03,
-    lookahead: 1150
-  });
-  
-  var player;
-  var playerPosition;
-  function onYouTubePlayerAPIReady() {
-    console.log('ready');
-  }
+  club.init();

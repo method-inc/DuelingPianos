@@ -262,6 +262,9 @@ h2 {
   border-left: solid 2px #ddd;
   border-right: solid 2px #999;
 }
+.pitch.highlight {
+  background: #ccc;
+}
 .key {
   background: #777;
   background: -webkit-gradient(linear, left top, right top, color-stop(0%, #ddd), color-stop(100%, #777));
