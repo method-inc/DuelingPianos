@@ -6,4 +6,7 @@
         li
           a(href="javascript:club.chooseSong('#{songs[0].ytid}')") #{songs[0].name}
   #stage
-    p This is the stage
+    #play-area
+      #keyroll
+        - for (var i = 0; i < 12; i++)
+          .pitch
