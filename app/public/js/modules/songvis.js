@@ -3,6 +3,7 @@
   function SongVis(options) {
     this.keyroll = $('#' + options.container)
     this.mx_to_px = options.ratio || 0.01;
+    this.lookahead = options.lookahead || 0;
     for(var i = 0; i < 12; i++) {
       var new_pitch = $('<div></div>').addClass('pitch');
       new_pitch.appendTo(this.keyroll);
@@ -51,6 +52,7 @@
       this.position = 0;
     },
     seek: function(ms) {
+      ms += this.lookahead;
       this.position = ms * this.mx_to_px;
       this.playhead && this.playhead.css({ 'top': this.position + 'px' });
       var i = this.keys.length;

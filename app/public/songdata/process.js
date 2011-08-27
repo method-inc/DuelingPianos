@@ -2,9 +2,9 @@ var fs = require('fs');
 
 // Options
 
-var CONFIDENCE_THRESHOLD = 0.1;
-var PITCH_THRESHOLD = 0.1;
-var LOUDNESS_THRESHOLD = -50;
+var CONFIDENCE_THRESHOLD = 0.5;
+var PITCH_THRESHOLD = 0.2;
+var LOUDNESS_THRESHOLD = -30;
 
 // Files
 
