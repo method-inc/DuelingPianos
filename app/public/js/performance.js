@@ -33,7 +33,7 @@
   }
   
   // Client can tell the server to load a song for a performance
-  Performance.prototype.load_song_server = function(id, callback) {
+  Performance.prototype.load_song = function(id, callback) {
     var song_dir = GLOBAL.app.set('app root') + '/public/songdata/';
     var fs = require('fs');
     var self = this;
@@ -46,7 +46,7 @@
       });
       // Set the last key to nothing
       self.last_key_index = -1;
-      return callback && callback();
+      return callback && callback(undefined, self.song);
     });
   };
   
@@ -63,7 +63,7 @@
       i++;
     }
     if (deadkeys.length) this.update_streak(-deadkeys.length);
-    return callback && callback(undefined, deadkeys);
+    return callback && callback(undefined, deadkeys, ms);
   };
   
   // Client can tell the server the user just pressed a key
@@ -77,12 +77,12 @@
         if (key.pitch === pitch && key.available) {
           key.available = false;
           self.update_streak(1);
-          return callback && callback(undefined, i, deadkeys);
+          return callback && callback(undefined, i, deadkeys, ms);
         }
         i++;
       }
       self.update_streak(-1);
-      return callback && callback(undefined, undefined, deadkeys);  
+      return callback && callback(undefined, undefined, deadkeys, ms);  
     });
   };
   
