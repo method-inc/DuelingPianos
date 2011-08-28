@@ -68,7 +68,7 @@
         if(this.playing && this.time() > (this.last_keypress + 1000)) {
           game.status(this.time(), function(err, res) {
             for(var i in res) {
-              self.vis.kill_key(res[i]);
+              self.dead_key(res[i]);
             }
           });
         }
@@ -92,14 +92,18 @@
         
         this.last_keypress = time;
         
-        game.keyPress(mapping, time, function(err, res) {
-          if(err) {
+        game.keyPress(mapping, time, function(err, key, dead) {
+          if(typeof key == 'undefined' || key == null) {
             self.fuckup(mapping);
-            for(var i in res) {
-              self.vis.kill_key(res[i]);
-            }
           }
-          else self.vis.activate_key(res);
+          else {
+            console.log(key)
+             self.vis.activate_key(key);
+          }
+          
+          for(var i in dead) {
+            self.dead_key(dead[i]);
+          }
         });
       }
     },
@@ -107,10 +111,22 @@
       if(this._keys_down[e.which]) delete this._keys_down[e.which];
     },
     
+    dead_key: function(k) {
+      this.vis.kill_key(k);
+    },
+    
     fuckup: function(chord) {
       var a = document.getElementById('fuckup_chord'+chord);
       a.currentPosition = 0;
       a.play();
+    },
+    
+    updateTips: function(tips) {
+      $("#tip_amount").html(tips);
+    },
+    
+    updateStreak: function(streak) {
+      $("#streak_amount").html(streak);
     }
     
   };
