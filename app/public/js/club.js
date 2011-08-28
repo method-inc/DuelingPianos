@@ -12,6 +12,7 @@
     player: null,
     vis: null,
     playing: false,
+    started: false,
     init: function() {
       this.vis = new SongVis({
         container: 'vis',
@@ -48,8 +49,9 @@
       function onStateChanged(state) {
         if(state.data == 1) self.playing = true;
         else self.playing = false;
-        if(!self.playing) {
+        if(!self.playing && self.started) {
           game.donePlaying();
+          self.started = false;
         }
       }
       
@@ -74,6 +76,9 @@
       if(true) {
         this.initKeyPressListener()
       }
+      window.setTimeout(function() {
+        self.started = true;
+      }, 1000);
     },
     
     time: function() {
@@ -212,7 +217,7 @@
     },
     
     resetPlayer: function() {
-      $('#club').addClass('stage');
+      $('#club').removeClass('stage');
       if(game.active) {
         $('#club').addClass('active');
       }

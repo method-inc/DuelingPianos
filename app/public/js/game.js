@@ -46,6 +46,7 @@
     },
     
     donePlaying: function(club) {
+      console.log('done playing')
       if (!club) club = "The Stinky Squirrel";
       now.donePlaying(this.player.id, club);
     }
@@ -70,8 +71,10 @@ now.keyUpdated = function (err, key, dead, ms, player_id) {
   }
 }
 
-now.newActivePlayer = function(club, tips) {
-  console.log("new active player")
+now.newActivePlayer = function(club, player) {
+  console.log(player);
+  game.active = isPLayer(player.id);
+  club.resetPlayer();
 }
 
 now.updatedTips = function (player_id, tips) {
@@ -94,11 +97,6 @@ now.songLoaded = function(id, songdata, player_id) {
   game.performance = new Performance.Performance({ player_id: game.player.id, numkeys: 6 });
   game.performance.load_json(songdata);
   club.songLoaded(id, songdata, player_id);
-}
-
-now.activePlayer = function(player) {
-  game.active = isPLayer(player.id);
-  club.resetPlayer();
 }
 
 now.ready(function(){

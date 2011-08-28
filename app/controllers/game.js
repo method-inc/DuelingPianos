@@ -15,9 +15,12 @@ exports = module.exports = function(server) {
     },
     
     rotateActivePlayer: function(club) {
+      console.log('ROTATE ACTIVEPLAYER')
+      console.log(this.clubs[club].players)
       var old_active = this.clubs[club].players.shift();
       this.clubs[club].players.push(old_active);
-      everyone.now.newActivePlayer(club, player);
+      console.log(this.clubs[club].players)
+      everyone.now.newActivePlayer(club, this.clubs[club].players[0]);
     }
   }
   
@@ -41,7 +44,7 @@ exports = module.exports = function(server) {
   
   // done playing
   everyone.now.donePlaying = function(player_id, club) {
-    game.rotateActivePlayers(club);
+    game.rotateActivePlayer(club);
   }
   
   // get player by id
