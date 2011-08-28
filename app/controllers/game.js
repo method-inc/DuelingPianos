@@ -143,7 +143,9 @@ exports = module.exports = function(server) {
   
   // check status
   everyone.now.status = function(player_id, ms, callback) {
-    game.players[player_id].performances[game.players[player_id].performances.length-1].status(ms, callback);
+    game.players[player_id].performances[game.players[player_id].performances.length-1].status(ms, function(err, deadkeys, ms) {
+      everyone.now.statusUpdated(err, deadkeys, ms, player_id);
+    });
   };
   
   // send a keypress

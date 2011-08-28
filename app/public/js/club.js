@@ -162,7 +162,7 @@
     },
     
     remoteKeyUpdated: function(err, key, dead, ms) {
-      console.log("remove updated: " + ms);
+      console.log('remote key update');
       var self = this;
       if(typeof key == 'undefined' || key == null) {
         self.fuckup(0);
@@ -175,9 +175,21 @@
         self.dead_key(dead[i]);
       }
       
-      if(ms > (this.time() + 1000) || ms > (this.time() - 1000)) {
-        this.vis.seek(ms);
-        this.player.seekTo(ms);
+      if(ms > (this.time() + 1000) || ms < (this.time() - 1000)) {
+        console.log(this.time() + ' seeking to ' + ms);
+        this.player.seekTo(ms/1000);
+      }
+    },
+    
+    remoteStatusUpdated: function(err, dead, ms) {
+      console.log('remote status update');
+      for(var i in dead) {
+        self.dead_key(dead[i]);
+      }
+      
+      if(ms > (this.time() + 1000) || ms < (this.time() - 1000)) {
+        console.log(this.time() + ' seeking to ' + ms);
+        this.player.seekTo(ms/1000);
       }
     },
     
