@@ -96,8 +96,9 @@
           if(typeof key == 'undefined' || key == null) {
             self.fuckup(mapping);
           }
-          else
-             self.vis.activate_key(key);
+          else {
+            self.vis.activate_key(key);
+          }
           
           for(var i in dead) {
             self.dead_key(dead[i]);
