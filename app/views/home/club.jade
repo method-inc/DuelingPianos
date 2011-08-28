@@ -5,31 +5,20 @@
   #meter
     #hottness
     #mask
-  
-  #crowd
+
+  #stage
+    #videoPlayer(style="display: none")
+    #time
     #chooser.modal
       h2 Choose a song:
       ul
         - for(var i in songs)
           li
             a(href="javascript:club.initSong('#{songs[i].ytid}')") #{songs[i].name}
-  #stage
-    #videoPlayer(style="display: none")
-    #time
-    
     #tips Tips: $
       span#tip_amount 0
-    #streak Streak: 
-      span#streak_amount 0
-    #volume Volume:
-      span#volume_amount 0
     #play-area
       #vis
-    div(style="position:absolute")
-      button(onclick="club.player.playVideo()") Play
-      button(onclick="club.player.pauseVideo()") Stop
-      button(onclick="club.player.seekTo(5)") Go back to 5
-      button(onclick="club.player.seekTo(45)") Jump into the middle
 
 audio#fuckup_chord0(preload=true)
   source(src="/sounds/fuckup_chord0_0.wav", type="audio/wav")

@@ -241,6 +241,11 @@
         a.play();
       }
       
+      if(this.streak == -35) {
+        this.player.stopVideo();
+        game.donePlaying();
+      }
+      
       if(this.streak == 18) {
         var a = document.getElementById('cheer_1');
         a.currentPosition = 0;
