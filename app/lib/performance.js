@@ -58,7 +58,7 @@ Performance.prototype.press_key = function(pitch, ms, callback) {
       if (key.pitch === pitch && key.available) {
         key.available = false;
         self.update_streak(1);
-        return callback(undefined, i, deadkeys);
+        return callback && callback(undefined, i, deadkeys);
       }
       i++;
     }
