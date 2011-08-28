@@ -156,12 +156,17 @@ h2 {
   left: -600px;
 }
 #lobby .footer {
+  text-align: right;
   background: rgba(0,0,0,0.40);
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
   height: 33%;
+}
+#lobby .footer p {
+  padding-top: 10px;
+  padding-right: 200px;
 }
 #lobby input {
   width: 200px;
