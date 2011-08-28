@@ -46,9 +46,11 @@
     },
     
     donePlaying: function(club) {
-      console.log('done playing')
-      if (!club) club = "The Stinky Squirrel";
-      now.donePlaying(this.player.id, club);
+      if(this.active) {
+        console.log('done playing')
+        if (!club) club = "The Stinky Squirrel";
+        now.donePlaying(this.player.id, club);
+      }
     }
     
   };
@@ -72,7 +74,6 @@ now.keyUpdated = function (err, key, dead, ms, player_id) {
 }
 
 now.newActivePlayer = function(c, player) {
-  console.log(player);
   if(player) {
     game.active = isPLayer(player.id);
     club.resetPlayer();

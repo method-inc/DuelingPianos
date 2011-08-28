@@ -85,11 +85,13 @@
       return Math.round((this.player.getCurrentTime() || 0) * 1000);
     },
     
+    interval:null,
     initKeyPressListener: function() {
       $(document).keydown(_.bind(this.onKeyPress, this));
       $(document).keyup(_.bind(this.onKeyUp, this));
       var self = this;
-      window.setInterval(_.bind(function() {
+      this.interval = window.setInterval(_.bind(function() {
+        console.log('interval')
         if(this.playing && this.time() > (this.last_keypress + 1000)) {
           game.status(this.time(), function(err, res) {
             for(var i in res) {
@@ -217,12 +219,18 @@
     },
     
     resetPlayer: function() {
+      if(this.player) this.player.pauseVideo();
       $('#club').removeClass('stage');
       if(game.active) {
         $('#club').addClass('active');
       }
       else {
         $('#club').removeClass('active');
+        $(document).unbind('keydown').unbind('keyup');
+        if(this.interval) {
+          window.clearInterval(this.interval);
+        }
+        
       }
     }
     
