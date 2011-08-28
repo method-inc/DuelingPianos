@@ -39,14 +39,15 @@ Performance.prototype.load_song = function(id, callback) {
 Performance.prototype.press_key = function(pitch, ms, callback) {
   
   // Find the next available keys
-  var i = this.last_key_index + 1,
+  var i = this.last_key_index,
+      start_i = i,
       keys = this.song.keys,
       past_boundary_ms = ms - this.range,
       future_boundary_ms = ms + this.range,
-      key, key_ms, total_checks = 0, deadkeys = [];
+      key, key_ms, deadkeys = [];
   if (i >= keys.length) return callback('end of song');
   do {
-    total_checks++;
+    i++;
     key = keys[i];
     key_ms = key.start;
     // If they haven't pressed a key in a while we need to invalidate really old keys
@@ -64,7 +65,7 @@ Performance.prototype.press_key = function(pitch, ms, callback) {
       console.log("KEY INDEX: " + i);
       return callback(undefined, i);
     }
-  } while (key_ms <= future_boundary_ms && total_checks < 30)
+  } while (key_ms <= future_boundary_ms && i - start_i < 30)
   // Key pressed doesn't have a match at that point in the song
   //this.send_fuckup(pitch);
   this.update_streak(-1);
