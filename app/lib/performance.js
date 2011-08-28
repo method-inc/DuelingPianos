@@ -9,7 +9,7 @@ var song_dir = GLOBAL.app.set('app root') + '/public/songdata/';
 
 function Performance(options) {
   this.player_id = options.player_id;
-  this.range = options.range || 300;  // What range (in ms) must an acceptable key fall into?
+  this.range = options.range || 1000;  // What range (in ms) must an acceptable key fall into?
   this.song = undefined;
   this.tips = 0;
   this.streak = 0;
@@ -18,7 +18,6 @@ function Performance(options) {
 
 Performance.prototype = Object.create( EventEmitter.prototype );
 
- 
 // Client can tell the server to load a song for a performance
 Performance.prototype.load_song = function(id, callback) {
   var self = this;
@@ -35,42 +34,47 @@ Performance.prototype.load_song = function(id, callback) {
   });
 };
 
+// Client can tell the server where they are (in ms) during playback (periodically)
+Performance.prototype.status = function(ms, callback) {
+  var i = this.last_key_index + 1, deadkeys = [];
+  var past_boundary_ms = ms - this.range;
+  while (this.song.keys[i] && this.song.keys[i].start < past_boundary_ms) {
+    this.song.keys[i].available = false;
+    deadkeys.push(i);
+    this.last_key_index = i;
+    i++;
+  }
+  if (deadkeys.length) this.update_streak(-deadkeys.length);
+  return callback && callback(undefined, deadkeys);
+};
+
 // Client can tell the server the user just pressed a key
 Performance.prototype.press_key = function(pitch, ms, callback) {
-  
-  // Find the next available keys
-  var i = this.last_key_index,
-      start_i = i,
-      keys = this.song.keys,
-      past_boundary_ms = ms - this.range,
-      future_boundary_ms = ms + this.range,
-      key, key_ms, deadkeys = [];
-  if (i >= keys.length) return callback('end of song');
-  do {
-    i++;
-    key = keys[i];
-    key_ms = key.start;
-    // If they haven't pressed a key in a while we need to invalidate really old keys
-    if (key_ms < past_boundary_ms) {
-      this.last_key_index = i;
-      key.available = false;
-      deadkeys.push(i);
+  var self = this;
+  this.status(ms, function(err, deadkeys) {
+    var future_boundary_ms = ms + self.range;
+    var i = self.last_key_index + 1;
+    while (self.song.keys[i] && self.song.keys[i].start < future_boundary_ms) {
+      var key = self.song.keys[i];
+      if (key.pitch === pitch && key.available) {
+        key.available = false;
+        self.update_streak(1);
+        return callback && callback(undefined, i, deadkeys);
+      }
+      i++;
     }
-    else if (key.available && key.pitch === pitch) {
-      // Key was correct (correct pitch within the allowed range of time)
-      key.available = false;
-      this.last_key_index = i;
-      this.update_streak(1);
-      console.log("  (was the right key!)");
-      console.log("KEY INDEX: " + i);
-      return callback(undefined, i);
-    }
-  } while (key_ms <= future_boundary_ms && i - start_i < 30)
-  // Key pressed doesn't have a match at that point in the song
-  //this.send_fuckup(pitch);
-  this.update_streak(-1);
-  return callback('fuckup', deadkeys);
+    self.update_streak(-1);
+    return callback && callback(undefined, undefined, deadkeys);  
+  });
 };
+
+Performance.prototype.kill_key = function(i) {
+  while(this.song.keys[i] && this.song.keys[i].available) {
+    this.song.keys[i].available = false;
+    i--;
+  }
+  this.last_key_index = i;
+}
 
 // Client can request the current state of this performance at any time
 Performance.prototype.get_status = function() {
@@ -91,8 +95,6 @@ Performance.prototype.update_streak = function(delta) {
     if (delta < 0) this.streak += delta;
     else this.streak = delta;
   }
-  if (this.streak > 10) this.send_tips(+3);
-  else this.send_tips(+1);
   this.send_streak();
 };
 

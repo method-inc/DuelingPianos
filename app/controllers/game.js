@@ -89,7 +89,7 @@ exports = module.exports = function(server) {
   
   // check status
   everyone.now.status = function(player_id, ms, callback) {
-    game.players[player_id].performance.press_key(ms, callback);
+    game.players[player_id].performance.status(ms, callback);
   };
   
   // send a keypress
