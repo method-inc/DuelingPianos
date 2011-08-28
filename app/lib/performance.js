@@ -18,7 +18,10 @@ function Performance(options) {
 
 Performance.prototype = Object.create( EventEmitter.prototype );
 
- 
+Performance.prototype.catch_up = function(ms) {
+  
+};
+
 // Client can tell the server to load a song for a performance
 Performance.prototype.load_song = function(id, callback) {
   var self = this;
