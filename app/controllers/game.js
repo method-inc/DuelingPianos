@@ -155,7 +155,7 @@ exports = module.exports = function(server) {
         
         for (var i = 0; i < game.clubs["The Stinky Squirrel"].players.length; i++) {
           var pl = game.clubs["The Stinky Squirrel"].players[i];
-          if (pl.id == player_id) {
+          if (pl && pl.id == player_id) {
             pl.tips += game.players[player_id].tips;
           }
         }
