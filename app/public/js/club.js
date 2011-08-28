@@ -162,6 +162,7 @@
     },
     
     remoteKeyUpdated: function(err, key, dead, ms) {
+      console.log("remove updated: " + ms);
       var self = this;
       if(typeof key == 'undefined' || key == null) {
         self.fuckup(0);
@@ -172,6 +173,11 @@
       
       for(var i in dead) {
         self.dead_key(dead[i]);
+      }
+      
+      if(ms > (this.time() + 1000) || ms > (this.time() - 1000)) {
+        this.vis.seek(ms);
+        this.player.seekTo(ms);
       }
     },
     
