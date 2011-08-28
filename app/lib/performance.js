@@ -35,6 +35,18 @@ Performance.prototype.load_song = function(id, callback) {
   });
 };
 
+Performance.prototype.status = function(ms, callback) {
+  var i = this.last_key_index, deadkeys = [];
+  var past_boundary_ms = ms - this.range;
+  while (this.keys[i].start < past_boundary_ms) {
+    i++;
+    this.keys[i].available = false;
+    deadkeys.push(i);
+  }
+  this.last_key_index = i;
+  callback(undefined, deadkeys);
+};
+
 // Client can tell the server the user just pressed a key
 Performance.prototype.press_key = function(pitch, ms, callback) {
   
@@ -45,6 +57,7 @@ Performance.prototype.press_key = function(pitch, ms, callback) {
       past_boundary_ms = ms - this.range,
       future_boundary_ms = ms + this.range,
       key, key_ms, deadkeys = [];
+      
   if (i >= keys.length) return callback('end of song');
   do {
     i++;
@@ -65,7 +78,7 @@ Performance.prototype.press_key = function(pitch, ms, callback) {
       console.log("KEY INDEX: " + i);
       return callback(undefined, i);
     }
-  } while (key_ms <= future_boundary_ms && i - start_i < 30)
+  } while (key_ms <= future_boundary_ms && i - start_i < 100)
   // Key pressed doesn't have a match at that point in the song
   //this.send_fuckup(pitch);
   this.update_streak(-1);
