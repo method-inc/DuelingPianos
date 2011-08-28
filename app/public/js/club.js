@@ -183,6 +183,7 @@
     
     remoteStatusUpdated: function(err, dead, ms) {
       console.log('remote status update');
+      var self = this;
       for(var i in dead) {
         self.dead_key(dead[i]);
       }
