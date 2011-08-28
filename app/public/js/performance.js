@@ -107,6 +107,10 @@
       else this.streak = delta;
     }
     this.send_streak();
+    var rand = Math.floor(Math.random() * 40);
+    if (rand < this.streak) {
+      this.send_tips(Math.floor(Math.random() * 4) + 1);
+    }
   };
   
   // Server can tell the client the user fucked up
@@ -120,8 +124,8 @@
   };
   
   // Server can tell the client to update the user's tips
-  Performance.prototype.send_tips = function() {
-    this.emit('updatedTips', this.player_id, this.tips);
+  Performance.prototype.send_tips = function(tips) {
+    this.emit('updatedTips', this.player_id, tips);
   };
   
   // Export that bitch

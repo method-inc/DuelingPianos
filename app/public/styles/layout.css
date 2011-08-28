@@ -116,6 +116,12 @@ h2 {
 #lobby h1 span {
   display: none;
 }
+#lobby h1 .voter {
+  position: absolute;
+  left: 50%;
+  margin-left: 250px;
+  top: 200px;
+}
 #lobby .playit {
   background: rgba(255,255,255,0.15);
   padding: 70px 0;
@@ -305,22 +311,26 @@ h2 {
 #club {
   width: 100%;
   height: 100%;
+  display: block;
+  position: relative;
+  background: url("/images/grunge.jpg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  width: 200%;
+  height: 100%;
+  -webkit-transition: all 1s cubic-bezier(0.77, 0, 0.2, 1);
+  -moz-transition: all 1s cubic-bezier(0.77, 0, 0.2, 1);
+  -o-transition: all 1s cubic-bezier(0.77, 0, 0.2, 1);
+  transition: all 1s cubic-bezier(0.77, 0, 0.2, 1);
   position: relative;
 }
 #club #chooser {
   display: none;
 }
-#club #vis {
-  opacity: 0.4;
-}
 #club.active #chooser {
   display: block;
-}
-#club.active.stage #chooser {
-  display: none;
-}
-#club.stage #vis {
-  opacity: 1;
 }
 #club #status {
   position: fixed;
@@ -351,12 +361,20 @@ h2 {
 }
 #club #leaveClub {
   position: absolute;
-  top: 30px;
+  top: 10px;
   left: 10px;
   z-index: 9999;
 }
+#club #crowd,
+#club.stage {
+  -webkit-transform: translateX(-50%);
+  -moz-transform: translateX(-50%);
+  -o-transform: translateX(-50%);
+  transform: translateX(-50%);
+}
 #club > div {
-  width: 100%;
+  width: 50%;
+  display: inline-block;
   position: relative;
   height: 100%;
   vertical-align: top;

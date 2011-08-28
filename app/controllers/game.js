@@ -22,25 +22,25 @@ exports = module.exports = function(server) {
       this.clubs[club].video_playing = false;
       
       setTimeout(function() {
+        console.log(self.clubs[club].players[0])
         everyone.now.newActivePlayer(club, self.clubs[club].players[0]);
-        setTimeout(function() {
-          if(!self.clubs[club].video_playing) {
-            // console.log("taking too long, picking a new player");
-            // self.rotateActivePlayer(club);
-          }
-        }, 5000)
-      }, 1000);
+      }, 5000);
     }
   }
   
   
   // get all players in game
-  everyone.now.getAllPlayers = function(callback) {
+  everyone.now.getAllPlayers = function(club, callback) {
     
-    var players = [];
-    
-    for(var p in game.players) {
-      players.push(game.players[p].playername)
+    if (typeof club === "string") {
+      var players = game.clubs[club].players;
+    }
+    else {
+      callback = club;
+      var players = [];
+      for(var p in game.players) {
+        players.push(game.players[p].playername)
+      }
     }
     
     callback(players);
@@ -49,18 +49,24 @@ exports = module.exports = function(server) {
   // get active player
   everyone.now.getActivePlayer = function(club, callback) {
     var self = this;
-    setTimeout(function() {
-      if(!game.clubs[club].video_playing) {
-        // console.log("taking too long, picking a new player");
-        // game.rotateActivePlayer(club);
-      }
-    }, 5000)
+    
+    if(!game.clubs[club].triggered) {
+      setTimeout(function() {
+        console.log(game.clubs[club].video_playing)
+        if(!game.clubs[club].video_playing) {
+          console.log("taking too long, picking a new player");
+          game.rotateActivePlayer(club);
+        }
+      }, 1000)
+    }
+    
     callback(game.clubs[club].players[0]);
   }
   
   // done playing
   everyone.now.donePlaying = function(player_id, club) {
     game.rotateActivePlayer(club);
+    game.clubs[club].video_playing
   }
   
   // get player by id

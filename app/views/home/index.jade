@@ -1,6 +1,7 @@
 #lobby
   h1.logo
     span Dualing Pianos
+    iframe.voter(src="http://nodeknockout.com/iframe/skookum", frameborder='0', scrolling='no', allowtransparency='true', width='115', height='25')
   
   .playit
     .playgroup
@@ -8,31 +9,14 @@
       input#playername(placeholder="player name")  
       a#door(href="/club/stinky_squirrel") Play!
       
-  .footer
-
-#citybackdrop
-  #backdrop2
-  #playerlist
-  
-  #club1
-    #sign
-    
-  #street
-    #playerlist
-  
-  a#door(href="/club/stinky_squirrel")
-    #knob
-    
-  
-
-  
+  .footer  
   
 script
   now.ready(function(){
   
     // get all players
     now.getAllPlayers(function(allPlayers){
-      $("#playerlist").html("All Players: " + allPlayers.toString())
+      //$("#playerlist").html("All Players: " + allPlayers.toString())
     })
   
   })
