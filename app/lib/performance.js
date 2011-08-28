@@ -14,6 +14,7 @@ function Performance(options) {
   this.tips = 0;
   this.streak = 0;
   this.last_key_index = -1;
+  this.numkeys = options.numkeys || 12;
 }
 
 Performance.prototype = Object.create( EventEmitter.prototype );
@@ -26,7 +27,7 @@ Performance.prototype.load_song = function(id, callback) {
     self.song = JSON.parse(data);
     // Initialize each key to an unpressed state
     self.song.keys.forEach(function(key) {
-      key.available = true;
+      if (key.pitch <= self.numkeys) key.available = true;
     });
     // Set the last key to nothing
     self.last_key_index = -1;

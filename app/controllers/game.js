@@ -44,7 +44,8 @@ exports = module.exports = function(server) {
       var player = {
         id:Math.uuidFast(),
         playername:'Mr. Anonymous',
-        tips: 0
+        tips: 0,
+        performances: []
       };
       
       game.players[player.id] = player;
@@ -66,16 +67,14 @@ exports = module.exports = function(server) {
   // load a song
   everyone.now.loadSong = function(player_id, song_id, callback) {
     
-    var player = game.players[player_id];
-    
-    player.performance = new Performance({ player_id: player.id });
-      
+    var perf = new Performance({ player_id: player_id, numkeys: 6 });
+  
     // create event listeners
-    player.performance.on('fuckedUp', function(player_id, pitch) {
+    perf.on('fuckedUp', function(player_id, pitch) {
       everyone.now.fuckedUp(player_id, pitch);
     });
     
-    player.performance.on('updatedTips', function(player_id, newtips) {
+    perf.on('updatedTips', function(player_id, newtips) {
       if (newtips > 0) {
         console.log("New tip: $" + newtips)
         game.players[player_id].tips += newtips;
@@ -84,21 +83,25 @@ exports = module.exports = function(server) {
       }
     });
     
-    player.performance.on('updatedStreak', function(player_id, streak) {
+    perf.on('updatedStreak', function(player_id, streak) {
       everyone.now.updatedStreak(player_id, streak);
     });
     
-    player.performance.load_song(song_id, callback);
+    game.players[player_id].performances.push(perf);
+    
+    var numperfs = game.players[player_id].performances.length;
+    
+    game.players[player_id].performances[numperfs - 1].load_song(song_id, callback);
   };
   
   // check status
   everyone.now.status = function(player_id, ms, callback) {
-    game.players[player_id].performance.status(ms, callback);
+    game.players[player_id].performances[game.players[player_id].performances.length-1].status(ms, callback);
   };
   
   // send a keypress
   everyone.now.keyPress = function(player_id, pitch, ms, callback) {
-    game.players[player_id].performance.press_key(pitch, ms, callback);
+    game.players[player_id].performances[game.players[player_id].performances.length-1].press_key(pitch, ms, callback);
   };
   
   // set a players location

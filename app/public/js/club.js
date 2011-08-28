@@ -14,7 +14,8 @@
       this.vis = new SongVis({
         container: 'vis',
         ratio: 0.03,
-        lookahead: 1300
+        lookahead: 1300,
+        numkeys: 6
       });
     },
     
@@ -30,6 +31,7 @@
           game.loadSong(id, function() {
             
             self.vis.load_song('/songdata/'+id+'.keys.json', function() {
+              
               $('#club').addClass('stage');
               var t = 0;
               window.setTimeout(function() { self.player.playVideo(); }, 1000);
