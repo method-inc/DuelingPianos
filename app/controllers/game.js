@@ -9,8 +9,11 @@ exports = module.exports = function(server) {
   
   var game = {
     players: {},
+    video_playing : false,
+    triggered : false,
+    timeout : false,
     clubs: {
-      "The Stinky Squirrel":{ players: [], video_playing: false, triggered: false}
+      "The Stinky Squirrel":{ players: []}
     },
     
     rotateActivePlayer: function(club) {
@@ -18,13 +21,31 @@ exports = module.exports = function(server) {
       this.clubs[club].players.push(old_active);
       var self = this;
       
-      this.clubs[club].triggered = true;
-      this.clubs[club].video_playing = false;
+      this.triggered = true;
+      this.video_playing = false;
       
       setTimeout(function() {
-        console.log(self.clubs[club].players[0])
         everyone.now.newActivePlayer(club, self.clubs[club].players[0]);
-      }, 5000);
+        
+        console.log("rotateplayer -> isplaying: " + self.video_playing)
+        console.log("rotateplayer -> intimeout: " + self.timeout)
+        
+        if (!self.timeout) {
+          
+          self.timeout = true;
+          
+          setTimeout(function() {
+            console.log("rotate is playing:" + self.video_playing)
+            if(!self.video_playing) {
+              console.log("taking too long, picking a new player");
+              game.rotateActivePlayer(club);
+              self.timeout = false;
+            }
+          }, 10000)
+          
+        }
+        
+      }, 1000);
     }
   }
   
@@ -50,14 +71,18 @@ exports = module.exports = function(server) {
   everyone.now.getActivePlayer = function(club, callback) {
     var self = this;
     
-    if(!game.clubs[club].triggered) {
+    console.log("getting active player")
+    console.log("triggered: " + game.triggered)
+    console.log("playing: " + game.video_playing)
+    
+    if(!game.triggered) {
       setTimeout(function() {
-        console.log(game.clubs[club].video_playing)
-        if(!game.clubs[club].video_playing) {
+        console.log("running active player timeout")
+        if(!game.video_playing) {
           console.log("taking too long, picking a new player");
           game.rotateActivePlayer(club);
         }
-      }, 1000)
+      }, 10000)
     }
     
     callback(game.clubs[club].players[0]);
@@ -66,7 +91,6 @@ exports = module.exports = function(server) {
   // done playing
   everyone.now.donePlaying = function(player_id, club) {
     game.rotateActivePlayer(club);
-    game.clubs[club].video_playing
   }
   
   // get player by id
@@ -93,7 +117,7 @@ exports = module.exports = function(server) {
       game.players[player.id] = player;
     }
     
-    console.log(game.players);
+    // console.log(game.players);
     
     if (callback) callback(player);
   }
@@ -133,8 +157,6 @@ exports = module.exports = function(server) {
     
     var numperfs = game.players[player_id].performances.length;
     
-    this.video_playing = true;
-    
     game.players[player_id].performances[numperfs - 1].load_song(song_id, function(err, songdata) {
       console.log("player_id is now" + player_id);
       everyone.now.songLoaded(song_id, songdata, player_id);
@@ -143,7 +165,7 @@ exports = module.exports = function(server) {
   
   // broadcast the start of the song
   everyone.now.startSong = function(player_id) {
-    this.video_playing = true;
+    game.video_playing = true;
     everyone.now.songStarted(player_id);
   }
   
@@ -178,9 +200,6 @@ exports = module.exports = function(server) {
     else {
       // for (var c in game.clubs) delete game.clubs[c].players[id]
     }
-    
-    console.log("set location")
-    console.log(game.clubs)
     
     if (callback) callback(value)
   }
