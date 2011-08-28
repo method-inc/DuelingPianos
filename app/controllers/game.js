@@ -12,13 +12,18 @@ exports = module.exports = function(server) {
     video_playing : false,
     triggered : false,
     timeout : false,
+    lastUpdate: new Date(),
     clubs: {
       "The Stinky Squirrel":{ players: []}
     },
     
-    rotateActivePlayer: function(club) {
+    rotateActivePlayer: function(club, timedout) {
       var old_active = this.clubs[club].players.shift();
-      this.clubs[club].players.push(old_active);
+      
+      if (timedout !== true) {
+        this.clubs[club].players.push(old_active);
+      }
+      
       var self = this;
       
       this.triggered = true;
@@ -27,18 +32,13 @@ exports = module.exports = function(server) {
       setTimeout(function() {
         everyone.now.newActivePlayer(club, self.clubs[club].players[0]);
         
-        console.log("rotateplayer -> isplaying: " + self.video_playing)
-        console.log("rotateplayer -> intimeout: " + self.timeout)
-        
         if (!self.timeout) {
           
           self.timeout = true;
           
           setTimeout(function() {
-            console.log("rotate is playing:" + self.video_playing)
             if(!self.video_playing) {
-              console.log("taking too long, picking a new player");
-              game.rotateActivePlayer(club);
+              game.rotateActivePlayer(club, false);
               self.timeout = false;
             }
           }, 10000)
@@ -48,6 +48,17 @@ exports = module.exports = function(server) {
       }, 1000);
     }
   }
+  
+  setInterval(function(){
+
+    var time_since = new Date() - game.lastUpdate
+    
+    if (game.video_playing && time_since > 5000) {
+      console.log("kicking player from inactivity")
+      game.rotateActivePlayer("The Stinky Squirrel", true)
+    }
+    
+  }, 5000)
   
   
   // get all players in game
@@ -64,16 +75,14 @@ exports = module.exports = function(server) {
       }
     }
     
-    callback(players);
+    console.log(players)
+    
+    if (callback) callback(players);
   }
   
   // get active player
   everyone.now.getActivePlayer = function(club, callback) {
     var self = this;
-    
-    console.log("getting active player")
-    console.log("triggered: " + game.triggered)
-    console.log("playing: " + game.video_playing)
     
     if(!game.triggered) {
       setTimeout(function() {
@@ -142,8 +151,15 @@ exports = module.exports = function(server) {
     
     perf.on('updatedTips', function(player_id, newtips) {
       if (newtips > 0) {
-        console.log("New tip: $" + newtips)
         game.players[player_id].tips += newtips;
+        
+        for (var i = 0; i < game.clubs["The Stinky Squirrel"].players.length; i++) {
+          var pl = game.clubs["The Stinky Squirrel"].players[i];
+          if (pl.id == player_id) {
+            pl.tips += game.players[player_id].tips;
+          }
+        }
+
         everyone.now.updatedTips(player_id, newtips);
         everyone.now.totalTips(player_id, game.players[player_id].tips)
       }
@@ -153,7 +169,9 @@ exports = module.exports = function(server) {
       everyone.now.updatedStreak(player_id, streak);
     });
     
-    game.players[player_id].performances.push(perf);
+    if (game.players[player_id]) {
+      game.players[player_id].performances.push(perf);
+    }
     
     var numperfs = game.players[player_id].performances.length;
     
@@ -171,9 +189,15 @@ exports = module.exports = function(server) {
   
   // check status
   everyone.now.status = function(player_id, ms, callback) {
-    game.players[player_id].performances[game.players[player_id].performances.length-1].status(ms, function(err, deadkeys, ms) {
-      everyone.now.statusUpdated(err, deadkeys, ms, player_id);
-    });
+    
+    console.log("logging activity")
+    game.lastUpdate = new Date();
+    
+    if (game.players[player_id]) {
+      game.players[player_id].performances[game.players[player_id].performances.length-1].status(ms, function(err, deadkeys, ms) {
+        everyone.now.statusUpdated(err, deadkeys, ms, player_id);
+      });
+    }
   };
   
   // send a keypress
