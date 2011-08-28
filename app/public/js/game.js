@@ -71,10 +71,12 @@ now.keyUpdated = function (err, key, dead, ms, player_id) {
   }
 }
 
-now.newActivePlayer = function(club, player) {
+now.newActivePlayer = function(c, player) {
   console.log(player);
-  game.active = isPLayer(player.id);
-  club.resetPlayer();
+  if(player) {
+    game.active = isPLayer(player.id);
+    club.resetPlayer();
+  }
 }
 
 now.updatedTips = function (player_id, tips) {
