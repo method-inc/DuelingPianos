@@ -23,6 +23,17 @@
         numkeys: 6,
         playkeys: this.playkeys
       });
+      
+      function update() {
+        if(self.playing) {
+          var position = self.time();
+          $("#time").html(position);
+          self.vis.seek(position);
+        }
+        setTimeout(update, 1000);
+      }
+      update();
+      
       game.getActivePlayer(function(player_obj) {
         if (player_obj && (player_obj.id === game.player.id)) {
           game.active = true;
@@ -100,16 +111,7 @@
       var t = 0, self = this;
       this.player.playVideo();
       var position;
-      function update() {
-        if(self.playing) {
-          var position = self.time();
-          $("#time").html(position);
-          self.vis.seek(position);
-        }
-        setTimeout(update, 1000);
-      }
-      update();
-      if(true) {
+      if(game.active) {
         this.initKeyPressListener()
       }
         $('#otherplayerstatus').text('playing');
