@@ -26,7 +26,6 @@
       game.getActivePlayer(function(player_obj) {
         if (player_obj && (player_obj.id === game.player.id)) {
           game.active = true;
-          club.resetPlayer();
         }
         else {
           if(player_obj.performances && player_obj.performances[player_obj.performances.length-1]) {
@@ -34,6 +33,7 @@
             self.songLoaded(perf.song.id, perf.song, player_obj.id);
           }
         }
+        club.resetPlayer(player_obj);
       });
     },
     
@@ -97,6 +97,7 @@
       if(true) {
         this.initKeyPressListener()
       }
+        $('#otherplayerstatus').text('playing');
     },
     
     time: function() {
@@ -263,7 +264,7 @@
       }
     },
     
-    resetPlayer: function() {
+    resetPlayer: function(player) {
       if(this.player) this.player.pauseVideo();
       $('#club').removeClass('stage');
       if(game.active) {
@@ -275,7 +276,8 @@
         if(this.interval) {
           window.clearInterval(this.interval);
         }
-        
+        $('#otherplayername').text(player.playername);
+        $('#otherplayerstatus').text('choosing a song');
       }
     }
     
