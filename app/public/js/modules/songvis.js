@@ -12,10 +12,16 @@
     for(var i = 0; i < this.numkeys; i++) {
       var new_pitch = $('<div><div></div></div>').addClass('pitch');
       new_pitch.appendTo(this.keyroll);
+      
+      if (i == this.numkeys / 2 - 1) {
+        var new_pitch = $('<div></div>').addClass('middlekey pitch');
+        new_pitch.appendTo(this.keyroll);
+      }
+      
     }
     this.playhead = $('<div></div>').addClass('playhead');
     this.playhead.appendTo(this.container);
-    this.playhead.css({ 'bottom': (this.falloff + 1) + 'px' });
+    this.playhead.css({ 'bottom': (this.falloff - 32) + 'px' });
     this.keys = [];
     this.seek(0);      
   }
