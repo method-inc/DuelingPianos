@@ -25,8 +25,8 @@ exports = module.exports = function(server) {
         everyone.now.newActivePlayer(club, self.clubs[club].players[0]);
         setTimeout(function() {
           if(!self.clubs[club].video_playing) {
-            console.log("taking too long, picking a new player");
-            self.rotateActivePlayer(club);
+            // console.log("taking too long, picking a new player");
+            // self.rotateActivePlayer(club);
           }
         }, 5000)
       }, 1000);
@@ -51,8 +51,8 @@ exports = module.exports = function(server) {
     var self = this;
     setTimeout(function() {
       if(!game.clubs[club].video_playing) {
-        console.log("taking too long, picking a new player");
-        game.rotateActivePlayer(club);
+        // console.log("taking too long, picking a new player");
+        // game.rotateActivePlayer(club);
       }
     }, 5000)
     callback(game.clubs[club].players[0]);
