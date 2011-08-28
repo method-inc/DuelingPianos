@@ -41,6 +41,9 @@
   position absolute
   border-bottom solid 5px #000
   border-radius 10px 10px 5px 5px
+  opacity 1
+  transition all 0.5s ease-out
+  transform-origin 50% 50%
   
   &.red
     background #700
@@ -52,7 +55,9 @@
     background #007
   
   &.active
-    background #f00
+    opacity 0 !important
+    transform scale(2) translateZ(50px)
+    
   
 .playhead
   width 100%
