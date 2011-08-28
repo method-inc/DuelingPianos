@@ -9,19 +9,33 @@
     this.lookahead = options.lookahead || 0;
     this.falloff = options.falloff || 100;
     this.numkeys = options.numkeys || 12;
+    this.playkeys = options.playkeys || ['s', 'd', 'f', 'j', 'k', 'l']
     for(var i = 0; i < this.numkeys; i++) {
       var new_pitch = $('<div><div></div></div>').addClass('pitch');
       new_pitch.appendTo(this.keyroll);
       
       if (i == this.numkeys / 2 - 1) {
-        var new_pitch = $('<div></div>').addClass('middlekey pitch');
-        new_pitch.appendTo(this.keyroll);
+        var gutter = $('<div></div>').addClass('pitch gutter');
+        gutter.appendTo(this.keyroll);
       }
       
     }
     this.playhead = $('<div></div>').addClass('playhead');
     this.playhead.appendTo(this.container);
-    this.playhead.css({ 'bottom': (this.falloff - 32) + 'px' });
+    this.playhead.css({ 'bottom': (this.falloff - 25) + 'px' });
+    
+    this.keychart = $('<div></div>').addClass('keychart');
+    for(var i = 0; i < this.numkeys; i++) {
+      var new_chart = $('<div>'+this.playkeys[i]+'</div>').addClass('chart');
+      new_chart.appendTo(this.keychart);
+      
+      if (i == this.numkeys / 2 - 1) {
+        var gutter = $('<div>0</div>').addClass('chart gutter');
+        gutter.appendTo(this.keychart);
+      }
+    }
+    this.keychart.appendTo(this.container);
+    
     this.keys = [];
     this.seek(0);      
   }

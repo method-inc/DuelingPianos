@@ -5,7 +5,8 @@
   };
   
   ClubController.prototype = {
-    key_mappings: { 65: 0, 83: 1, 68: 2, 74: 3, 75: 4, 76: 5 },
+    key_mappings: { 83: 0, 68: 1, 70: 2, 74: 3, 75: 4, 76: 5 },
+    playkeys: ['s', 'd', 'f', 'j', 'k', 'l'],
     
     player: null,
     vis: null,
@@ -15,7 +16,8 @@
         container: 'vis',
         ratio: 0.03,
         lookahead: 1300,
-        numkeys: 6
+        numkeys: 6,
+        playkeys: this.playkeys
       });
     },
     
@@ -81,9 +83,16 @@
     // keep track of which keys are down to prevent repeating key events before the key is released
     _keys_down: {},
     onKeyPress: function(e) {
+      
+      console.log("key pressed:")
+      console.log(e.which)
+      
       var self = this;
       if(this.playing && !(e.which in this._keys_down) && (e.which in this.key_mappings)) {
         this._keys_down[e.which] = true;
+        
+        
+        
         var mapping = this.key_mappings[e.which];
         var time = this.time();
         
