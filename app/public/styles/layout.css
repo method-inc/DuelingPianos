@@ -172,7 +172,7 @@ h2 {
   text-decoration: none;
   font-size: 20px;
   font-weight: bold;
-  background: -moz-linear-gradient(top, #880101, #3f1010 100%);
+  background: -moz-linear-gradient(top, #880101 0%, #3f1010 100%);
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #880101), color-stop(100%, #3f1010));
   background: -webkit-linear-gradient(top, #880101 0%, #3f1010 100%);
   background: -o-linear-gradient(top, #880101 0%, #3f1010 100%);

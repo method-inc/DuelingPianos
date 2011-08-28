@@ -51,6 +51,10 @@
         if (!club) club = "The Stinky Squirrel";
         now.donePlaying(this.player.id, club);
       }
+    },
+    
+    getActivePlayer: function(callback) {
+      now.getActivePlayer('The Stinky Squirrel', callback);
     }
     
   };

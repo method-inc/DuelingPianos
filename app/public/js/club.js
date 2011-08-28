@@ -13,6 +13,8 @@
     vis: null,
     playing: false,
     started: false,
+    
+    
     init: function() {
       this.vis = new SongVis({
         container: 'vis',
@@ -20,6 +22,12 @@
         lookahead: 1000,
         numkeys: 6,
         playkeys: this.playkeys
+      });
+      game.getActivePlayer(function(player_obj) {
+        if (player_obj.id === game.player.id) {
+          game.active = true;
+          club.resetPlayer();
+        }
       });
     },
     
@@ -46,12 +54,18 @@
         }
       }
       
+      var states = {
+        'unstarted': -1,
+        'ended': 0,
+        'playing': 1,
+        'paused': 2,
+        'buffering': 3
+      }
+      
       function onStateChanged(state) {
-        if(state.data == 1) self.playing = true;
-        else self.playing = false;
-        if(!self.playing && self.started) {
+        self.playing = (state.data !== states.ended && state.data !== states.paused);
+        if(state.data === 0 || state.data === 2) {
           game.donePlaying();
-          self.started = false;
         }
       }
       
