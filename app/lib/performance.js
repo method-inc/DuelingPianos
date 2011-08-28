@@ -49,20 +49,34 @@ Performance.prototype.status = function(ms, callback) {
 
 // Client can tell the server the user just pressed a key
 Performance.prototype.press_key = function(pitch, ms, callback) {
+  console.log("Press key");
+  var self = this;
   this.status(ms, function(err, deadkeys) {
-    var future_boundary_ms = ms + this.range;
-    var i = this.last_key_index + 1;
-    while (this.song.keys[i] && this.song.keys[i].start < future_boundary_ms) {
-        if (key.pitch === pitch && key.available) {
-          key.available = false;
-          this.update_streak(1);
-          return callback(undefined, i);
-        }
+    console.log("Status complete, starting key search")
+    var future_boundary_ms = ms + self.range;
+    var i = self.last_key_index + 1;
+    while (self.song.keys[i] && self.song.keys[i].start < future_boundary_ms) {
+      var key = self.song.keys[i];
+      if (key.pitch === pitch && key.available) {
+        key.available = false;
+        self.update_streak(1);
+        return callback(undefined, i, deadkeys);
+      }
+      i++;
     }
-    this.update_streak(-1);
-    return callback && callback('fuckup', deadkeys);  
+    self.update_streak(-1);
+    console.log("Deadkeys", deadkeys);
+    return callback && callback(undefined, undefined, deadkeys);  
   });
 };
+
+Performance.prototype.kill_key = function(i) {
+  while(this.song.keys[i] && this.song.keys[i].available) {
+    this.song.keys[i].available = false;
+    i--;
+  }
+  this.last_key_index = i;
+}
 
 // Client can request the current state of this performance at any time
 Performance.prototype.get_status = function() {
