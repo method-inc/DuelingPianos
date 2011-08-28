@@ -131,5 +131,7 @@ now.ready(function(){
         game.player.name = name;
       })
     })
-  })
+  });
+  
+  club.init();
 })
