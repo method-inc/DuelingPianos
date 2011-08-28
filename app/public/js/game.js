@@ -41,8 +41,8 @@
       now.startSong(this.player.id);
     },
     
-    setLocation: function(location) {
-      now.setLocation(this.player.id, location);
+    setLocation: function(location, callback) {
+      now.setLocation(this.player.id, location, callback);
     },
     
     donePlaying: function(club) {
@@ -51,6 +51,10 @@
         if (!club) club = "The Stinky Squirrel";
         now.donePlaying(this.player.id, club);
       }
+    },
+    
+    getActivePlayer: function(callback) {
+      now.getActivePlayer('The Stinky Squirrel', callback);
     }
     
   };
@@ -113,7 +117,9 @@ now.ready(function(){
     $("#playername").val(player.playername);
     
     if (window.location.pathname.match(/club/)) {
-      game.setLocation("The Stinky Squirrel");
+      game.setLocation("The Stinky Squirrel", function() {
+        club.init();        
+      });
     }
   
     // listen for new name inputs
@@ -127,5 +133,6 @@ now.ready(function(){
         game.player.name = name;
       })
     })
-  })
+  });
+
 })

@@ -55,18 +55,13 @@ audio#cheer_2(preload=true)
 script(src='http://www.youtube.com/player_api', type='text/javascript')
 
 script
-  
-  
-  
-  setTimeout(function() {
-    club.init();
-    $("#goToCrowd").click(function(){
-      club.player.pauseVideo();
-      $('#club').removeClass('stage');
-    });
     
-    $("#leaveClub").click(function(){
-      window.location = '/';
-    });
-  }, 1000);
+  $("#goToCrowd").click(function(){
+    club.player.pauseVideo();
+    $('#club').removeClass('stage');
+  });
+  
+  $("#leaveClub").click(function(){
+    window.location = '/';
+  });
   

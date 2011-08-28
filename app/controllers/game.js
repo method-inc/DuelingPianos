@@ -20,7 +20,7 @@ exports = module.exports = function(server) {
       var self = this;
       setTimeout(function() {
         everyone.now.newActivePlayer(club, self.clubs[club].players[0]);
-      }, 5000)
+      }, 1000);
     }
   }
   
@@ -38,7 +38,7 @@ exports = module.exports = function(server) {
   }
   
   // get active player
-  everyone.now.getActivePLayer = function(club, callback) {
+  everyone.now.getActivePlayer = function(club, callback) {
     callback(game.clubs[club].players[0]);
   }
   
