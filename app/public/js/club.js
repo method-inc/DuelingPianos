@@ -222,7 +222,7 @@
         $('#club').addClass('active');
       }
       else {
-        $('#club').addClass('removeClass');
+        $('#club').removeClass('active');
       }
     }
     
