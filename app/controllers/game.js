@@ -87,6 +87,11 @@ exports = module.exports = function(server) {
     game.players[player_id].performance.load_song(song_id, callback);
   };
   
+  // check status
+  everyone.now.status = function(player_id, ms, callback) {
+    game.players[player_id].performance.press_key(ms, callback);
+  };
+  
   // send a keypress
   everyone.now.keyPress = function(player_id, pitch, ms, callback) {
     game.players[player_id].performance.press_key(pitch, ms, callback);

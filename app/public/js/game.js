@@ -13,6 +13,10 @@
       now.keyPress (this.player.id, pitch, ms, callback)
     },
     
+    status: function(ms, callback) {
+      now.keyPress (this.player.id, ms, callback)
+    },
+    
     loadSong: function(song_id, callback) {
       now.loadSong(this.player.id, song_id, callback)
     }
