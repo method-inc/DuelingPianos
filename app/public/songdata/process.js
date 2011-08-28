@@ -20,6 +20,8 @@ var key_map = {
   }
 };
 
+var key_colors = ['yellow', 'blue', 'red', 'green', 'purple', 'orange'];
+
 var largest_chord = 1;
 var noisy = 5;
 
@@ -41,7 +43,7 @@ function map(segment) {
          segment.loudness_start >= thresholds.loudness &&
          pitch >= thresholds.pitch) {
         // Update our best match information
-        new_key.type = key_type;
+        new_key.type = key_colors[index];
         new_key.pitch = index;
         new_key.strength = pitch;
       }
