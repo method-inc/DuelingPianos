@@ -77,6 +77,12 @@ now.keyUpdated = function (err, key, dead, ms, player_id) {
   }
 }
 
+now.statusUpdated = function(err, dead, ms, player_id) {
+  if (!isPLayer(player_id)) {
+    club.remoteStatusUpdated(err, dead, ms);
+  }
+}
+
 now.newActivePlayer = function(c, player) {
   if(player) {
     game.active = isPLayer(player.id);
