@@ -35,6 +35,21 @@
         }
         club.resetPlayer(player_obj);
       });
+      
+      setInterval(function() {
+        now.getAllPlayers(function(allPlayers) {
+          var html = '';
+          _(allPlayers).each(function(p, i) {
+            if (i === 0) {
+              html += '<li>' + p + ' (playing)</li>';
+            }
+            else {
+              html += '<li>' + p + '</li>';
+            }
+          });
+          $("#playerlist").html(html);
+        })
+      }, 5000);
     },
     
     songLoaded: function(id, songdata, player_id) {

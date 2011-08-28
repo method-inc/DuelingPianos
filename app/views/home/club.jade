@@ -1,6 +1,4 @@
 #club
-  button#goToCrowd Select New Song
-  button#leaveClub Leave Club
   
   #meter
     #hottness
@@ -24,6 +22,14 @@
           span(id="otherplayerstatus")
     #play-area
       #vis
+  
+  #userinfo
+    #menu
+      a.leaveClub(href='/') Return to lobby
+    #players
+      h3 players
+      ul#playerlist
+      
 
 audio#fuckup_chord0(preload=true)
   source(src="/sounds/fuckup_chord0_0.wav", type="audio/wav")
@@ -47,15 +53,3 @@ audio#cheer_2(preload=true)
   source(src="/sounds/cheer-02.wav", type="audio/wav")
 
 script(src='http://www.youtube.com/player_api', type='text/javascript')
-
-script
-    
-  $("#goToCrowd").click(function(){
-    club.player.pauseVideo();
-    $('#club').removeClass('stage');
-  });
-  
-  $("#leaveClub").click(function(){
-    window.location = '/';
-  });
-  
