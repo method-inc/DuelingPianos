@@ -7,7 +7,7 @@
       ul
         - for(var i in songs)
           li
-            a(href="javascript:club.chooseSong('#{songs[i].ytid}')") #{songs[i].name}
+            a(href="javascript:club.initSong('#{songs[i].ytid}')") #{songs[i].name}
   #stage
     #videoPlayer(style="display: none")
     #time
@@ -46,14 +46,19 @@ audio#cheer_1(preload=true)
 audio#cheer_2(preload=true)
   source(src="/sounds/cheer-02.wav", type="audio/wav")
 
-script
-  club.init();
+script(src='http://www.youtube.com/player_api', type='text/javascript')
 
-  $("#goToCrowd").click(function(){
-    club.player.pauseVideo();
-    $('#club').removeClass('stage');
-  });
+script
+  setTimeout(function() {
+    club.init();
   
-  $("#leaveClub").click(function(){
-    window.location = '/';
-  });
+    $("#goToCrowd").click(function(){
+      club.player.pauseVideo();
+      $('#club').removeClass('stage');
+    });
+    
+    $("#leaveClub").click(function(){
+      window.location = '/';
+    });
+  }, 1000);
+  

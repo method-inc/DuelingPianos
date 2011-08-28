@@ -33,11 +33,12 @@
       }
     },
     
-    loadSong: function(song_id, callback) {
-      if(this.localPlaying) {
-        this.performance.load_song(song_id, callback);
-        now.loadSong(this.player.id, song_id)
-      }
+    initSong: function(song_id) {
+      now.loadSong(this.player.id, song_id)
+    },
+    
+    startSong: function(callback) {
+      now.startSong(this.player.id);
     }
     
   };
@@ -50,12 +51,8 @@ function isPLayer(id) {
   return game.player.id === id;
 }
 
-now.startSong = function(player_id, time) {
-  club.startSong(time);
-}
-
-now.initSong = function(player_id, id) {
-  club.initSong(id);
+now.songStarted = function(player_id) {
+  club.startSong(player_id);
 }
 
 now.fuckedUp = function (player_id, pitch) {}
@@ -74,6 +71,10 @@ now.updatedStreak = function (player_id, streak) {
 
 now.status = function(player_id, time) {
   club.status(time);
+}
+
+now.songLoaded = function(id, songdata, player_id) {
+  club.songLoaded(id, songdata, player_id);
 }
 
 now.ready(function(){

@@ -46,6 +46,10 @@
       this.keys = [];
       this.position = 0;
     },
+    load_json: function(data) {
+      this.reset();
+      this.render(data);
+    },
     load_song: function(url, callback) {
       this.reset();
       var self = this;

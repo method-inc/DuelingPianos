@@ -22,29 +22,26 @@
       });
     },
     
-    initSong: function(id) {
+    songLoaded: function(id, songdata, player_id) {
+      console.log("Song has been loaded!");
+      var self = this;
+      
       $("#videoPlayer").html("")
+      
       this.player = new YT.Player('videoPlayer', 
       {height: '390', width: '640', videoId: id, playerVars: {'start': 0, controls: '0'},
         events: {'onReady': onReady, 'onStateChange': onStateChanged} });
       
-      this.player.seekTo(0);
+      self.vis.load_json(songdata);
       
+      this.player.seekTo(0);
       var self = this;
+      
       function onReady() {
-        if(self.vis) {
-          game.loadSong(id, function() {
-            
-            self.vis.load_song('/songdata/'+id+'.keys.json', function() {
-              $('#club').addClass('stage');
-            });
-            
-            if(game.localPlaying) {
-              window.setTimeout(function() { self.startSong(); }, 1000);
-              self.initKeyPressListener();
-            }
-            
-          });
+        $('#club').addClass('stage');
+        console.log(player_id + " vs " + game.player.id )
+        if (player_id === game.player.id) {
+          game.startSong(player_id);
         }
       }
       
@@ -55,19 +52,22 @@
       
     },
     
-    function startSong(time) {      
+    initSong: function(id) {
+      console.log("Sending command to load a song!");
+      game.initSong(id);
+    },
+    
+    startSong: function () {      
       var t = 0, self = this;
       this.player.playVideo();
-      if(game.localPlaying) {
-        var position;
-        function update() {
-          var position = self.time();
-          $("#time").html(position);
-          self.vis.seek(position);
-          setTimeout(update, 1000);
-        }
-        update();
+      var position;
+      function update() {
+        var position = self.time();
+        $("#time").html(position);
+        self.vis.seek(position);
+        setTimeout(update, 1000);
       }
+      update();
     },
     
     time: function() {
