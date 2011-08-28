@@ -27,6 +27,7 @@
     fs.readFile(song_dir + id + '.keys.json', 'utf-8', function(err, data) {
       if (err) throw err;
       self.song = JSON.parse(data);
+      self.song.id = id;
       // Initialize each key to an unpressed state
       self.song.keys.forEach(function(key) {
         if (key.pitch <= self.numkeys) key.available = true;
@@ -35,6 +36,10 @@
       self.last_key_index = -1;
       return callback && callback(undefined, self.song);
     });
+  };
+  
+  Performance.prototype.get_song = function(callback) {
+    return callback && callback(undefined, self.song);
   };
   
   // Client can tell the server where they are (in ms) during playback (periodically)
