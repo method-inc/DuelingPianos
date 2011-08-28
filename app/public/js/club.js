@@ -16,6 +16,7 @@
     
     
     init: function() {
+      console.log("Club.init");
       this.vis = new SongVis({
         container: 'vis',
         ratio: 0.03,
