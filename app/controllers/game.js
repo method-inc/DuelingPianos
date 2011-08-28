@@ -9,8 +9,15 @@ exports = module.exports = function(server) {
   
   var game = {
     players: {},
+    
     clubs: {
-      "The Stinky Squirrel":{ players: {}, spectators: {} }
+      "The Stinky Squirrel":{ players: []}
+    },
+    
+    rotateActivePlayer: function(club) {
+      var old_active = this.clubs[club].players.shift();
+      this.clubs[club].players.push(old_active);
+      everyone.now.newActivePlayer(club, player);
     }
   }
   
@@ -25,6 +32,16 @@ exports = module.exports = function(server) {
     }
     
     callback(players);
+  }
+  
+  // get active player
+  everyone.now.getActivePLayer = function(club, callback) {
+    callback(game.clubs[club].players[0]);
+  }
+  
+  // done playing
+  everyone.now.donePlaying = function(player_id, club) {
+    game.rotateActivePlayers(club);
   }
   
   // get player by id
@@ -124,13 +141,16 @@ exports = module.exports = function(server) {
     if (game.clubs[value]) {
       
       // put player in club
-      game.clubs[value].players[id] = game.players[id]
+      game.clubs[value].players.push(game.players[id]);
     }
     
     // not a club, remove from all clubs
     else {
-      for (var c in game.clubs) delete game.clubs[c].players[id]
+      // for (var c in game.clubs) delete game.clubs[c].players[id]
     }
+    
+    console.log("set location")
+    console.log(game.clubs)
     
     if (callback) callback(value)
   }

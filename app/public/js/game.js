@@ -39,6 +39,15 @@
     
     startSong: function(callback) {
       now.startSong(this.player.id);
+    },
+    
+    setLocation: function(location) {
+      now.setLocation(this.player.id, location);
+    },
+    
+    donePlaying: function(club) {
+      if (!club) club = "The Stinky Squirrel";
+      now.donePlaying(this.player.id, club);
     }
     
   };
@@ -59,6 +68,10 @@ now.keyUpdated = function (err, key, dead, ms, player_id) {
   if(!isPLayer(player_id) ) {
     club.remoteKeyUpdated(err, key, dead, ms);
   }
+}
+
+now.newActivePlayer = function(club, tips) {
+  console.log("new active player")
 }
 
 now.updatedTips = function (player_id, tips) {
