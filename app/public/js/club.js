@@ -96,10 +96,8 @@
           if(typeof key == 'undefined' || key == null) {
             self.fuckup(mapping);
           }
-          else {
-            console.log(key)
+          else
              self.vis.activate_key(key);
-          }
           
           for(var i in dead) {
             self.dead_key(dead[i]);
@@ -118,6 +116,7 @@
     fuckup: function(chord) {
       var a = document.getElementById('fuckup_chord'+chord);
       a.currentPosition = 0;
+      a.volume = 1;
       a.play();
     },
     
