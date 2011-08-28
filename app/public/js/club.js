@@ -85,7 +85,7 @@
       
       function onStateChanged(state) {
         self.playing = (state.data !== states.ended && state.data !== states.paused && state.data != states.unstarted);
-        if(state.data === 0 || state.data === 2) {
+        if(state.data === 0) {
           game.donePlaying();
         }
       }
@@ -101,9 +101,11 @@
       this.player.playVideo();
       var position;
       function update() {
-        var position = self.time();
-        $("#time").html(position);
-        self.vis.seek(position);
+        if(self.playing) {
+          var position = self.time();
+          $("#time").html(position);
+          self.vis.seek(position);
+        }
         setTimeout(update, 1000);
       }
       update();
