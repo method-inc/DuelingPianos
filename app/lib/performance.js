@@ -36,17 +36,15 @@ Performance.prototype.load_song = function(id, callback) {
 };
 
 Performance.prototype.status = function(ms, callback) {
-    console.log('ARE WE FUCKING HERE?!?!?')
-  return callback(undefined, []);
-  var i = this.last_key_index, deadkeys = [];
+  var i = this.last_key_index + 1, deadkeys = [];
   var past_boundary_ms = ms - this.range;
-  while (i < this.keys.length && this.keys[i].start < past_boundary_ms) {
-    this.keys[i].available = false;
+  while (this.song.keys[i] && this.song.keys[i].start < past_boundary_ms) {
+    this.song.keys[i].available = false;
     deadkeys.push(i);
+    this.last_key_index = i;
     i++;
   }
-  this.last_key_index = i;
-  return callback && callback(undefined, deadkeys);
+  return callback && callback(true, deadkeys);
 };
 
 // Client can tell the server the user just pressed a key

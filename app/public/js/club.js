@@ -63,12 +63,13 @@
     initKeyPressListener: function() {
       $(document).keydown(_.bind(this.onKeyPress, this));
       $(document).keyup(_.bind(this.onKeyUp, this));
+      var self = this;
       window.setInterval(_.bind(function() {
         if(this.playing && this.time() > (this.last_keypress + 1000)) {
-          console.log('sending status')
           game.status(this.time(), function(err, res) {
-            console.log('status callback');
-            console.log(err, res);
+            for(var i in res) {
+              self.vis.kill_key(res[i]);
+            }
           });
         }
       }, this), 1000);
@@ -104,16 +105,6 @@
     },
     onKeyUp: function(e) {
       if(this._keys_down[e.which]) delete this._keys_down[e.which];
-    },
-    
-    _handleStatusCallback: function(err, res) {
-      if(err) {
-        self.fuckup(mapping);
-        for(var i in res) {
-          self.vis.kill_key(res[i]);
-        }
-      }
-      else self.vis.activate_key(res);
     },
     
     fuckup: function(chord) {
