@@ -37,23 +37,23 @@ Performance.prototype.load_song = function(id, callback) {
 
 // Client can tell the server the user just pressed a key
 Performance.prototype.press_key = function(pitch, ms, callback) {
-  console.log("PERFORMANCE.press_key")
-  return callback(undefined, i);
   
   // Find the next available keys
   var i = this.last_key_index + 1,
       keys = this.song.keys,
       past_boundary_ms = ms - this.range,
       future_boundary_ms = ms + this.range,
-      key, key_ms;
+      key, key_ms, total_checks = 0, deadkeys = [];
   if (i >= keys.length) return callback('end of song');
   do {
+    total_checks++;
     key = keys[i];
     key_ms = key.start;
     // If they haven't pressed a key in a while we need to invalidate really old keys
     if (key_ms < past_boundary_ms) {
       this.last_key_index = i;
       key.available = false;
+      deadkeys.push(i);
     }
     else if (key.available && key.pitch === pitch) {
       // Key was correct (correct pitch within the allowed range of time)
@@ -61,14 +61,14 @@ Performance.prototype.press_key = function(pitch, ms, callback) {
       this.last_key_index = i;
       this.update_streak(1);
       console.log("  (was the right key!)");
+      console.log("KEY INDEX: " + i);
       return callback(undefined, i);
     }
-  } while (key_ms <= future_boundary_ms)
+  } while (key_ms <= future_boundary_ms && total_checks < 30)
   // Key pressed doesn't have a match at that point in the song
   //this.send_fuckup(pitch);
-  console.log("  (was a fuckup)");
   this.update_streak(-1);
-  return callback('fuckup');
+  return callback('fuckup', deadkeys);
 };
 
 // Client can request the current state of this performance at any time
@@ -90,9 +90,9 @@ Performance.prototype.update_streak = function(delta) {
     if (delta < 0) this.streak += delta;
     else this.streak = delta;
   }
-  if (this.streak > 10) send_tips(+3);
-  else send_tips(+1);
-  send_streak();
+  if (this.streak > 10) this.send_tips(+3);
+  else this.send_tips(+1);
+  this.send_streak();
 };
 
 // Server can tell the client the user fucked up

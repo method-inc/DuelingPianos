@@ -74,7 +74,6 @@
         var mapping = this.key_mappings[e.which];
         console.log('pressed key ' + mapping + ' at ' + this.time());
         
-        now.keyPress(this.key_mappings[e.which], this.time());
         $($('#vis .keyroll > div')[this.key_mappings[e.which]]).addClass('highlight');
         _.delay(_.bind(function() {
           $($('#vis .keyroll > div')[this.key_mappings[e.which]]).removeClass('highlight');
