@@ -39,7 +39,7 @@ Performance.prototype.status = function(ms, callback) {
   return callback(undefined, []);
   var i = this.last_key_index, deadkeys = [];
   var past_boundary_ms = ms - this.range;
-  while (this.keys[i].start < past_boundary_ms) {
+  while (i < this.keys.length && this.keys[i].start < past_boundary_ms) {
     this.keys[i].available = false;
     deadkeys.push(i);
     i++;
