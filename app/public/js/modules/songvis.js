@@ -40,10 +40,9 @@
       var keyroll = this.keyroll;
       var pitches = keyroll.find('.pitch > div');
       pitches.html('');
-      var pitch, pitch_el, key, key_el, top, i;
-      i = song.keys.length;
+      var pitch, pitch_el, key, key_el, top;
       var bottom = song.keys[song.keys.length - 1].stop * ms_to_px;
-      while(i--) {
+      for(var i = 0; i < song.keys.length; i++) {
         key = song.keys[i];
         pitch_el = pitches[key.pitch];
         key.el = $('<div></div>').addClass('key').addClass(key.type).css({ 'opacity': (key.strength * key.strength * key.strength * key.strength) });
@@ -66,6 +65,9 @@
     },
     activate_key: function(key_index) {
       this.keys[key_index].el.addClass('active');
+    },
+    kill_key: function(key_index) {
+      this.keys[key_index].el.addClass('dead');
     }
   };
   
