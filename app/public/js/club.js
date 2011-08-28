@@ -7,6 +7,7 @@
   ClubController.prototype = {
     key_mappings: { 83: 0, 68: 1, 70: 2, 74: 3, 75: 4, 76: 5 },
     playkeys: ['s', 'd', 'f', 'j', 'k', 'l'],
+    numkeys: 6,
     
     player: null,
     vis: null,
@@ -84,22 +85,24 @@
     _keys_down: {},
     onKeyPress: function(e) {
       
-      console.log("key pressed:")
-      console.log(e.which)
       
       var self = this;
       if(this.playing && !(e.which in this._keys_down) && (e.which in this.key_mappings)) {
         this._keys_down[e.which] = true;
         
-        
-        
         var mapping = this.key_mappings[e.which];
+        var keyhighlight = mapping;
+        
+        if (mapping > (self.numkeys / 2 - 1)) {
+          keyhighlight++;
+        }
+        
         var time = this.time();
         
-        $($('#vis .keyroll > div')[this.key_mappings[e.which]]).addClass('highlight');
+        $($('#vis .keyroll > div')[keyhighlight]).addClass('highlight');
         _.delay(_.bind(function() {
-          $($('#vis .keyroll > div')[this.key_mappings[e.which]]).removeClass('highlight');
-        }, this), 750);
+          $($('#vis .keyroll > div')[keyhighlight]).removeClass('highlight');
+        }, this), 500);
         
         this.last_keypress = time;
         
