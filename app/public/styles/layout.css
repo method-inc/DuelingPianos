@@ -137,9 +137,17 @@ h2 {
   width: 625px;
   height: 657px;
   background: url("/images/dude.png") no-repeat center center;
-  z-index: 1000;
   top: -300px;
   left: -200px;
+  z-index: 0;
+}
+#lobby .footer {
+  background: rgba(0,0,0,0.40);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 33%;
 }
 #lobby input {
   width: 200px;
@@ -156,6 +164,8 @@ h2 {
   -moz-box-shadow: inset 2px 2px 2px #777;
   -o-box-shadow: inset 2px 2px 2px #777;
   box-shadow: inset 2px 2px 2px #777;
+  z-index: 10;
+  position: relative;
 }
 #lobby a#door {
   color: #fff;
@@ -183,6 +193,8 @@ h2 {
   top: 4px;
   margin-left: 3px;
   border: solid 1px #333;
+  z-index: 10;
+  position: relative;
 }
 #old #citybackdrop {
   background: url("/images/skyline.jpg") repeat-x bottom left;

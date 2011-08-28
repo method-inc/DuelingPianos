@@ -37,9 +37,17 @@
     width 625px
     height 657px
     background url('/images/dude.png') no-repeat center center
-    z-index 1000
     top -300px
     left -200px
+    z-index 0
+    
+  .footer
+    background rgba(0, 0, 0, .4)
+    position absolute
+    bottom 0
+    left 0
+    right 0
+    height 33%
     
   input
     width 200px
@@ -50,6 +58,8 @@
     border solid 2px #444
     display inline-block
     box-shadow inset 2px 2px 2px #777
+    z-index 10
+    position relative
     
   a#door
     color #fff
@@ -67,7 +77,9 @@
     top 4px
     margin-left 3px
     border solid 1px #333
-
+    z-index 10
+    position relative
+    
 #old
 
   #citybackdrop
