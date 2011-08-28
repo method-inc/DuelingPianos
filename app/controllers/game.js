@@ -27,17 +27,12 @@ exports = module.exports = function(server) {
       setTimeout(function() {
         everyone.now.newActivePlayer(club, self.clubs[club].players[0]);
         
-        console.log("rotateplayer -> isplaying: " + self.video_playing)
-        console.log("rotateplayer -> intimeout: " + self.timeout)
-        
         if (!self.timeout) {
           
           self.timeout = true;
           
           setTimeout(function() {
-            console.log("rotate is playing:" + self.video_playing)
             if(!self.video_playing) {
-              console.log("taking too long, picking a new player");
               game.rotateActivePlayer(club);
               self.timeout = false;
             }
@@ -72,10 +67,6 @@ exports = module.exports = function(server) {
   // get active player
   everyone.now.getActivePlayer = function(club, callback) {
     var self = this;
-    
-    console.log("getting active player")
-    console.log("triggered: " + game.triggered)
-    console.log("playing: " + game.video_playing)
     
     if(!game.triggered) {
       setTimeout(function() {
