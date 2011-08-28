@@ -38,6 +38,8 @@ Performance.prototype.load_song = function(id, callback) {
 // Client can tell the server the user just pressed a key
 Performance.prototype.press_key = function(pitch, ms, callback) {
   console.log("PERFORMANCE.press_key")
+  return callback(undefined, i);
+  
   // Find the next available keys
   var i = this.last_key_index + 1,
       keys = this.song.keys,
