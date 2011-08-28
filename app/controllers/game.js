@@ -46,25 +46,6 @@ exports = module.exports = function(server) {
         playername:'Mr. Anonymous',
         tips: 0
       };
-      player.performance = new Performance({ player_id: player.id });
-      
-      // create event listeners
-      player.performance.on('fuckedUp', function(player_id, pitch) {
-        everyone.now.fuckedUp(player_id, pitch);
-      });
-      
-      player.performance.on('updatedTips', function(player_id, newtips) {
-        if (newtips > 0) {
-          console.log("New tip: $" + newtips)
-          game.players[player_id].tips += newtips;
-          everyone.now.updatedTips(player_id, newtips);
-          everyone.now.totalTips(player_id, game.players[player_id].tips)
-        }
-      });
-      
-      player.performance.on('updatedStreak', function(player_id, streak) {
-        everyone.now.updatedStreak(player_id, streak);
-      });
       
       game.players[player.id] = player;
     }
@@ -84,7 +65,30 @@ exports = module.exports = function(server) {
   
   // load a song
   everyone.now.loadSong = function(player_id, song_id, callback) {
-    game.players[player_id].performance.load_song(song_id, callback);
+    
+    var player = game.players[player_id];
+    
+    player.performance = new Performance({ player_id: player.id });
+      
+    // create event listeners
+    player.performance.on('fuckedUp', function(player_id, pitch) {
+      everyone.now.fuckedUp(player_id, pitch);
+    });
+    
+    player.performance.on('updatedTips', function(player_id, newtips) {
+      if (newtips > 0) {
+        console.log("New tip: $" + newtips)
+        game.players[player_id].tips += newtips;
+        everyone.now.updatedTips(player_id, newtips);
+        everyone.now.totalTips(player_id, game.players[player_id].tips)
+      }
+    });
+    
+    player.performance.on('updatedStreak', function(player_id, streak) {
+      everyone.now.updatedStreak(player_id, streak);
+    });
+    
+    player.performance.load_song(song_id, callback);
   };
   
   // check status
