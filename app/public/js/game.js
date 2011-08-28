@@ -108,6 +108,10 @@ now.ready(function(){
     game.player = player
     amplify.store("playerid", player.id)
     $("#playername").val(player.playername);
+    
+    if (window.location.pathname.match(/club/)) {
+      game.setLocation("The Stinky Squirrel");
+    }
   
     // listen for new name inputs
     $("#playername").keyup(function(){

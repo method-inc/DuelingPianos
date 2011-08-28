@@ -15,11 +15,8 @@ exports = module.exports = function(server) {
     },
     
     rotateActivePlayer: function(club) {
-      console.log('ROTATE ACTIVEPLAYER')
-      console.log(this.clubs[club].players)
       var old_active = this.clubs[club].players.shift();
       this.clubs[club].players.push(old_active);
-      console.log(this.clubs[club].players)
       everyone.now.newActivePlayer(club, this.clubs[club].players[0]);
     }
   }
