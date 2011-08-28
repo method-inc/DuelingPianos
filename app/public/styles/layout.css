@@ -182,17 +182,17 @@ h2 {
 }
 #citybackdrop #club1 #door:hover #knob {
   display: none;
+  z-index: 999;
 }
 #citybackdrop #street {
-  background: #333;
+  background: url("/images/street.png") repeat-x bottom left;
   border-top: 1px solid #ccc;
   position: absolute;
   bottom: 0px;
   left: 0px;
   display: block;
-  height: 20px;
+  height: 100%;
   width: 100%;
-  z-index: 99;
 }
 #club {
   width: 200%;
