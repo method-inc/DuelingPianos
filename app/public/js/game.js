@@ -90,7 +90,7 @@ now.statusUpdated = function(err, dead, ms, player_id) {
 now.newActivePlayer = function(c, player) {
   if(player) {
     game.active = isPLayer(player.id);
-    club.resetPlayer();
+    club.resetPlayer(player);
   }
 }
 
