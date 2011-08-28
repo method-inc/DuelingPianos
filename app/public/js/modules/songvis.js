@@ -25,15 +25,16 @@
     this.playhead.css({ 'bottom': (this.falloff - 25) + 'px' });
     
     this.keychart = $('<div></div>').addClass('keychart');
+    this.keychartl = $('<div></div>').addClass('left');
+    this.keychartr = $('<div></div>').addClass('right');
     for(var i = 0; i < this.numkeys; i++) {
       var new_chart = $('<div>'+this.playkeys[i]+'</div>').addClass('chart');
-      new_chart.appendTo(this.keychart);
       
-      if (i == this.numkeys / 2 - 1) {
-        var gutter = $('<div>0</div>').addClass('chart gutter');
-        gutter.appendTo(this.keychart);
-      }
+      if (i > this.numkeys / 2 - 1) new_chart.appendTo(this.keychartr);
+      else new_chart.appendTo(this.keychartl);
     }
+    this.keychartl.appendTo(this.keychart);
+    this.keychartr.appendTo(this.keychart);
     this.keychart.appendTo(this.container);
     
     this.keys = [];
