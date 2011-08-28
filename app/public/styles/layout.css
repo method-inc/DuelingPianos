@@ -50,13 +50,13 @@ h2 {
   top: 50%;
   margin-left: -150px;
   margin-top: -150px;
-  background: -moz-linear-gradient(top, rgba(255,255,255,0.40) 0%, rgba(255,255,255,0.20) 100%);
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(255,255,255,0.40)), color-stop(100%, rgba(255,255,255,0.20)));
-  background: -webkit-linear-gradient(top, rgba(255,255,255,0.40) 0%, rgba(255,255,255,0.20) 100%);
-  background: -o-linear-gradient(top, rgba(255,255,255,0.40) 0%, rgba(255,255,255,0.20) 100%);
-  background: -ms-linear-gradient(top, rgba(255,255,255,0.40) 0%, rgba(255,255,255,0.20) 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='rgba(255,255,255,0.40)', endColorstr='rgba(255,255,255,0.20)',GradientType=0 );
-  background: linear-gradient(top, rgba(255,255,255,0.40) 0%, rgba(255,255,255,0.40) 100%);
+  background: -moz-linear-gradient(top, rgba(0,0,0,0.80) 0%, rgba(0,0,0,0.70) 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(0,0,0,0.80)), color-stop(100%, rgba(0,0,0,0.70)));
+  background: -webkit-linear-gradient(top, rgba(0,0,0,0.80) 0%, rgba(0,0,0,0.70) 100%);
+  background: -o-linear-gradient(top, rgba(0,0,0,0.80) 0%, rgba(0,0,0,0.70) 100%);
+  background: -ms-linear-gradient(top, rgba(0,0,0,0.80) 0%, rgba(0,0,0,0.70) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='rgba(0,0,0,0.80)', endColorstr='rgba(0,0,0,0.70)',GradientType=0 );
+  background: linear-gradient(top, rgba(0,0,0,0.80) 0%, rgba(0,0,0,0.80) 100%);
   background: /* W3C */;
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
@@ -325,6 +325,9 @@ h2 {
   top: 10px;
   right: 10px;
   width: 200px;
+}
+#club #userinfo iframe {
+  margin-left: 3px;
 }
 #club #menu {
   width: 200px;
