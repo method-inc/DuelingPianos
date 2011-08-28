@@ -12,11 +12,10 @@
     player: null,
     vis: null,
     playing: false,
-    started: false,
-    
+    readyToPlay: false,
     
     init: function() {
-      console.log("Club.init");
+      var self = this;
       this.vis = new SongVis({
         container: 'vis',
         ratio: 0.03,
@@ -29,30 +28,36 @@
           game.active = true;
           club.resetPlayer();
         }
+        else {
+          if(player_obj.performances && player_obj.performances[player_obj.performances.length-1]) {
+            var perf = player_obj.performances[player_obj.performances.length-1];
+            self.songLoaded(perf.song.id, perf.song, player_obj.id);
+          }
+        }
       });
     },
     
     songLoaded: function(id, songdata, player_id) {
-      console.log("Song has been loaded!");
       var self = this;
       
       $("#videoPlayer").html("")
       
       this.player = new YT.Player('videoPlayer', 
-      {height: '390', width: '640', videoId: id, playerVars: {'start': 0, controls: '0'},
+      {height: '390', width: '640', videoId: id, playerVars: {'start': 0, controls: '1'},
         events: {'onReady': onReady, 'onStateChange': onStateChanged} });
       
       self.vis.load_json(songdata);
       
-      this.player.seekTo(0);
       var self = this;
+      
+      this.readyToPlay = false;
       
       function onReady() {
         $('#club').addClass('stage');
-        console.log(player_id + " vs " + game.player.id )
         if (player_id === game.player.id) {
           game.startSong(player_id);
         }
+        self.readyToPlay = true;
       }
       
       var states = {
@@ -64,7 +69,7 @@
       }
       
       function onStateChanged(state) {
-        self.playing = (state.data !== states.ended && state.data !== states.paused);
+        self.playing = (state.data !== states.ended && state.data !== states.paused && state.data != states.unstarted);
         if(state.data === 0 || state.data === 2) {
           game.donePlaying();
         }
@@ -73,11 +78,10 @@
     },
     
     initSong: function(id) {
-      console.log("Sending command to load a song!");
       game.initSong(id);
     },
     
-    startSong: function () {      
+    startSong: function () {
       var t = 0, self = this;
       this.player.playVideo();
       var position;
@@ -91,9 +95,6 @@
       if(true) {
         this.initKeyPressListener()
       }
-      window.setTimeout(function() {
-        self.started = true;
-      }, 1000);
     },
     
     time: function() {
@@ -106,7 +107,6 @@
       $(document).keyup(_.bind(this.onKeyUp, this));
       var self = this;
       this.interval = window.setInterval(_.bind(function() {
-        console.log('interval')
         if(this.playing && this.time() > (this.last_keypress + 1000)) {
           game.status(this.time(), function(err, res) {
             for(var i in res) {
@@ -162,7 +162,6 @@
     },
     
     remoteKeyUpdated: function(err, key, dead, ms) {
-      console.log('remote key update');
       var self = this;
       if(typeof key == 'undefined' || key == null) {
         self.fuckup(0);
@@ -175,20 +174,26 @@
         self.dead_key(dead[i]);
       }
       
-      if(ms > (this.time() + 1000) || ms < (this.time() - 1000)) {
-        console.log(this.time() + ' seeking to ' + ms);
+      if(this.readyToPlay && !this.playing) {
+        this.startSong();
+      }
+      
+      if(ms > (this.time() + 1000) || ms < (this.time() - 1000) && this.playing) {
         this.player.seekTo(ms/1000);
       }
     },
     
     remoteStatusUpdated: function(err, dead, ms) {
-      console.log('remote status update');
+      var self = this;
       for(var i in dead) {
         self.dead_key(dead[i]);
       }
       
-      if(ms > (this.time() + 1000) || ms < (this.time() - 1000)) {
-        console.log(this.time() + ' seeking to ' + ms);
+      if(!this.playing && this.readyToPlay) {
+        this.startSong();
+      }
+      
+      if(ms > (this.time() + 1000) || ms < (this.time() - 1000) && this.playing) {
         this.player.seekTo(ms/1000);
       }
     },

@@ -107,6 +107,10 @@
       else this.streak = delta;
     }
     this.send_streak();
+    var rand = Math.floor(Math.random());
+    if (rand < this.streak) {
+      this.send_tips(rand + 1);
+    }
   };
   
   // Server can tell the client the user fucked up
