@@ -81,7 +81,12 @@
         
         game.keyPress(mapping, this.time(), function(err, res) {
           console.log('result for key ' + mapping, err, res);
-          if(err) self.fuckup(mapping);
+          if(err) {
+            self.fuckup(mapping);
+            for(var i in res) {
+              self.vis.kill_key(res[i]);
+            }
+          }
           else self.vis.activate_key(res);
         });
       }
