@@ -54,9 +54,12 @@ exports = module.exports = function(server) {
       });
       
       player.performance.on('updatedTips', function(player_id, newtips) {
-        game.players[player_id].tips += newtips;
-        everyone.now.updatedTips(player_id, newtips);
-        everyone.now.totalTips(player_id, game.players[player_id].tips)
+        if (newtips > 0) {
+          console.log("New tip: $" + newtips)
+          game.players[player_id].tips += newtips;
+          everyone.now.updatedTips(player_id, newtips);
+          everyone.now.totalTips(player_id, game.players[player_id].tips)
+        }
       });
       
       player.performance.on('updatedStreak', function(player_id, streak) {
