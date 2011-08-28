@@ -6,8 +6,9 @@
   .playit
     .playgroup
       .dude
-      input#playername(placeholder="player name")  
-      a#door(href="/club/stinky_squirrel") Play!
+      form(action='/club/stinky_squirrel')
+        input#playername(placeholder="player name")  
+        a#door(href="/club/stinky_squirrel") Play!
       
   .footer  
   

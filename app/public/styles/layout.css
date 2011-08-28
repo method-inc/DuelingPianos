@@ -314,13 +314,12 @@ h2 {
   height: 100%;
   display: block;
   position: relative;
-  background: url("/images/grunge.jpg") no-repeat center center fixed;
+  background: url("/images/grunge_blur.jpg") no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
 }
-<<<<<<< HEAD
 #club #userinfo {
   position: absolute;
   top: 10px;
@@ -352,8 +351,6 @@ h2 {
 #club #playerlist li {
   margin-left: 20px;
 }
-=======
->>>>>>> 6e024e558d6e66a4cafe218a3f2b80c97edd3313
 #club #chooser {
   display: none;
 }
@@ -474,6 +471,14 @@ h2 {
   height: 50%;
   background: #000;
 }
+#club #tips {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  font-size: 1.25em;
+  font-weight: bold;
+  text-shadow: #000 1px 1px 0;
+}
 #vis-test {
   position: absolute;
   top: 0;
@@ -566,7 +571,7 @@ h2 {
 .keychart {
   width: 100%;
   height: 25px;
-  background: #333;
+  background: #000;
   color: #eee;
   position: absolute;
   bottom: 0px;
