@@ -308,7 +308,7 @@ h2 {
   border-right: solid 2px #999;
 }
 .pitch.highlight {
-  background: #fff8bd;
+  background: #f8f4d2;
 }
 .pitch.gutter {
   background: #333;
@@ -368,13 +368,21 @@ h2 {
   height: 25px;
   background: #333;
   color: #eee;
-  font-size: 16px;
   position: absolute;
   bottom: 0px;
 }
+.keychart .left {
+  float: left;
+  width: 48%;
+}
+.keychart .right {
+  float: right;
+  width: 48%;
+}
 .keychart .chart {
   display: inline-block;
-  width: 100px;
+  width: 33%;
+  font-size: 16px;
   text-align: center;
 }
 .keychart .chart.gutter {

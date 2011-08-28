@@ -15,6 +15,7 @@ function Performance(options) {
   this.streak = 0;
   this.last_key_index = -1;
   this.numkeys = options.numkeys || 12;
+  this.hard_crowd = options.hard_crowd || 1;
 }
 
 Performance.prototype = Object.create( EventEmitter.prototype );
@@ -48,7 +49,7 @@ Performance.prototype.status = function(ms, callback) {
     i++;
   }
   if (deadkeys.length) this.update_streak(-deadkeys.length);
-  return callback && callback(undefined, deadkeys);
+  return callback && callback(undefined, deadkeys, ms);
 };
 
 // Client can tell the server the user just pressed a key
@@ -62,12 +63,12 @@ Performance.prototype.press_key = function(pitch, ms, callback) {
       if (key.pitch === pitch && key.available) {
         key.available = false;
         self.update_streak(1);
-        return callback && callback(undefined, i, deadkeys);
+        return callback && callback(undefined, i, deadkeys, ms);
       }
       i++;
     }
     self.update_streak(-1);
-    return callback && callback(undefined, undefined, deadkeys);  
+    return callback && callback(undefined, undefined, deadkeys, ms);  
   });
 };
 
@@ -90,7 +91,7 @@ Performance.prototype.get_status = function() {
 
 // Used internally
 Performance.prototype.update_streak = function(delta) {
-  if (delta < 0) delta *= 2;
+  if (delta < 0) delta *= this.hard_crowd;
   if (this.streak >= 0) {
     if (delta > 0) this.streak += delta;
     else this.streak = delta;
@@ -118,15 +119,3 @@ Performance.prototype.send_tips = function() {
 };
 
 exports = module.exports = Performance;
-
-
-// Quick test
-
-/*
-var p = new Performance();
-
-p.load_song('zuqJ1Q_px5k', function() {
-console.log("song loaded:");
-console.log(p.song);
-});
-*/
