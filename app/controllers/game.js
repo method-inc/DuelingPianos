@@ -1,8 +1,6 @@
 var nowjs = require("now")
 var Performance = require( GLOBAL.app.set('app root') + '/lib/performance');
 
-console.log(Performance)
-
 require('../../lib/uuidstuff');
 
 exports = module.exports = function(server) {
@@ -46,7 +44,7 @@ exports = module.exports = function(server) {
       var player = {
         id:Math.uuidFast(),
         playername:'Mr. Anonymous',
-        score: 0
+        tips: 0
       };
       player.performance = new Performance({ player_id: player.id });
       
@@ -55,8 +53,13 @@ exports = module.exports = function(server) {
         everyone.now.fuckedUp(player_id, pitch);
       });
       
-      player.performance.on('updatedTips', function(player_id, tips) {
-        everyone.now.updatedTips(player_id, tips);
+      player.performance.on('updatedTips', function(player_id, newtips) {
+        if (newtips > 0) {
+          console.log("New tip: $" + newtips)
+          game.players[player_id].tips += newtips;
+          everyone.now.updatedTips(player_id, newtips);
+          everyone.now.totalTips(player_id, game.players[player_id].tips)
+        }
       });
       
       player.performance.on('updatedStreak', function(player_id, streak) {
@@ -82,6 +85,11 @@ exports = module.exports = function(server) {
   // load a song
   everyone.now.loadSong = function(player_id, song_id, callback) {
     game.players[player_id].performance.load_song(song_id, callback);
+  };
+  
+  // check status
+  everyone.now.status = function(player_id, ms, callback) {
+    game.players[player_id].performance.press_key(ms, callback);
   };
   
   // send a keypress

@@ -13,6 +13,10 @@
       now.keyPress (this.player.id, pitch, ms, callback)
     },
     
+    status: function(ms, callback) {
+      now.keyPress (this.player.id, ms, callback)
+    },
+    
     loadSong: function(song_id, callback) {
       now.loadSong(this.player.id, song_id, callback)
     }
@@ -28,15 +32,27 @@ function isPLayer(id) {
 }
 
 now.fuckedUp = function (player_id, pitch) {
-  if (isPLayer) console.log("you fucked up!")
+  if (isPLayer) {
+    //console.log("you fucked up!")
+  }
 }
 
 now.updatedTips = function (player_id, tips) {
-  if (isPLayer) console.log("new tips: $" + tips)
+  if (isPLayer) {
+    //console.log("new tips: $" + tips)
+  }
+}
+
+now.totalTips = function (player_id, tips) {
+  if (isPLayer) {
+    console.log("total tips: $" + tips)
+  }
 }
 
 now.updatedStreak = function (player_id, streak) {
-  if (isPLayer) console.log("new streak: " + streak)
+  if (isPLayer) {
+    // console.log("new streak: " + streak)
+  }
 }
 
 now.ready(function(){
