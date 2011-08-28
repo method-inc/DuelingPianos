@@ -328,6 +328,40 @@ h2 {
   -o-background-size: cover;
   background-size: cover;
 }
+<<<<<<< HEAD
+#club #userinfo {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 200px;
+}
+#club #userinfo iframe {
+  margin-left: 3px;
+}
+#club #menu {
+  width: 200px;
+  margin-bottom: 20px;
+}
+#club #menu a {
+  display: block;
+  text-decoration: none;
+  background: #000;
+  background: rgba(0,0,0,0.50);
+  padding: 10px;
+  margin: 2px;
+}
+#club #menu a:hover {
+  background: #000;
+}
+#club #players h3 {
+  padding: 10px;
+  margin: 2px;
+}
+#club #playerlist li {
+  margin-left: 20px;
+}
+=======
+>>>>>>> 6e024e558d6e66a4cafe218a3f2b80c97edd3313
 #club #chooser {
   display: none;
 }
@@ -351,15 +385,15 @@ h2 {
 }
 #club #status > div {
   text-align: center;
-}
-#club #status .you {
-  display: none;
+  padding: 50px;
+  background: #010101;
+  background: rgba(0, 0, 0, 0.4);
 }
 #club #status .other {
   display: block;
 }
-#club.active #status .you {
-  display: block;
+#club #status h1 {
+  margin: 0;
 }
 #club.active #status .other {
   display: none;

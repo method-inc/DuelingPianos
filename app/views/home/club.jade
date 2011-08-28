@@ -1,6 +1,4 @@
 #club
-  button#goToCrowd Select New Song
-  button#leaveClub Leave Club
   
   #meter
     #hottness
@@ -14,10 +12,25 @@
         - for(var i in songs)
           li
             a(href="javascript:club.initSong('#{songs[i].ytid}')") #{songs[i].name}
-    #tips Tips: $
+    #tips Your Tips: $
       span#tip_amount 0
+    #status
+      .other
+        h1 
+          span(id="otherplayername")
+          | &nbsp;is 
+          span(id="otherplayerstatus")
     #play-area
       #vis
+  
+  #userinfo
+    #menu
+      a.leaveClub(href='/') Return to lobby
+    iframe.voter(src="http://nodeknockout.com/iframe/skookum", frameborder='0', scrolling='no', allowtransparency='true', width='115', height='25')
+    #players
+      h3 players
+      ul#playerlist
+      
 
 audio#fuckup_chord0(preload=true)
   source(src="/sounds/fuckup_chord0_0.wav", type="audio/wav")
@@ -41,15 +54,3 @@ audio#cheer_2(preload=true)
   source(src="/sounds/cheer-02.wav", type="audio/wav")
 
 script(src='http://www.youtube.com/player_api', type='text/javascript')
-
-script
-    
-  $("#goToCrowd").click(function(){
-    club.player.pauseVideo();
-    $('#club').removeClass('stage');
-  });
-  
-  $("#leaveClub").click(function(){
-    window.location = '/';
-  });
-  

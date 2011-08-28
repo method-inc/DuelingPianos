@@ -23,10 +23,20 @@
         numkeys: 6,
         playkeys: this.playkeys
       });
+      
+      function update() {
+        if(self.playing) {
+          var position = self.time();
+          $("#time").html(position);
+          self.vis.seek(position);
+        }
+        setTimeout(update, 1000);
+      }
+      update();
+      
       game.getActivePlayer(function(player_obj) {
         if (player_obj && (player_obj.id === game.player.id)) {
           game.active = true;
-          club.resetPlayer();
         }
         else {
           if(player_obj.performances && player_obj.performances[player_obj.performances.length-1]) {
@@ -34,7 +44,23 @@
             self.songLoaded(perf.song.id, perf.song, player_obj.id);
           }
         }
+        club.resetPlayer(player_obj);
       });
+      
+      setInterval(function() {
+        now.getAllPlayers(function(allPlayers) {
+          var html = '';
+          _(allPlayers).each(function(p, i) {
+            if (i === 0) {
+              html += '<li>' + p + ' (playing)</li>';
+            }
+            else {
+              html += '<li>' + p + '</li>';
+            }
+          });
+          $("#playerlist").html(html);
+        })
+      }, 5000);
     },
     
     songLoaded: function(id, songdata, player_id) {
@@ -70,7 +96,7 @@
       
       function onStateChanged(state) {
         self.playing = (state.data !== states.ended && state.data !== states.paused && state.data != states.unstarted);
-        if(state.data === 0 || state.data === 2) {
+        if(state.data === 0) {
           game.donePlaying();
         }
       }
@@ -85,16 +111,10 @@
       var t = 0, self = this;
       this.player.playVideo();
       var position;
-      function update() {
-        var position = self.time();
-        $("#time").html(position);
-        self.vis.seek(position);
-        setTimeout(update, 1000);
-      }
-      update();
-      if(true) {
+      if(game.active) {
         this.initKeyPressListener()
       }
+        $('#otherplayerstatus').text('playing');
     },
     
     time: function() {
@@ -261,7 +281,7 @@
       }
     },
     
-    resetPlayer: function() {
+    resetPlayer: function(player) {
       if(this.player) this.player.pauseVideo();
       $('#club').removeClass('stage');
       if(game.active) {
@@ -273,7 +293,8 @@
         if(this.interval) {
           window.clearInterval(this.interval);
         }
-        
+        $('#otherplayername').text(player.playername);
+        $('#otherplayerstatus').text('choosing a song');
       }
     }
     
