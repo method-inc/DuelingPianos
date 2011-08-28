@@ -9,17 +9,26 @@ exports = module.exports = function(server) {
   
   var game = {
     players: {},
-    
     clubs: {
-      "The Stinky Squirrel":{ players: []}
+      "The Stinky Squirrel":{ players: [], video_playing: false, triggered: false}
     },
     
     rotateActivePlayer: function(club) {
       var old_active = this.clubs[club].players.shift();
       this.clubs[club].players.push(old_active);
       var self = this;
+      
+      this.clubs[club].triggered = true;
+      this.clubs[club].video_playing = false;
+      
       setTimeout(function() {
         everyone.now.newActivePlayer(club, self.clubs[club].players[0]);
+        setTimeout(function() {
+          if(!self.clubs[club].video_playing) {
+            console.log("taking too long, picking a new player");
+            self.rotateActivePlayer(club);
+          }
+        }, 5000)
       }, 1000);
     }
   }
@@ -39,6 +48,13 @@ exports = module.exports = function(server) {
   
   // get active player
   everyone.now.getActivePlayer = function(club, callback) {
+    var self = this;
+    setTimeout(function() {
+      if(!game.clubs[club].video_playing) {
+        console.log("taking too long, picking a new player");
+        game.rotateActivePlayer(club);
+      }
+    }, 5000)
     callback(game.clubs[club].players[0]);
   }
   
@@ -111,6 +127,8 @@ exports = module.exports = function(server) {
     
     var numperfs = game.players[player_id].performances.length;
     
+    this.video_playing = true;
+    
     game.players[player_id].performances[numperfs - 1].load_song(song_id, function(err, songdata) {
       console.log("player_id is now" + player_id);
       everyone.now.songLoaded(song_id, songdata, player_id);
@@ -119,6 +137,7 @@ exports = module.exports = function(server) {
   
   // broadcast the start of the song
   everyone.now.startSong = function(player_id) {
+    this.video_playing = true;
     everyone.now.songStarted(player_id);
   }
   
