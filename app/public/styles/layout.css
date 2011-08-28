@@ -212,6 +212,33 @@ h2 {
   transition: all 1s cubic-bezier(0.77, 0, 0.2, 1);
   position: relative;
 }
+#club #chooser {
+  display: none;
+}
+#club.active #chooser {
+  display: block;
+}
+#club #status {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+#club #status > div {
+  text-align: center;
+}
+#club #status .you {
+  display: none;
+}
+#club #status .other {
+  display: block;
+}
+#club.active #status .you {
+  display: block;
+}
+#club.active #status .other {
+  display: none;
+}
 #club #goToCrowd {
   position: absolute;
   top: 10px;

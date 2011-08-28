@@ -11,11 +11,11 @@
     
     performance: null,
     
-    localPlaying: true,
+    active: false,
     
     // Called when a player presses a key during song play 
     keyPress: function(pitch, ms, callback) {
-      if(this.localPlaying) {
+      if(this.active) {
         // use local scoring algorithm if local player is playing
         this.performance.press_key(pitch, ms, callback);
         // send the performance to the server to sync with other players
@@ -25,7 +25,7 @@
     
     // Called when no action has been taken by the user during a song for 1 second
     status: function(ms, callback) {
-      if(this.localPlaying) {
+      if(this.active) {
         // use local scoring algorithm if local player is playing
         this.performance.status(ms, callback);
         // send the performance to the server to sync with other players
@@ -81,6 +81,11 @@ now.songLoaded = function(id, songdata, player_id) {
   game.performance = new Performance.Performance({ player_id: game.player.id, numkeys: 6 });
   game.performance.load_json(songdata);
   club.songLoaded(id, songdata, player_id);
+}
+
+now.activePlayer = function(player) {
+  game.active = isPLayer(player.id);
+  club.resetPlayer();
 }
 
 now.ready(function(){

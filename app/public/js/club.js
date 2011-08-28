@@ -48,6 +48,9 @@
       function onStateChanged(state) {
         if(state.data == 1) self.playing = true;
         else self.playing = false;
+        if(!self.playing) {
+          game.donePlaying();
+        }
       }
       
     },
@@ -205,6 +208,16 @@
         a.currentPosition = 0;
         a.volume = 1;
         a.play();
+      }
+    },
+    
+    resetPlayer: function() {
+      $('#club').addClass('stage');
+      if(game.active) {
+        $('#club').addClass('active');
+      }
+      else {
+        $('#club').addClass('removeClass');
       }
     }
     

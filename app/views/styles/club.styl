@@ -4,6 +4,28 @@
   transition all 1s cubic-bezier(.77, 0, .20, 1)
   position relative
   
+  #chooser
+    display none 
+  &.active #chooser
+    display block
+  
+  #status
+    position fixed
+    bottom 0
+    left 0
+    right 0
+    > div
+      text-align center
+    .you
+      display none
+    .other
+      display block
+  &.active #status
+    .you
+      display block
+    .other
+      display none
+  
   #goToCrowd
     position absolute
     top 10px
