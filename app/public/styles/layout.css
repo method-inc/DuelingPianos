@@ -334,7 +334,7 @@ h2 {
   transform: scale(2) translateZ(50px);
 }
 .key.dead {
-  background: #0f0;
+  background: #999;
 }
 .playhead {
   width: 100%;

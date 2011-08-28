@@ -140,13 +140,26 @@
         a.volume = 1;
         a.play();
       }
-      if(this.streak == -25) {
+      if(this.streak == -28) {
         var a = document.getElementById('boo_2');
         a.currentPosition = 0;
         a.volume = 1;
         a.play();
       }
-        
+      
+      if(this.streak == 18) {
+        var a = document.getElementById('cheer_1');
+        a.currentPosition = 0;
+        a.volume = 1;
+        a.play();
+      }
+      
+      if(this.streak == 35) {
+        var a = document.getElementById('cheer_2');
+        a.currentPosition = 0;
+        a.volume = 1;
+        a.play();
+      }
     }
     
   };
