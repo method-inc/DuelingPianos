@@ -15,21 +15,8 @@
   Performance.prototype = new EventEmitter();
   
   // Client can load its own damn song
-  Performance.prototype.load_song_client = function(id, callback) {
-    var self = this;
-    var url = '/songdata/' + id + '.keys.json';
-    $.ajax({
-      url: url,
-      dataType: 'json',
-      success: function(song) {
-        self.song = song;
-        callback && callback(undefined, song);
-      },
-      error: function(xhr, error, msg) {
-        console.log("Error pulling song data");
-        callback && callback("Couldn't load song");
-      }
-    });
+  Performance.prototype.load_json = function(songdata) {
+    this.song = songdata;
   }
   
   // Client can tell the server to load a song for a performance
