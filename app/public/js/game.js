@@ -14,7 +14,7 @@
     },
     
     status: function(ms, callback) {
-      now.keyPress (this.player.id, ms, callback)
+      now.status (this.player.id, ms, callback)
     },
     
     loadSong: function(song_id, callback) {

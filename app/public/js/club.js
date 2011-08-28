@@ -63,8 +63,19 @@
     initKeyPressListener: function() {
       $(document).keydown(_.bind(this.onKeyPress, this));
       $(document).keyup(_.bind(this.onKeyUp, this));
+      var self = this;
+      window.setInterval(_.bind(function() {
+        if(this.playing && this.time() > (this.last_keypress + 1000)) {
+          game.status(this.time(), function(err, res) {
+            for(var i in res) {
+              self.vis.kill_key(res[i]);
+            }
+          });
+        }
+      }, this), 1000);
     },
     
+    last_keypress: -1,
     // keep track of which keys are down to prevent repeating key events before the key is released
     _keys_down: {},
     onKeyPress: function(e) {
@@ -72,15 +83,16 @@
       if(this.playing && !(e.which in this._keys_down) && (e.which in this.key_mappings)) {
         this._keys_down[e.which] = true;
         var mapping = this.key_mappings[e.which];
-        console.log('pressed key ' + mapping + ' at ' + this.time());
+        var time = this.time();
         
         $($('#vis .keyroll > div')[this.key_mappings[e.which]]).addClass('highlight');
         _.delay(_.bind(function() {
           $($('#vis .keyroll > div')[this.key_mappings[e.which]]).removeClass('highlight');
         }, this), 750);
         
-        game.keyPress(mapping, this.time(), function(err, res) {
-          console.log('result for key ' + mapping, err, res);
+        this.last_keypress = time;
+        
+        game.keyPress(mapping, time, function(err, res) {
           if(err) {
             self.fuckup(mapping);
             for(var i in res) {
