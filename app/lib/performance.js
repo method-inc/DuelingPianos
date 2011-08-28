@@ -45,7 +45,7 @@ Performance.prototype.status = function(ms, callback) {
     i++;
   }
   this.last_key_index = i;
-  callback(undefined, deadkeys);
+  return callback && callback(undefined, deadkeys);
 };
 
 // Client can tell the server the user just pressed a key
@@ -83,7 +83,7 @@ Performance.prototype.press_key = function(pitch, ms, callback) {
   // Key pressed doesn't have a match at that point in the song
   //this.send_fuckup(pitch);
   this.update_streak(-1);
-  return callback('fuckup', deadkeys);
+  return callback && callback('fuckup', deadkeys);
 };
 
 // Client can request the current state of this performance at any time
