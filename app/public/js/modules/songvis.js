@@ -41,7 +41,13 @@
     this.seek(0);      
   }
   SongVis.prototype = {
+    reset: function() {
+      this.keyroll.find('.pitch > div').html('');
+      this.keys = [];
+      this.position = 0;
+    },
     load_song: function(url, callback) {
+      this.reset();
       var self = this;
       this.url = url;
       $.ajax({
@@ -61,7 +67,6 @@
       var ms_to_px = this.mx_to_px;
       var keyroll = this.keyroll;
       var pitches = keyroll.find('.pitch > div');
-      pitches.html('');
       var pitch, pitch_el, key, key_el, top;
       var bottom = song.keys[song.keys.length - 1].stop * ms_to_px;
       for(var i = 0; i < song.keys.length; i++) {
@@ -76,7 +81,6 @@
       }
       var last_top = song.keys[song.keys.length - 1].stop * ms_to_px;
       keyroll.css({ 'height': last_top + 'px' });
-      this.position = 0;
     },
     seek: function(ms) {
       ms += this.lookahead;
