@@ -47,7 +47,7 @@ now.totalTips = function (player_id, tips) {
 
 now.updatedStreak = function (player_id, streak) {
   if (isPLayer) {
-    console.log("new streak: " + streak)
+    // console.log("new streak: " + streak)
   }
 }
 

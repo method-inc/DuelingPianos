@@ -1,8 +1,6 @@
 var nowjs = require("now")
 var Performance = require( GLOBAL.app.set('app root') + '/lib/performance');
 
-console.log(Performance)
-
 require('../../lib/uuidstuff');
 
 exports = module.exports = function(server) {
