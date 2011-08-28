@@ -9,7 +9,7 @@ html {
 }
 body {
   height: 100%;
-  font: 1.2em "Andika", sans-serif;
+  font: 1.2em "Arial", sans-serif;
   text-rendering: optimizeLegibility;
 }
 ul,
@@ -24,7 +24,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Gloria Hallelujah", cursive;
+  font-family: "Arial", sans-serif;
 }
 a {
   color: #fff;
@@ -97,27 +97,114 @@ h2 {
   background: linear-gradient(top, rgba(255,255,255,0.20) 0%, rgba(255,255,255,0.20) 100%);
   background: /* W3C */;
 }
-#citybackdrop {
+#lobby {
+  width: 100%;
+  height: 100%;
+  display: block;
+  position: relative;
+  background: url("/images/grunge.jpg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  padding-top: 100px;
+}
+#lobby h1 {
+  background: url("/images/logo.png") no-repeat center center;
+  height: 94px;
+}
+#lobby h1 span {
+  display: none;
+}
+#lobby .playit {
+  background: rgba(255,255,255,0.15);
+  padding: 70px 0;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  margin-top: -150px;
+}
+#lobby .playgroup {
+  margin-left: auto;
+  margin-right: auto;
+  width: 400px;
+  padding-left: 200px;
+  position: relative;
+}
+#lobby .dude {
+  position: absolute;
+  width: 625px;
+  height: 657px;
+  background: url("/images/dude.png") no-repeat center center;
+  z-index: 1000;
+  top: -300px;
+  left: -200px;
+}
+#lobby input {
+  width: 200px;
+  font-size: 20px;
+  padding: 10px;
+  color: #777;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -o-border-radius: 10px;
+  border-radius: 10px;
+  border: solid 2px #444;
+  display: inline-block;
+  -webkit-box-shadow: inset 2px 2px 2px #777;
+  -moz-box-shadow: inset 2px 2px 2px #777;
+  -o-box-shadow: inset 2px 2px 2px #777;
+  box-shadow: inset 2px 2px 2px #777;
+}
+#lobby a#door {
+  color: #fff;
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: bold;
+  background: -moz-linear-gradient(top, #880101, #3f1010 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #880101), color-stop(100%, #3f1010));
+  background: -webkit-linear-gradient(top, #880101 0%, #3f1010 100%);
+  background: -o-linear-gradient(top, #880101 0%, #3f1010 100%);
+  background: -ms-linear-gradient(top, #880101 0%, #3f1010 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#880101', endColorstr='#3f1010',GradientType=0 );
+  background: linear-gradient(top, #880101 0%, #880101 100%);
+  background: /* W3C */;
+  display: inline-block;
+  padding: 11px 15px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -o-border-radius: 10px;
+  border-radius: 10px;
+  text-shadow: 1px 1px 1px #000;
+  width: 60px;
+  text-align: center;
+  position: relative;
+  top: 4px;
+  margin-left: 3px;
+  border: solid 1px #333;
+}
+#old #citybackdrop {
   background: url("/images/skyline.jpg") repeat-x bottom left;
   width: 100%;
   height: 100%;
   display: block;
   position: relative;
 }
-#citybackdrop #backdrop2 {
+#old #citybackdrop #backdrop2 {
   background: url("/images/skyline2.png") repeat-x bottom left;
   width: 150%;
   height: 100%;
   display: block;
   position: absolute;
 }
-#citybackdrop #playerlist {
+#old #citybackdrop #playerlist {
   padding: 20px;
   color: #666;
   font-size: 16px;
   width: 50%;
 }
-#citybackdrop #playername {
+#old #citybackdrop #playername {
   background: none;
   border: 1px solid #2a2f5c;
   position: absolute;
@@ -133,10 +220,10 @@ h2 {
   text-align: center;
   z-index: 99;
 }
-#citybackdrop #playername:hover {
+#old #citybackdrop #playername:hover {
   border: 1px solid #eee;
 }
-#citybackdrop #club1 {
+#old #citybackdrop #club1 {
   background: #2f4637;
   position: absolute;
   bottom: 10px;
@@ -154,7 +241,7 @@ h2 {
   -o-box-shadow: 0 0 10px rgba(0,0,0,0.30);
   box-shadow: 0 0 10px rgba(0,0,0,0.30);
 }
-#citybackdrop #club1 #sign {
+#old #citybackdrop #club1 #sign {
   position: absolute;
   top: 5%;
   left: 5%;
@@ -162,7 +249,7 @@ h2 {
   width: 400px;
   background: url("/images/squirrel.png") no-repeat;
 }
-#door {
+#old #door {
   background: #777;
   position: absolute;
   bottom: 20px;
@@ -172,7 +259,7 @@ h2 {
   border: 1px solid #000;
   z-index: 999;
 }
-#door #knob {
+#old #door #knob {
   background: #333;
   position: absolute;
   top: 50%;
@@ -185,14 +272,14 @@ h2 {
   -o-border-radius: 10px;
   border-radius: 10px;
 }
-#door:hover {
+#old #door:hover {
   background: #efecb7;
 }
-#door:hover #knob {
+#old #door:hover #knob {
   display: none;
   z-index: 999;
 }
-#street {
+#old #street {
   background: url("/images/street.png") repeat-x bottom left;
   border-top: 1px solid #ccc;
   position: absolute;
