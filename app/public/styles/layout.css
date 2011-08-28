@@ -50,7 +50,7 @@ h2 {
   top: 50%;
   margin-left: -150px;
   margin-top: -150px;
-  background: -moz-linear-gradient(top, rgba(255,255,255,0.40), rgba(255,255,255,0.20) 100%);
+  background: -moz-linear-gradient(top, rgba(255,255,255,0.40) 0%, rgba(255,255,255,0.20) 100%);
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(255,255,255,0.40)), color-stop(100%, rgba(255,255,255,0.20)));
   background: -webkit-linear-gradient(top, rgba(255,255,255,0.40) 0%, rgba(255,255,255,0.20) 100%);
   background: -o-linear-gradient(top, rgba(255,255,255,0.40) 0%, rgba(255,255,255,0.20) 100%);
@@ -73,7 +73,7 @@ h2 {
   margin: 0 -20px;
 }
 .modal ul li a {
-  background: -moz-linear-gradient(top, rgba(255,255,255,0.30), rgba(255,255,255,0.20) 100%);
+  background: -moz-linear-gradient(top, rgba(255,255,255,0.30) 0%, rgba(255,255,255,0.20) 100%);
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(255,255,255,0.30)), color-stop(100%, rgba(255,255,255,0.20)));
   background: -webkit-linear-gradient(top, rgba(255,255,255,0.30) 0%, rgba(255,255,255,0.20) 100%);
   background: -o-linear-gradient(top, rgba(255,255,255,0.30) 0%, rgba(255,255,255,0.20) 100%);
@@ -88,7 +88,7 @@ h2 {
   font-size: 1.25em;
 }
 .modal ul li a:active {
-  background: -moz-linear-gradient(top, rgba(255,255,255,0.20), rgba(255,255,255,0.30) 100%);
+  background: -moz-linear-gradient(top, rgba(255,255,255,0.20) 0%, rgba(255,255,255,0.30) 100%);
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(255,255,255,0.20)), color-stop(100%, rgba(255,255,255,0.30)));
   background: -webkit-linear-gradient(top, rgba(255,255,255,0.20) 0%, rgba(255,255,255,0.30) 100%);
   background: -o-linear-gradient(top, rgba(255,255,255,0.20) 0%, rgba(255,255,255,0.30) 100%);
@@ -311,6 +311,33 @@ h2 {
   transition: all 1s cubic-bezier(0.77, 0, 0.2, 1);
   position: relative;
 }
+#club #chooser {
+  display: none;
+}
+#club.active #chooser {
+  display: block;
+}
+#club #status {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+#club #status > div {
+  text-align: center;
+}
+#club #status .you {
+  display: none;
+}
+#club #status .other {
+  display: block;
+}
+#club.active #status .you {
+  display: block;
+}
+#club.active #status .other {
+  display: none;
+}
 #club #goToCrowd {
   position: absolute;
   top: 10px;
@@ -323,9 +350,7 @@ h2 {
   left: 10px;
   z-index: 9999;
 }
-#club #crowd {
-  background: #333;
-}
+#club #crowd,
 #club.stage {
   -webkit-transform: translateX(-50%);
   -moz-transform: translateX(-50%);
@@ -372,6 +397,38 @@ h2 {
   -moz-transition: all 1s linear;
   -o-transition: all 1s linear;
   transition: all 1s linear;
+}
+#club #meter {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  width: 25px;
+  height: 200px;
+  border: 1px solid #fff;
+}
+#club #meter #hottness {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: -moz-linear-gradient(top, #008000 35%, #f00 95%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(35%, #008000), color-stop(95%, #f00));
+  background: -webkit-linear-gradient(top, #008000 35%, #f00 95%);
+  background: -o-linear-gradient(top, #008000 35%, #f00 95%);
+  background: -ms-linear-gradient(top, #008000 35%, #f00 95%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#008000', endColorstr='#f00',GradientType=0 );
+  background: linear-gradient(top, #008000 35%, #008000 95%);
+  background: /* W3C */;
+}
+#club #meter #mask {
+  border-bottom: 1px solid rgba(255,255,255,0.50);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  background: #000;
 }
 #vis-test {
   position: absolute;

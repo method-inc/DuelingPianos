@@ -4,6 +4,28 @@
   transition all 1s cubic-bezier(.77, 0, .20, 1)
   position relative
   
+  #chooser
+    display none 
+  &.active #chooser
+    display block
+  
+  #status
+    position fixed
+    bottom 0
+    left 0
+    right 0
+    > div
+      text-align center
+    .you
+      display none
+    .other
+      display block
+  &.active #status
+    .you
+      display block
+    .other
+      display none
+  
   #goToCrowd
     position absolute
     top 10px
@@ -16,8 +38,6 @@
     z-index 9999
     
   #crowd
-    background #333
-  
   &.stage
     transform translateX(-50%)
   > div
@@ -26,6 +46,7 @@
     position: relative;
     height: 100%;
     vertical-align top
+  
   #stage
     perspective 50
     #play-area
@@ -43,3 +64,26 @@
       .keyroll
         //animation song 180s linear
         transition all 1s linear
+
+  #meter
+    position absolute
+    bottom 10px
+    right 10px
+    width 25px
+    height 200px
+    border 1px solid #fff
+    #hottness
+      position absolute
+      bottom 0
+      left 0
+      width 100%
+      height 100%
+      background two-stop(green, red, 35%, 95%)
+    #mask
+      border-bottom 1px solid rgba(255,255,255,.5)
+      position absolute
+      top 0
+      left 0
+      width 100%
+      height 50%
+      background black

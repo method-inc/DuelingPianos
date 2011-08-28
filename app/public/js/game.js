@@ -11,11 +11,11 @@
     
     performance: null,
     
-    localPlaying: false,
+    active: false,
     
     // Called when a player presses a key during song play 
     keyPress: function(pitch, ms, callback) {
-      if(this.localPlaying) {
+      if(this.active) {
         // use local scoring algorithm if local player is playing
         this.performance.press_key(pitch, ms, callback);
         // send the performance to the server to sync with other players
@@ -25,7 +25,7 @@
     
     // Called when no action has been taken by the user during a song for 1 second
     status: function(ms, callback) {
-      if(this.localPlaying) {
+      if(this.active) {
         // use local scoring algorithm if local player is playing
         this.performance.status(ms, callback);
         // send the performance to the server to sync with other players
@@ -34,11 +34,21 @@
     },
     
     initSong: function(song_id) {
-      now.loadSong(this.player.id, song_id)
+      now.loadSong(this.player.id, song_id);
     },
     
     startSong: function(callback) {
       now.startSong(this.player.id);
+    },
+    
+    setLocation: function(location) {
+      now.setLocation(this.player.id, location);
+    },
+    
+    donePlaying: function(club) {
+      console.log('done playing')
+      if (!club) club = "The Stinky Squirrel";
+      now.donePlaying(this.player.id, club);
     }
     
   };
@@ -55,7 +65,17 @@ now.songStarted = function(player_id) {
   club.startSong(player_id);
 }
 
-now.fuckedUp = function (player_id, pitch) {}
+now.keyUpdated = function (err, key, dead, ms, player_id) {
+  if(!isPLayer(player_id) ) {
+    club.remoteKeyUpdated(err, key, dead, ms);
+  }
+}
+
+now.newActivePlayer = function(club, player) {
+  console.log(player);
+  game.active = isPLayer(player.id);
+  club.resetPlayer();
+}
 
 now.updatedTips = function (player_id, tips) {
   club.updateTips(tips);
@@ -74,6 +94,8 @@ now.status = function(player_id, time) {
 }
 
 now.songLoaded = function(id, songdata, player_id) {
+  game.performance = new Performance.Performance({ player_id: game.player.id, numkeys: 6 });
+  game.performance.load_json(songdata);
   club.songLoaded(id, songdata, player_id);
 }
 
@@ -86,6 +108,10 @@ now.ready(function(){
     game.player = player
     amplify.store("playerid", player.id)
     $("#playername").val(player.playername);
+    
+    if (window.location.pathname.match(/club/)) {
+      game.setLocation("The Stinky Squirrel");
+    }
   
     // listen for new name inputs
     $("#playername").keyup(function(){
