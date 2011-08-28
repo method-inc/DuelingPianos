@@ -46,7 +46,7 @@ exports = module.exports = function(server) {
       var player = {
         id:Math.uuidFast(),
         playername:'Mr. Anonymous',
-        score: 0
+        tips: 0
       };
       player.performance = new Performance({ player_id: player.id });
       
@@ -55,8 +55,10 @@ exports = module.exports = function(server) {
         everyone.now.fuckedUp(player_id, pitch);
       });
       
-      player.performance.on('updatedTips', function(player_id, tips) {
-        everyone.now.updatedTips(player_id, tips);
+      player.performance.on('updatedTips', function(player_id, newtips) {
+        game.players[player_id].tips += newtips;
+        everyone.now.updatedTips(player_id, newtips);
+        everyone.now.totalTips(player_id, game.players[player_id].tips)
       });
       
       player.performance.on('updatedStreak', function(player_id, streak) {
