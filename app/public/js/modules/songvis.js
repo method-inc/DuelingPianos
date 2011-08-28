@@ -7,7 +7,7 @@
     this.keyroll.appendTo(this.container);
     this.mx_to_px = options.ratio || 0.01;
     this.lookahead = options.lookahead || 0;
-    this.falloff = options.falloff || 250;
+    this.falloff = options.falloff || 100;
     for(var i = 0; i < 12; i++) {
       var new_pitch = $('<div><div></div></div>').addClass('pitch');
       new_pitch.appendTo(this.keyroll);
