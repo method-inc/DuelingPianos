@@ -8,13 +8,5 @@ exports = module.exports = {
     require("../models/songs").listAll(function(songs) {
       res.render('home/club', {songs: songs, layout: 'layout'})
     })
-  },
-  
-  nowjs: function(req, res) {
-    res.render('home/nowjs', {layout: 'layout'})
-  },
-  
-  youtube: function(req, res) {
-    res.render('home/youtube', {layout: 'layout'})
   }
 }
