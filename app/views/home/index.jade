@@ -1,22 +1,24 @@
 #citybackdrop
   #backdrop2
-  
-  input#playername(placeholder="player name")
+  #playerlist
   
   #club1
     #sign
-      h1 The Stinky Squirrel
-    a#door(href="/club/stinky_squirrel")
-      #knob
     
   #street
+    #playerlist
+  
+  a#door(href="/club/stinky_squirrel")
+    #knob
+
+  input#playername(placeholder="player name")
   
 script
   now.ready(function(){
   
     // get all players
     now.getAllPlayers(function(allPlayers){
-      $("#street").html(allPlayers.toString())
+      $("#playerlist").html("All Players: " + allPlayers.toString())
     })
   
   })

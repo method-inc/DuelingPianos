@@ -134,7 +134,7 @@
       else {
         this.player.setVolume( 100 );
       }
-      if(this.streak == -18) {
+      if(this.streak == -12) {
         var a = document.getElementById('boo_1');
         a.currentPosition = 0;
         a.volume = 1;
