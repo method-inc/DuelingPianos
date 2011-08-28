@@ -31,26 +31,22 @@ function isPLayer(id) {
   return game.player.id === id;
 }
 
-now.fuckedUp = function (player_id, pitch) {
-  if (isPLayer()) {
-    //console.log("you fucked up!")
-  }
-}
+now.fuckedUp = function (player_id, pitch) {}
 
 now.updatedTips = function (player_id, tips) {
-  if (isPLayer()) {
+  if (isPLayer(player_id)) {
     club.updateTips(tips);
   }
 }
 
 now.totalTips = function (player_id, tips) {
-  if (isPLayer()) {
+  if (isPLayer(player_id)) {
     club.updateTips(tips);
   }
 }
 
 now.updatedStreak = function (player_id, streak) {
-  if (isPLayer()) {
+  if (isPLayer(player_id)) {
     club.updateStreak(streak);
   }
 }

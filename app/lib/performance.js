@@ -9,7 +9,7 @@ var song_dir = GLOBAL.app.set('app root') + '/public/songdata/';
 
 function Performance(options) {
   this.player_id = options.player_id;
-  this.range = options.range || 1000;  // What range (in ms) must an acceptable key fall into?
+  this.range = options.range || 500;  // What range (in ms) must an acceptable key fall into?
   this.song = undefined;
   this.tips = 0;
   this.streak = 0;
@@ -87,7 +87,7 @@ Performance.prototype.get_status = function() {
 
 // Used internally
 Performance.prototype.update_streak = function(delta) {
-  if (delta < 0) delta *= 1.5;
+  if (delta < 0) delta *= 2;
   if (this.streak >= 0) {
     if (delta > 0) this.streak += delta;
     else this.streak = delta;
