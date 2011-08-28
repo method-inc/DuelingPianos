@@ -140,12 +140,11 @@
     updateStreak: function(streak) {
       $("#streak_amount").html(streak);
       this.streak = streak;
-      if(this.streak < 0) {
-        this.player.setVolume( 100 - (streak/-25)*100 );
-      }
-      else {
-        this.player.setVolume( 100 );
-      }
+      var volume = Math.max(0, Math.min(100, 50 - (streak/-10) * 100));
+      this.player.setVolume(volume);
+      
+      $("#volume_amount").html(volume);
+      
       if(this.streak == -12) {
         var a = document.getElementById('boo_1');
         a.currentPosition = 0;

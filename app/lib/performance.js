@@ -15,6 +15,7 @@ function Performance(options) {
   this.streak = 0;
   this.last_key_index = -1;
   this.numkeys = options.numkeys || 12;
+  this.hard_crowd = options.hard_crowd || 1;
 }
 
 Performance.prototype = Object.create( EventEmitter.prototype );
@@ -90,7 +91,7 @@ Performance.prototype.get_status = function() {
 
 // Used internally
 Performance.prototype.update_streak = function(delta) {
-  if (delta < 0) delta *= 2;
+  if (delta < 0) delta *= this.hard_crowd;
   if (this.streak >= 0) {
     if (delta > 0) this.streak += delta;
     else this.streak = delta;
