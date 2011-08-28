@@ -9,7 +9,7 @@ var song_dir = GLOBAL.app.set('app root') + '/public/songdata/';
 
 function Performance(options) {
   this.player_id = options.player_id;
-  this.range = options.range || 500;  // What range (in ms) must an acceptable key fall into?
+  this.range = options.range || 750;  // What range (in ms) must an acceptable key fall into?
   this.song = undefined;
   this.tips = 0;
   this.streak = 0;
@@ -39,8 +39,10 @@ Performance.prototype.status = function(ms, callback) {
   var i = this.last_key_index + 1, deadkeys = [];
   var past_boundary_ms = ms - this.range;
   while (this.song.keys[i] && this.song.keys[i].start < past_boundary_ms) {
-    this.song.keys[i].available = false;
-    deadkeys.push(i);
+    if (this.song.keys[i].available) {
+      deadkeys.push(i);
+      this.song.keys[i].available = false;
+    }
     this.last_key_index = i;
     i++;
   }
