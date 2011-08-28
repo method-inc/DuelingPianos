@@ -68,6 +68,9 @@
         setTimeout(update, 1000);
       }
       update();
+      if(true) {
+        this.initKeyPressListener()
+      }
     },
     
     time: function() {
@@ -131,6 +134,20 @@
     },
     onKeyUp: function(e) {
       if(this._keys_down[e.which]) delete this._keys_down[e.which];
+    },
+    
+    remoteKeyUpdated: function(err, key, dead, ms) {
+      var self = this;
+      if(typeof key == 'undefined' || key == null) {
+        self.fuckup(0);
+      }
+      else {
+        self.vis.activate_key(key);
+      }
+      
+      for(var i in dead) {
+        self.dead_key(dead[i]);
+      }
     },
     
     dead_key: function(k) {

@@ -109,7 +109,9 @@ exports = module.exports = function(server) {
   
   // send a keypress
   everyone.now.keyPress = function(player_id, pitch, ms, callback) {
-    game.players[player_id].performances[game.players[player_id].performances.length-1].press_key(pitch, ms, callback);
+    game.players[player_id].performances[game.players[player_id].performances.length-1].press_key(pitch, ms, function(err, key, deadkeys, ms) {
+      everyone.now.keyUpdated(err, key, deadkeys, ms, player_id);
+    });
   };
   
   // set a players location

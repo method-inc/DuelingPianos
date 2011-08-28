@@ -11,7 +11,7 @@
     
     performance: null,
     
-    localPlaying: false,
+    localPlaying: true,
     
     // Called when a player presses a key during song play 
     keyPress: function(pitch, ms, callback) {
@@ -34,7 +34,7 @@
     },
     
     initSong: function(song_id) {
-      now.loadSong(this.player.id, song_id)
+      now.loadSong(this.player.id, song_id);
     },
     
     startSong: function(callback) {
@@ -55,7 +55,11 @@ now.songStarted = function(player_id) {
   club.startSong(player_id);
 }
 
-now.fuckedUp = function (player_id, pitch) {}
+now.keyUpdated = function (err, key, dead, ms, player_id) {
+  if(!isPLayer(player_id) ) {
+    club.remoteKeyUpdated(err, key, dead, ms);
+  }
+}
 
 now.updatedTips = function (player_id, tips) {
   club.updateTips(tips);
@@ -74,6 +78,8 @@ now.status = function(player_id, time) {
 }
 
 now.songLoaded = function(id, songdata, player_id) {
+  game.performance = new Performance.Performance({ player_id: game.player.id, numkeys: 6 });
+  game.performance.load_json(songdata);
   club.songLoaded(id, songdata, player_id);
 }
 
