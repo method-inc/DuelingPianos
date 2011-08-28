@@ -23,18 +23,19 @@
     color #eee
     font-size 14px
     text-align center
+    z-index 99
   
   #playername:hover
     border 1px solid #eee
   
   #club1
-    background #595
+    background #2f4637
     position absolute
     bottom 10px
-    left 25%
+    left 20%
     display block
     height 400px
-    width 300px
+    width 500px
     z-index 2
     border-radius 2px 2px 0 0
     box-shadow 0 0 10px rgba(0,0,0,0.3)
@@ -43,42 +44,44 @@
       position absolute
       top 5%
       left 5%
-      width 90%
-      background #555
-      border 1px solid #333
+      height 77px
+      width 400px
+      background url('/images/squirrel.png') no-repeat
     
-    #door
-      background #777
-      position absolute
-      bottom 0px
-      left 50px
-      width 60px
-      height 100px
-      border 1px solid #000
-      
-      #knob
-        background #333
-        position absolute
-        top 50%
-        left 10px
-        width 10px
-        height 10px
-        border 1px solid #000
-        border-radius 10px
-    
-    #door:hover
-      background #efecb7
-      #knob
-        display none
-        z-index 999
+#door
+  background #777
+  position absolute
+  bottom 20px
+  left 25%
+  width 60px
+  height 100px
+  border 1px solid #000
+  z-index 999
+  
+  #knob
+    background #333
+    position absolute
+    top 50%
+    left 10px
+    width 10px
+    height 10px
+    border 1px solid #000
+    border-radius 10px
+
+#door:hover
+  background #efecb7
+  #knob
+    display none
+    z-index 999
         
   
-  #street
-    background url('/images/street.png') repeat-x bottom left
-    border-top 1px solid #ccc
-    position absolute
-    bottom 0px
-    left 0px
-    display block
-    height 100%
-    width 100%
+#street
+  background url('/images/street.png') repeat-x bottom left
+  border-top 1px solid #ccc
+  position absolute
+  bottom 0px
+  left 0px
+  display block
+  height 100%
+  width 100%
+  z-index 99
