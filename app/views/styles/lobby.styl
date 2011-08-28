@@ -1,95 +1,179 @@
-#citybackdrop
-  background url('/images/skyline.jpg') repeat-x bottom left
+#lobby
   width 100%
   height 100%
   display block
   position relative
+  background url('/images/grunge.jpg') no-repeat center center fixed
+  -webkit-background-size cover;
+  -moz-background-size cover;
+  -o-background-size cover;
+  background-size cover;
+  padding-top 100px
   
-  #backdrop2
-    background url('/images/skyline2.png') repeat-x bottom left
-    width 150%
-    height 100%
-    display block
-    position absolute
-  
-  #playerlist
-    padding 20px
-    color #666
-    font-size 16px
-    width 50%
-  
-  #playername
-    background none
-    border 1px solid #2a2f5c
-    position absolute
-    top 10px
-    right 10px
-    border-radius 10px
-    padding 5px
-    color #eee
-    font-size 14px
-    text-align center
-    z-index 99
-  
-  #playername:hover
-    border 1px solid #eee
-  
-  #club1
-    background #2f4637
-    position absolute
-    bottom 10px
-    left 20%
-    display block
-    height 400px
-    width 500px
-    z-index 2
-    border-radius 2px 2px 0 0
-    box-shadow 0 0 10px rgba(0,0,0,0.3)
-    
-    #sign
-      position absolute
-      top 5%
-      left 5%
-      height 77px
-      width 400px
-      background url('/images/squirrel.png') no-repeat
-    
-#door
-  background #777
-  position absolute
-  bottom 20px
-  left 25%
-  width 60px
-  height 100px
-  border 1px solid #000
-  z-index 999
-  
-  #knob
-    background #333
+  h1
+    background url('/images/logo.png') no-repeat center center
+    height 94px
+    span
+      display none
+
+  .playit
+    background rgba(255, 255, 255, .15)
+    padding 70px 0
     position absolute
     top 50%
-    left 10px
-    width 10px
-    height 10px
-    border 1px solid #000
-    border-radius 10px
+    left 0
+    right 0
+    margin-top -150px
+  
+  .playgroup
+    margin-left auto
+    margin-right auto
+    width 400px
+    padding-left 200px
+    position relative
+    
+  .dude
+    position absolute
+    width 625px
+    height 657px
+    background url('/images/dude.png') no-repeat center center
+    top -300px
+    left -200px
+    z-index 0
+    
+  .footer
+    background rgba(0, 0, 0, .4)
+    position absolute
+    bottom 0
+    left 0
+    right 0
+    height 33%
+    
+  input
+    width 200px
+    font-size 20px
+    padding 10px
+    color #777
+    border-radius(10px)
+    border solid 2px #444
+    display inline-block
+    box-shadow inset 2px 2px 2px #777
+    z-index 10
+    position relative
+    
+  a#door
+    color #fff
+    text-decoration none
+    font-size 20px
+    font-weight bold
+    background two-stop(#880101, #3f1010)
+    display inline-block
+    padding 11px 15px
+    border-radius(10px)
+    text-shadow 1px 1px 1px #000
+    width 60px
+    text-align center
+    position relative
+    top 4px
+    margin-left 3px
+    border solid 1px #333
+    z-index 10
+    position relative
+    
+#old
 
-#door:hover
-  background #efecb7
-  #knob
-    display none
+  #citybackdrop
+    background url('/images/skyline.jpg') repeat-x bottom left
+    width 100%
+    height 100%
+    display block
+    position relative
+    
+    #backdrop2
+      background url('/images/skyline2.png') repeat-x bottom left
+      width 150%
+      height 100%
+      display block
+      position absolute
+    
+    #playerlist
+      padding 20px
+      color #666
+      font-size 16px
+      width 50%
+    
+    #playername
+      background none
+      border 1px solid #2a2f5c
+      position absolute
+      top 10px
+      right 10px
+      border-radius 10px
+      padding 5px
+      color #eee
+      font-size 14px
+      text-align center
+      z-index 99
+    
+    #playername:hover
+      border 1px solid #eee
+    
+    #club1
+      background #2f4637
+      position absolute
+      bottom 10px
+      left 20%
+      display block
+      height 400px
+      width 500px
+      z-index 2
+      border-radius 2px 2px 0 0
+      box-shadow 0 0 10px rgba(0,0,0,0.3)
+      
+      #sign
+        position absolute
+        top 5%
+        left 5%
+        height 77px
+        width 400px
+        background url('/images/squirrel.png') no-repeat
+      
+  #door
+    background #777
+    position absolute
+    bottom 20px
+    left 25%
+    width 60px
+    height 100px
+    border 1px solid #000
     z-index 999
-        
+    
+    #knob
+      background #333
+      position absolute
+      top 50%
+      left 10px
+      width 10px
+      height 10px
+      border 1px solid #000
+      border-radius 10px
   
-#street
-  background url('/images/street.png') repeat-x bottom left
-  border-top 1px solid #ccc
-  position absolute
-  bottom 0px
-  left 0px
-  display block
-  height 100%
-  width 100%
-  z-index 99
-  
-  
+  #door:hover
+    background #efecb7
+    #knob
+      display none
+      z-index 999
+          
+    
+  #street
+    background url('/images/street.png') repeat-x bottom left
+    border-top 1px solid #ccc
+    position absolute
+    bottom 0px
+    left 0px
+    display block
+    height 100%
+    width 100%
+    z-index 99
+    
+    
