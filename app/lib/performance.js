@@ -87,6 +87,7 @@ Performance.prototype.get_status = function() {
 
 // Used internally
 Performance.prototype.update_streak = function(delta) {
+  if (delta < 0) delta *= 1.5;
   if (this.streak >= 0) {
     if (delta > 0) this.streak += delta;
     else this.streak = delta;
