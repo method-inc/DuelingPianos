@@ -55,6 +55,10 @@
     
     getActivePlayer: function(callback) {
       now.getActivePlayer('The Stinky Squirrel', callback);
+    },
+    
+    getAllPlayers: function(callback) {
+      now.getAllPlayers('The Stinky Squirrel', callback);
     }
     
   };
