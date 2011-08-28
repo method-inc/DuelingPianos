@@ -9,16 +9,35 @@
     // player object
     player: {},
     
+    performance: null,
+    
+    localPlaying: false,
+    
+    // Called when a player presses a key during song play 
     keyPress: function(pitch, ms, callback) {
-      now.keyPress (this.player.id, pitch, ms, callback)
+      if(this.localPlaying) {
+        // use local scoring algorithm if local player is playing
+        this.performance.press_key(pitch, ms, callback);
+        // send the performance to the server to sync with other players
+        now.keyPress (this.player.id, pitch, ms)
+      }
     },
     
+    // Called when no action has been taken by the user during a song for 1 second
     status: function(ms, callback) {
-      now.status (this.player.id, ms, callback)
+      if(this.localPlaying) {
+        // use local scoring algorithm if local player is playing
+        this.performance.status(ms, callback);
+        // send the performance to the server to sync with other players
+        now.status(this.player.id, ms)
+      }
     },
     
     loadSong: function(song_id, callback) {
-      now.loadSong(this.player.id, song_id, callback)
+      if(this.localPlaying) {
+        this.performance.load_song(song_id, callback);
+        now.loadSong(this.player.id, song_id)
+      }
     }
     
   };
@@ -31,24 +50,30 @@ function isPLayer(id) {
   return game.player.id === id;
 }
 
+now.startSong = function(player_id, time) {
+  club.startSong(time);
+}
+
+now.initSong = function(player_id, id) {
+  club.initSong(id);
+}
+
 now.fuckedUp = function (player_id, pitch) {}
 
 now.updatedTips = function (player_id, tips) {
-  if (isPLayer(player_id)) {
-    club.updateTips(tips);
-  }
+  club.updateTips(tips);
 }
 
 now.totalTips = function (player_id, tips) {
-  if (isPLayer(player_id)) {
-    club.updateTips(tips);
-  }
+  club.updateTips(tips);
 }
 
 now.updatedStreak = function (player_id, streak) {
-  if (isPLayer(player_id)) {
-    club.updateStreak(streak);
-  }
+  club.updateStreak(streak);
+}
+
+now.status = function(player_id, time) {
+  club.status(time);
 }
 
 now.ready(function(){

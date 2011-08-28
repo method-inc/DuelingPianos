@@ -22,11 +22,13 @@
       });
     },
     
-    chooseSong: function(id) {
+    initSong: function(id) {
       $("#videoPlayer").html("")
       this.player = new YT.Player('videoPlayer', 
       {height: '390', width: '640', videoId: id, playerVars: {'start': 0, controls: '0'},
         events: {'onReady': onReady, 'onStateChange': onStateChanged} });
+      
+      this.player.seekTo(0);
       
       var self = this;
       function onReady() {
@@ -34,31 +36,38 @@
           game.loadSong(id, function() {
             
             self.vis.load_song('/songdata/'+id+'.keys.json', function() {
-              
               $('#club').addClass('stage');
-              var t = 0;
-              window.setTimeout(function() { self.player.playVideo(); }, 1000);
-              var position;
-              function update() {
-                var position = self.time();
-                $("#time").html(position);
-                self.vis.seek(position);
-                setTimeout(update, 1000);
-              }
-              update();
             });
+            
+            if(game.localPlaying) {
+              window.setTimeout(function() { self.startSong(); }, 1000);
+              self.initKeyPressListener();
+            }
             
           });
         }
-        self.initKeyPressListener();
       }
       
       function onStateChanged(state) {
         if(state.data == 1) self.playing = true;
         else self.playing = false;
-        console.log(self.playing);
       }
       
+    },
+    
+    function startSong(time) {      
+      var t = 0, self = this;
+      this.player.playVideo();
+      if(game.localPlaying) {
+        var position;
+        function update() {
+          var position = self.time();
+          $("#time").html(position);
+          self.vis.seek(position);
+          setTimeout(update, 1000);
+        }
+        update();
+      }
     },
     
     time: function() {
