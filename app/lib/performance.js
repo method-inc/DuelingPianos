@@ -36,6 +36,7 @@ Performance.prototype.load_song = function(id, callback) {
 };
 
 Performance.prototype.status = function(ms, callback) {
+    console.log('ARE WE FUCKING HERE?!?!?')
   return callback(undefined, []);
   var i = this.last_key_index, deadkeys = [];
   var past_boundary_ms = ms - this.range;
