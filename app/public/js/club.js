@@ -16,49 +16,58 @@
       this.vis = new SongVis({
         container: 'vis',
         ratio: 0.03,
-        lookahead: 1300,
+        lookahead: 1000,
         numkeys: 6,
         playkeys: this.playkeys
       });
     },
     
-    chooseSong: function(id) {
+    songLoaded: function(id, songdata, player_id) {
+      console.log("Song has been loaded!");
+      var self = this;
+      
       $("#videoPlayer").html("")
+      
       this.player = new YT.Player('videoPlayer', 
       {height: '390', width: '640', videoId: id, playerVars: {'start': 0, controls: '0'},
         events: {'onReady': onReady, 'onStateChange': onStateChanged} });
       
+      self.vis.load_json(songdata);
+      
+      this.player.seekTo(0);
       var self = this;
+      
       function onReady() {
-        if(self.vis) {
-          game.loadSong(id, function() {
-            
-            self.vis.load_song('/songdata/'+id+'.keys.json', function() {
-              
-              $('#club').addClass('stage');
-              var t = 0;
-              window.setTimeout(function() { self.player.playVideo(); }, 1000);
-              var position;
-              function update() {
-                var position = self.time();
-                $("#time").html(position);
-                self.vis.seek(position);
-                setTimeout(update, 1000);
-              }
-              update();
-            });
-            
-          });
+        $('#club').addClass('stage');
+        console.log(player_id + " vs " + game.player.id )
+        if (player_id === game.player.id) {
+          game.startSong(player_id);
         }
-        self.initKeyPressListener();
       }
       
       function onStateChanged(state) {
         if(state.data == 1) self.playing = true;
         else self.playing = false;
-        console.log(self.playing);
       }
       
+    },
+    
+    initSong: function(id) {
+      console.log("Sending command to load a song!");
+      game.initSong(id);
+    },
+    
+    startSong: function () {      
+      var t = 0, self = this;
+      this.player.playVideo();
+      var position;
+      function update() {
+        var position = self.time();
+        $("#time").html(position);
+        self.vis.seek(position);
+        setTimeout(update, 1000);
+      }
+      update();
     },
     
     time: function() {

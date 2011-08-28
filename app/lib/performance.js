@@ -49,7 +49,7 @@ Performance.prototype.status = function(ms, callback) {
     i++;
   }
   if (deadkeys.length) this.update_streak(-deadkeys.length);
-  return callback && callback(undefined, deadkeys);
+  return callback && callback(undefined, deadkeys, ms);
 };
 
 // Client can tell the server the user just pressed a key
@@ -63,12 +63,12 @@ Performance.prototype.press_key = function(pitch, ms, callback) {
       if (key.pitch === pitch && key.available) {
         key.available = false;
         self.update_streak(1);
-        return callback && callback(undefined, i, deadkeys);
+        return callback && callback(undefined, i, deadkeys, ms);
       }
       i++;
     }
     self.update_streak(-1);
-    return callback && callback(undefined, undefined, deadkeys);  
+    return callback && callback(undefined, undefined, deadkeys, ms);  
   });
 };
 
@@ -119,15 +119,3 @@ Performance.prototype.send_tips = function() {
 };
 
 exports = module.exports = Performance;
-
-
-// Quick test
-
-/*
-var p = new Performance();
-
-p.load_song('zuqJ1Q_px5k', function() {
-console.log("song loaded:");
-console.log(p.song);
-});
-*/

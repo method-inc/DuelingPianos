@@ -1,5 +1,5 @@
 var nowjs = require("now")
-var Performance = require( GLOBAL.app.set('app root') + '/lib/performance');
+var Performance = require( GLOBAL.app.set('app root') + '/public/js/performance').Performance;
 
 require('../../lib/uuidstuff');
 
@@ -65,8 +65,8 @@ exports = module.exports = function(server) {
   }
   
   // load a song
-  everyone.now.loadSong = function(player_id, song_id, callback) {
-    
+  everyone.now.loadSong = function(player_id, song_id) {
+    console.log("SERVER player_id" + player_id);
     var perf = new Performance({ player_id: player_id, numkeys: 6 });
   
     // create event listeners
@@ -91,8 +91,16 @@ exports = module.exports = function(server) {
     
     var numperfs = game.players[player_id].performances.length;
     
-    game.players[player_id].performances[numperfs - 1].load_song(song_id, callback);
+    game.players[player_id].performances[numperfs - 1].load_song(song_id, function(err, songdata) {
+      console.log("player_id is now" + player_id);
+      everyone.now.songLoaded(song_id, songdata, player_id);
+    });
   };
+  
+  // broadcast the start of the song
+  everyone.now.startSong = function(player_id) {
+    everyone.now.songStarted(player_id);
+  }
   
   // check status
   everyone.now.status = function(player_id, ms, callback) {
