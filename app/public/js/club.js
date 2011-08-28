@@ -96,10 +96,8 @@
           if(typeof key == 'undefined' || key == null) {
             self.fuckup(mapping);
           }
-          else {
-            console.log(key)
+          else
              self.vis.activate_key(key);
-          }
           
           for(var i in dead) {
             self.dead_key(dead[i]);
@@ -118,6 +116,7 @@
     fuckup: function(chord) {
       var a = document.getElementById('fuckup_chord'+chord);
       a.currentPosition = 0;
+      a.volume = 1;
       a.play();
     },
     
@@ -125,8 +124,29 @@
       $("#tip_amount").html(tips);
     },
     
+    streak: 0,
     updateStreak: function(streak) {
       $("#streak_amount").html(streak);
+      this.streak = streak;
+      if(this.streak < 0) {
+        this.player.setVolume( 100 - (streak/-25)*100 );
+      }
+      else {
+        this.player.setVolume( 100 );
+      }
+      if(this.streak == -18) {
+        var a = document.getElementById('boo_1');
+        a.currentPosition = 0;
+        a.volume = 1;
+        a.play();
+      }
+      if(this.streak == -25) {
+        var a = document.getElementById('boo_2');
+        a.currentPosition = 0;
+        a.volume = 1;
+        a.play();
+      }
+        
     }
     
   };

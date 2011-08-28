@@ -98,18 +98,18 @@ h2 {
   background: /* W3C */;
 }
 #citybackdrop {
-  background: -moz-linear-gradient(top, #2a2f5c, #4953ad 100%);
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #2a2f5c), color-stop(100%, #4953ad));
-  background: -webkit-linear-gradient(top, #2a2f5c 0%, #4953ad 100%);
-  background: -o-linear-gradient(top, #2a2f5c 0%, #4953ad 100%);
-  background: -ms-linear-gradient(top, #2a2f5c 0%, #4953ad 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2a2f5c', endColorstr='#4953ad',GradientType=0 );
-  background: linear-gradient(top, #2a2f5c 0%, #2a2f5c 100%);
-  background: /* W3C */;
+  background: url("/images/skyline.jpg") repeat-x bottom left;
   width: 100%;
   height: 100%;
   display: block;
   position: relative;
+}
+#citybackdrop #backdrop2 {
+  background: url("/images/skyline2.png") repeat-x bottom left;
+  width: 150%;
+  height: 100%;
+  display: block;
+  position: absolute;
 }
 #citybackdrop #playername {
   background: none;
@@ -133,7 +133,7 @@ h2 {
   background: #595;
   position: absolute;
   bottom: 10px;
-  left: 100px;
+  left: 25%;
   display: block;
   height: 400px;
   width: 300px;
@@ -149,8 +149,9 @@ h2 {
 }
 #citybackdrop #club1 #sign {
   position: absolute;
-  top: 75px;
-  left: 10px;
+  top: 5%;
+  left: 5%;
+  width: 90%;
   background: #555;
   border: 1px solid #333;
 }
