@@ -64,7 +64,9 @@ exports = module.exports = function(server) {
       }
     }
     
-    callback(players);
+    console.log(players)
+    
+    if (callback) callback(players);
   }
   
   // get active player
@@ -144,6 +146,18 @@ exports = module.exports = function(server) {
       if (newtips > 0) {
         console.log("New tip: $" + newtips)
         game.players[player_id].tips += newtips;
+        
+        for (var i = 0; i < game.clubs["The Stinky Squirrel"].players.length; i++) {
+          var pl = game.clubs["The Stinky Squirrel"].players[i];
+          if (pl.id == player_id) {
+            console.log("updating tip")
+            pl.tips += game.players[player_id].tips;
+          }
+        }
+        
+        console.log(game.clubs["The Stinky Squirrel"].players)
+        
+        
         everyone.now.updatedTips(player_id, newtips);
         everyone.now.totalTips(player_id, game.players[player_id].tips)
       }
@@ -171,9 +185,11 @@ exports = module.exports = function(server) {
   
   // check status
   everyone.now.status = function(player_id, ms, callback) {
-    game.players[player_id].performances[game.players[player_id].performances.length-1].status(ms, function(err, deadkeys, ms) {
-      everyone.now.statusUpdated(err, deadkeys, ms, player_id);
-    });
+    if (game.players[player_id]) {
+      game.players[player_id].performances[game.players[player_id].performances.length-1].status(ms, function(err, deadkeys, ms) {
+        everyone.now.statusUpdated(err, deadkeys, ms, player_id);
+      });
+    }
   };
   
   // send a keypress
