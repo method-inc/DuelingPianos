@@ -20,14 +20,14 @@ vendor(prop, args)
   -o-{prop} args
   {prop} args
 
-two-stop(start, end=start)
-  add-property(current-property[0], -moz-linear-gradient(top, start, end 100%)) /* FF3.6+ */
-  add-property(current-property[0], -webkit-gradient(linear, left top, left bottom, color-stop(0%,start), color-stop(100%,end))) /* Chrome,Safari4+ */
-  add-property(current-property[0], -webkit-linear-gradient(top, start 0%,end 100%)) /* Chrome10+,Safari5.1+ */
-  add-property(current-property[0], -o-linear-gradient(top, start 0%,end 100%)) /* Opera11.10+ */
-  add-property(current-property[0], -ms-linear-gradient(top, start 0%,end 100%)) /* IE10+ */
+two-stop(start, end=start, strans=0%, etrans=100%)
+  add-property(current-property[0], -moz-linear-gradient(top, start strans, end etrans)) /* FF3.6+ */
+  add-property(current-property[0], -webkit-gradient(linear, left top, left bottom, color-stop(strans,start), color-stop(etrans,end))) /* Chrome,Safari4+ */
+  add-property(current-property[0], -webkit-linear-gradient(top, start strans,end etrans)) /* Chrome10+,Safari5.1+ */
+  add-property(current-property[0], -o-linear-gradient(top, start strans,end etrans)) /* Opera11.10+ */
+  add-property(current-property[0], -ms-linear-gradient(top, start strans,end etrans)) /* IE10+ */
   add-property('filter', s("progid:DXImageTransform.Microsoft.gradient( startColorstr='%s', endColorstr='%s',GradientType=0 )",start,end)) /* IE6-9 */
-  add-property(current-property[0], linear-gradient(top, start 0%,start 100%)) /* W3C */
+  add-property(current-property[0], linear-gradient(top, start strans,start etrans)) /* W3C */
 
 radial-two-stop(pos, start, end=start)
   add-property(current-property[0], -moz-radial-gradient(pos, circle, start 0%, end 100%)) /* FF3.6+ */
