@@ -151,6 +151,12 @@
     streak: 0,
     updateStreak: function(streak) {
       $("#streak_amount").html(streak);
+      
+      var hottness = 100 - (streak + 50)
+      if (hottness < 5) hotness = 5;
+      if (hottness > 100) hotness = 100;
+      $("#meter #mask").css("height", hottness + '%')
+      
       this.streak = streak;
       var volume = Math.max(0, Math.min(100, 50 - (streak/-10) * 100));
       this.player.setVolume(volume);
