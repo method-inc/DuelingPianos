@@ -4,7 +4,6 @@
     this.player_id = options.player_id;
     this.range = options.range || 500;  // The time range (in ms) an acceptable key must fall into
     this.song = undefined;
-    this.song_id = undefined;
     this.tips = 0;
     this.streak = 0;
     this.last_key_index = -1;
@@ -27,8 +26,8 @@
     var self = this;
     fs.readFile(song_dir + id + '.keys.json', 'utf-8', function(err, data) {
       if (err) throw err;
-      self.song_id = id;
       self.song = JSON.parse(data);
+      self.song.id = id;
       // Initialize each key to an unpressed state
       self.song.keys.forEach(function(key) {
         if (key.pitch <= self.numkeys) key.available = true;
