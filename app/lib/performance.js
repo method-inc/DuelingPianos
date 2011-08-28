@@ -44,7 +44,7 @@ Performance.prototype.status = function(ms, callback) {
     this.last_key_index = i;
     i++;
   }
-  if (deadkeys.length) this.update_streak(-1);
+  if (deadkeys.length) this.update_streak(-deadkeys.length);
   return callback && callback(undefined, deadkeys);
 };
 
