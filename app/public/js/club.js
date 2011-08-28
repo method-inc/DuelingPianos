@@ -24,7 +24,7 @@
         playkeys: this.playkeys
       });
       game.getActivePlayer(function(player_obj) {
-        if (player_obj.id === game.player.id) {
+        if (player_obj && (player_obj.id === game.player.id)) {
           game.active = true;
           club.resetPlayer();
         }
