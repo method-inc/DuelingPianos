@@ -96,8 +96,9 @@
           if(typeof key == 'undefined' || key == null) {
             self.fuckup(mapping);
           }
-          else
-             self.vis.activate_key(key);
+          else {
+            self.vis.activate_key(key);
+          }
           
           for(var i in dead) {
             self.dead_key(dead[i]);
@@ -140,13 +141,26 @@
         a.volume = 1;
         a.play();
       }
-      if(this.streak == -25) {
+      if(this.streak == -28) {
         var a = document.getElementById('boo_2');
         a.currentPosition = 0;
         a.volume = 1;
         a.play();
       }
-        
+      
+      if(this.streak == 18) {
+        var a = document.getElementById('cheer_1');
+        a.currentPosition = 0;
+        a.volume = 1;
+        a.play();
+      }
+      
+      if(this.streak == 35) {
+        var a = document.getElementById('cheer_2');
+        a.currentPosition = 0;
+        a.volume = 1;
+        a.play();
+      }
     }
     
   };
