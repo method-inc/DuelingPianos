@@ -119,15 +119,3 @@ Performance.prototype.send_tips = function() {
 };
 
 exports = module.exports = Performance;
-
-
-// Quick test
-
-/*
-var p = new Performance();
-
-p.load_song('zuqJ1Q_px5k', function() {
-console.log("song loaded:");
-console.log(p.song);
-});
-*/

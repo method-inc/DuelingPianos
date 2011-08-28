@@ -16,7 +16,7 @@
       this.vis = new SongVis({
         container: 'vis',
         ratio: 0.03,
-        lookahead: 1300,
+        lookahead: 1000,
         numkeys: 6,
         playkeys: this.playkeys
       });

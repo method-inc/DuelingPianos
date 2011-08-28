@@ -1,5 +1,5 @@
 var nowjs = require("now")
-var Performance = require( GLOBAL.app.set('app root') + '/lib/performance');
+var Performance = require( GLOBAL.app.set('app root') + '/public/js/performance').Performance;
 
 require('../../lib/uuidstuff');
 
@@ -91,7 +91,7 @@ exports = module.exports = function(server) {
     
     var numperfs = game.players[player_id].performances.length;
     
-    game.players[player_id].performances[numperfs - 1].load_song(song_id, callback);
+    game.players[player_id].performances[numperfs - 1].load_song_server(song_id, callback);
   };
   
   // check status

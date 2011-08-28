@@ -76,7 +76,7 @@
         this.keys.push(key);
         height = (key.stop - key.start) * ms_to_px;
         top = bottom - (key.start * ms_to_px) - height;
-        key.el.css({ 'left': 0, 'top': top + 'px', 'height': height + 'px' });
+        key.el.css({ 'left': 0, 'top': top + 4 + 'px', 'height': height + 'px' });
       }
       var last_top = song.keys[song.keys.length - 1].stop * ms_to_px;
       keyroll.css({ 'height': last_top + 'px' });
