@@ -7,7 +7,7 @@ exec("rm *.sock", function(err, stdout, stderr) {
 
 
 var cluster = require('cluster'),
-    port    = 80;
+    port    = 3100;
 
 console.log("Opening server on port " + port + "...");
 
