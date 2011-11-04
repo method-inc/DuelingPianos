@@ -118,7 +118,9 @@ now.songLoaded = function(id, songdata, player_id) {
 
 now.ready(function(){
   var playerid = amplify.store("playerid"),
-      name = amplify.store("player_name");
+      name = amplify.store("player_name") || "Mr Anonomous";
+  
+  $("#playername").val(name);
   
   // get player from server and put into local object
   now.getPlayer(amplify.store("playerid"), function(player){

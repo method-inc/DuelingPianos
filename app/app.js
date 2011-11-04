@@ -4,10 +4,11 @@ var root = require('path').normalize(__dirname + '/..');
 
 // Modules
 
-var express = require('express'),
-    connectTimeout = require('connect-timeout'),
-    stylus = require('stylus'),
-    context = require('../lib/context');
+var express         = require('express'),
+    connectTimeout  = require('connect-timeout'),
+    stylus          = require('stylus'),
+    connectRedis    = require('connect-redis')(require('connect')),
+    redis           = require('redis');
 
 require('../lib/uuidstuff');
 
@@ -15,10 +16,9 @@ require('../lib/uuidstuff');
 
 exports = module.exports = (function() {
   
-  var nko = require("nko")("1+I/76dAh/RtGchg")
-  
   var server = express.createServer(),
-      options = require('./config/constants')([server.set('env')]);
+      options = require('./config/constants')([server.set('env')]),
+      redisClient = redis.createClient(options.redis.port, options.redis.host);
 
   GLOBAL.app = server;
 
@@ -30,12 +30,13 @@ exports = module.exports = (function() {
     
     // Settings
     
-    server.set('app root', root + '/app')
-    server.set('view engine', options.view_engine || 'jade')
-    server.set('views', server.set('app root') + '/views')
+    server.set('app root', root + '/app');
+    server.set('view engine', options.view_engine || 'jade');
+    server.set('views', server.set('app root') + '/views');
     server.set('public', server.set('app root') + '/public');
     server.set('port', options.port);
     server.set('host', options.host);
+    server.set('redisClient', redisClient);
     
     // Middleware
     
@@ -51,34 +52,34 @@ exports = module.exports = (function() {
       },
       force: true
     }));
-    server.use(express.static(server.set('app root') + '/public'));
+    server.use(express['static'](server.set('app root') + '/public'));
     server.use(express.cookieParser());
     server.use(express.session({
       secret: Math.uuidFast(),
       key: options.sessionKey,
-      store: new express.session.MemoryStore({
-        reapInterval: options.reapInterval,
-        maxAge: options.maxAge
+      store: new connectRedis({
+        maxAge: options.maxAge,
+        host: options.redis.host,
+        port: options.redis.port
       })
-    }))
-    server.use(express.bodyParser())
-    server.use(context);
-    server.use(server.router)
+    }));
+    server.use(express.bodyParser());
+    server.use(server.router);
     server.use(express.errorHandler({ dumpExceptions: options.dumpExceptions, showStack: options.showStack}));
     
     // Nowjs game controller
     
-    require('./controllers/game')(server)
+    require('./controllers/game').init(server);
     
     // Helpers
     
-    require('./config/helpers')(server)
+    require('./config/helpers')(server);
     
     // Map routes
     
-    require('./config/routes')(server)
+    require('./config/routes')(server);
 
-  })
+  });
   
   // Config (development)
   
@@ -100,7 +101,7 @@ exports = module.exports = (function() {
   
   // Handle errors
   
-  require('./config/errors.js')(server)
+  require('./config/errors.js')(server);
     
   // Export the server
   

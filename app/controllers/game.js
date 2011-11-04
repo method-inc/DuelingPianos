@@ -1,33 +1,54 @@
-var nowjs = require("now");
+var nowjs = require("now"),
+    client,
+    game,
+    everyone;
 var Performance = require( GLOBAL.app.set('app root') + '/public/js/performance').Performance;
+
+var song_picking_timer;
 
 require('../../lib/uuidstuff');
 
-exports = module.exports = function(server) {
-  
-  var everyone = nowjs.initialize(server);
-  
-  var game = {
+var Game = function() {};
+
+
+exports = module.exports = new Game();
+
+Game.prototype.init = function(server, options) {
+  client = server.set('redisClient');
+  everyone = nowjs.initialize(server);
+  game = this.buildGame();
+
+  var self = this;
+
+  client.get("players", function(err, players){
+    if (!err && players) {
+      game.players = JSON.parse(players);
+      console.log("players found in redis:", game.players);
+    } else {
+      console.log("no players found");
+    }
+
+    self.addNowjsFunctions();
+
+  });
+};
+
+Game.prototype.buildGame = function() {
+  return {
     players: {},
     video_playing : false,
-    triggered : false,
-    timeout : false,
     lastUpdate: new Date(),
     clubs: {
       "The Stinky Squirrel":{ players: []}
     },
     
     rotateActivePlayer: function(club, timedout) {
-      var old_active = this.clubs[club].players.shift();
+      var old_active = this.clubs[club].players.shift(),
+          self = this;
       
       if (timedout !== true) {
         this.clubs[club].players.push(old_active);
       }
-      
-      var self = this;
-      
-      this.triggered = true;
-      this.video_playing = false;
       
       setTimeout(function() {
         everyone.now.newActivePlayer(club, self.clubs[club].players[0]);
@@ -48,19 +69,14 @@ exports = module.exports = function(server) {
       }, 1000);
     }
   };
-  
-  setInterval(function(){
+};
 
-    var time_since = new Date() - game.lastUpdate;
+
+/**
+ * setup now.js functions
+ */
+Game.prototype.addNowjsFunctions = function() {
     
-    if (game.video_playing && time_since > 5000) {
-      console.log("kicking player from inactivity");
-      game.rotateActivePlayer("The Stinky Squirrel", true);
-    }
-    
-  }, 5000);
-  
-  
   // get all players in game
   everyone.now.getAllPlayers = function(club, callback) {
     
@@ -75,34 +91,20 @@ exports = module.exports = function(server) {
         players.push(game.players[p].playername);
       }
     }
-    
-    console.log(players);
-    
+
     if (callback) callback(players);
   };
-  
+
   // get active player
   everyone.now.getActivePlayer = function(club, callback) {
-    var self = this;
-    
-    if(!game.triggered) {
-      setTimeout(function() {
-        console.log("running active player timeout");
-        if(!game.video_playing) {
-          console.log("taking too long, picking a new player");
-          game.rotateActivePlayer(club);
-        }
-      }, 10000);
-    }
-    
     callback(game.clubs[club].players[0]);
   };
-  
+
   // done playing
   everyone.now.donePlaying = function(player_id, club) {
     game.rotateActivePlayer(club);
   };
-  
+
   // get player by id
   everyone.now.getPlayer = function(id, callback) {
     
@@ -128,11 +130,11 @@ exports = module.exports = function(server) {
       game.players[player.id] = player;
     }
     
-    // console.log(game.players);
-    
-    if (callback) callback(player);
+    client.set("players", JSON.stringify(game.players), function(err, result) {
+      if (callback) callback(player);  
+    });
   };
-  
+
   // set a players name
   everyone.now.setName = function(id, value, callback) {
     
@@ -140,12 +142,12 @@ exports = module.exports = function(server) {
     
     if (callback) callback(value);
   };
-  
+
   // load a song
   everyone.now.loadSong = function(player_id, song_id) {
     console.log("SERVER player_id" + player_id);
     var perf = new Performance({ player_id: player_id, numkeys: 6 });
-  
+
     // create event listeners
     perf.on('fuckedUp', function(player_id, pitch) {
       everyone.now.fuckedUp(player_id, pitch);
@@ -182,33 +184,42 @@ exports = module.exports = function(server) {
       everyone.now.songLoaded(song_id, songdata, player_id);
     });
   };
-  
+
   // broadcast the start of the song
   everyone.now.startSong = function(player_id) {
     game.video_playing = true;
     everyone.now.songStarted(player_id);
+    // song_picking_timer.clearInterval();
   };
-  
+
   // check status
   everyone.now.status = function(player_id, ms, callback) {
     
     console.log("logging activity");
     game.lastUpdate = new Date();
-    
-    if (game.players[player_id]) {
+
+    var performance = game.players[player_id].performances[game.players[player_id].performances.length-1];
+    if (performance){
       game.players[player_id].performances[game.players[player_id].performances.length-1].status(ms, function(err, deadkeys, ms) {
         everyone.now.statusUpdated(err, deadkeys, ms, player_id);
       });
     }
   };
-  
+
   // send a keypress
   everyone.now.keyPress = function(player_id, pitch, ms, callback) {
-    game.players[player_id].performances[game.players[player_id].performances.length-1].press_key(pitch, ms, function(err, key, deadkeys, ms) {
-      everyone.now.keyUpdated(err, key, deadkeys, ms, player_id);
-    });
+    var performance = game.players[player_id].performances[game.players[player_id].performances.length-1];
+    if (performance){
+      performance.press_key(pitch, ms, function(err, key, deadkeys, ms) {
+        everyone.now.keyUpdated(err, key, deadkeys, ms, player_id);
+      });
+    }
+    else {
+      console.log("couldn't find performance");
+      console.log(game.players[player_id]);
+    }
   };
-  
+
   // set a players location
   everyone.now.setLocation = function(id, value, callback) {
     
@@ -229,5 +240,6 @@ exports = module.exports = function(server) {
     
     if (callback) callback(value);
   };
-  
 };
+
+

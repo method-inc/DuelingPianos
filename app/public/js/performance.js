@@ -1,4 +1,5 @@
-;(function(exports, EventEmitter) {
+
+(function(exports, EventEmitter) {
 
   function Performance(options) {
     this.player_id = options.player_id;
@@ -17,7 +18,7 @@
   // Client can load its own damn song
   Performance.prototype.load_json = function(songdata) {
     this.song = songdata;
-  }
+  };
   
   // Client can tell the server to load a song for a performance
   Performance.prototype.load_song = function(id, callback) {
@@ -84,7 +85,7 @@
       i--;
     }
     this.last_key_index = i;
-  }
+  };
   
   // Client can request the current state of this performance at any time
   Performance.prototype.get_status = function() {
@@ -132,5 +133,5 @@
   exports.Performance = Performance;
 
 // Goofy shit to work both client and server-side. Make this less ugly at some point.
-})(typeof exports === 'undefined'? this['Performance']={}: exports, typeof EventEmitter === 'undefined'? require('events').EventEmitter: EventEmitter);
+})(typeof exports === 'undefined'? this.Performance={}: exports, typeof EventEmitter === 'undefined'? require('events').EventEmitter: EventEmitter);
 
