@@ -1,4 +1,4 @@
-var nowjs = require("now")
+var nowjs = require("now");
 var Performance = require( GLOBAL.app.set('app root') + '/public/js/performance').Performance;
 
 require('../../lib/uuidstuff');
@@ -41,44 +41,45 @@ exports = module.exports = function(server) {
               game.rotateActivePlayer(club, false);
               self.timeout = false;
             }
-          }, 10000)
+          }, 10000);
           
         }
         
       }, 1000);
     }
-  }
+  };
   
   setInterval(function(){
 
-    var time_since = new Date() - game.lastUpdate
+    var time_since = new Date() - game.lastUpdate;
     
     if (game.video_playing && time_since > 5000) {
-      console.log("kicking player from inactivity")
-      game.rotateActivePlayer("The Stinky Squirrel", true)
+      console.log("kicking player from inactivity");
+      game.rotateActivePlayer("The Stinky Squirrel", true);
     }
     
-  }, 5000)
+  }, 5000);
   
   
   // get all players in game
   everyone.now.getAllPlayers = function(club, callback) {
     
+    var players = [];
+
     if (typeof club === "string") {
-      var players = game.clubs[club].players;
+      players = game.clubs[club].players;
     }
     else {
       callback = club;
-      var players = [];
       for(var p in game.players) {
-        players.push(game.players[p].playername)
+        players.push(game.players[p].playername);
       }
     }
     
-    console.log(players)
+    console.log(players);
     
     if (callback) callback(players);
-  }
+  };
   
   // get active player
   everyone.now.getActivePlayer = function(club, callback) {
@@ -86,37 +87,38 @@ exports = module.exports = function(server) {
     
     if(!game.triggered) {
       setTimeout(function() {
-        console.log("running active player timeout")
+        console.log("running active player timeout");
         if(!game.video_playing) {
           console.log("taking too long, picking a new player");
           game.rotateActivePlayer(club);
         }
-      }, 10000)
+      }, 10000);
     }
     
     callback(game.clubs[club].players[0]);
-  }
+  };
   
   // done playing
   everyone.now.donePlaying = function(player_id, club) {
     game.rotateActivePlayer(club);
-  }
+  };
   
   // get player by id
   everyone.now.getPlayer = function(id, callback) {
     
-    var id = id || null;
+    id = id || null;
+    var player = {};
     
     // check if player already exists
     if (game.players[id]) {
-      console.log("getting existing player")
-      var player = game.players[id];
+      console.log("getting existing player");
+      player = game.players[id];
     }
     
     // make new player
     else {
-      console.log("creating new player")
-      var player = {
+      console.log("creating new player");
+      player = {
         id:Math.uuidFast(),
         playername:'Mr. Anonymous',
         tips: 0,
@@ -129,15 +131,15 @@ exports = module.exports = function(server) {
     // console.log(game.players);
     
     if (callback) callback(player);
-  }
+  };
   
   // set a players name
   everyone.now.setName = function(id, value, callback) {
     
     game.players[id].playername = value;
     
-    if (callback) callback(value)
-  }
+    if (callback) callback(value);
+  };
   
   // load a song
   everyone.now.loadSong = function(player_id, song_id) {
@@ -161,7 +163,7 @@ exports = module.exports = function(server) {
         }
 
         everyone.now.updatedTips(player_id, newtips);
-        everyone.now.totalTips(player_id, game.players[player_id].tips)
+        everyone.now.totalTips(player_id, game.players[player_id].tips);
       }
     });
     
@@ -185,12 +187,12 @@ exports = module.exports = function(server) {
   everyone.now.startSong = function(player_id) {
     game.video_playing = true;
     everyone.now.songStarted(player_id);
-  }
+  };
   
   // check status
   everyone.now.status = function(player_id, ms, callback) {
     
-    console.log("logging activity")
+    console.log("logging activity");
     game.lastUpdate = new Date();
     
     if (game.players[player_id]) {
@@ -211,7 +213,7 @@ exports = module.exports = function(server) {
   everyone.now.setLocation = function(id, value, callback) {
     
     // grab player
-    var player = game.players[id]
+    var player = game.players[id];
     
     // check if location is valid club
     if (game.clubs[value]) {
@@ -225,7 +227,7 @@ exports = module.exports = function(server) {
       // for (var c in game.clubs) delete game.clubs[c].players[id]
     }
     
-    if (callback) callback(value)
-  }
+    if (callback) callback(value);
+  };
   
-}
+};
