@@ -2,7 +2,7 @@
   
   function GameController() {
 
-  };
+  }
   
   GameController.prototype = {
     
@@ -19,7 +19,7 @@
         // use local scoring algorithm if local player is playing
         this.performance.press_key(pitch, ms, callback);
         // send the performance to the server to sync with other players
-        now.keyPress (this.player.id, pitch, ms)
+        now.keyPress (this.player.id, pitch, ms);
       }
     },
     
@@ -29,7 +29,7 @@
         // use local scoring algorithm if local player is playing
         this.performance.status(ms, callback);
         // send the performance to the server to sync with other players
-        now.status(this.player.id, ms)
+        now.status(this.player.id, ms);
       }
     },
     
@@ -47,7 +47,7 @@
     
     donePlaying: function(club) {
       if(this.active) {
-        console.log('done playing')
+        console.log('done playing');
         if (!club) club = "The Stinky Squirrel";
         now.donePlaying(this.player.id, club);
       }
@@ -73,57 +73,58 @@ function isPLayer(id) {
 
 now.songStarted = function(player_id) {
   club.startSong(player_id);
-}
+};
 
 now.keyUpdated = function (err, key, dead, ms, player_id) {
   if(!isPLayer(player_id) ) {
     club.remoteKeyUpdated(err, key, dead, ms);
   }
-}
+};
 
 now.statusUpdated = function(err, dead, ms, player_id) {
   if (!isPLayer(player_id)) {
     club.remoteStatusUpdated(err, dead, ms);
   }
-}
+};
 
 now.newActivePlayer = function(c, player) {
   if(player) {
     game.active = isPLayer(player.id);
     club.resetPlayer(player);
   }
-}
+};
 
 now.updatedTips = function (player_id, tips) {
   club.updateTips(tips);
-}
+};
 
 now.totalTips = function (player_id, tips) {
   club.updateTips(tips);
-}
+};
 
 now.updatedStreak = function (player_id, streak) {
   club.updateStreak(streak);
-}
+};
 
 now.status = function(player_id, time) {
   club.status(time);
-}
+};
 
 now.songLoaded = function(id, songdata, player_id) {
   game.performance = new Performance.Performance({ player_id: game.player.id, numkeys: 6 });
   game.performance.load_json(songdata);
   club.songLoaded(id, songdata, player_id);
-}
+};
 
 now.ready(function(){
-  var playerid = amplify.store("playerid");
+  var playerid = amplify.store("playerid"),
+      name = amplify.store("player_name");
   
   // get player from server and put into local object
   now.getPlayer(amplify.store("playerid"), function(player){
     
-    game.player = player
-    amplify.store("playerid", player.id)
+    game.player = player;
+    amplify.store("playerid", player.id);
     $("#playername").val(player.playername);
     
     if (window.location.pathname.match(/club/)) {
@@ -136,13 +137,14 @@ now.ready(function(){
     $("#playername").keyup(function(){
     
       // grab new name from input box
-      var name = $(this).val();
+      name = $(this).val();
+      amplify.store("player_name", name);
     
       // update server player object with new name
       now.setName(game.player.id, name, function(newname){
         game.player.name = name;
-      })
-    })
+      });
+    });
   });
 
-})
+});
