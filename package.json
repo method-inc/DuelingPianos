@@ -14,7 +14,8 @@
     "socket.io":"latest",
     "nko":"latest",
     "async":"latest",
-    "now":"latest"
+    "now":"latest",
+    "underscore":"=1.2.0"
   },
   "directories":{}
 }

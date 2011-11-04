@@ -4,7 +4,7 @@ var nowjs = require("now"),
     everyone;
 var Performance = require( GLOBAL.app.set('app root') + '/public/js/performance').Performance;
 
-var song_picking_timer;
+var song_picking_timer = {clearTimeout:function(){}};
 
 require('../../lib/uuidstuff');
 
@@ -39,34 +39,59 @@ Game.prototype.buildGame = function() {
     video_playing : false,
     lastUpdate: new Date(),
     clubs: {
-      "The Stinky Squirrel":{ players: []}
+      "The Stinky Squirrel":{ players: {}}
     },
     
-    rotateActivePlayer: function(club, timedout) {
-      var old_active = this.clubs[club].players.shift(),
-          self = this;
-      
-      if (timedout !== true) {
-        this.clubs[club].players.push(old_active);
+    rotateActivePlayer: function(club) {
+      var self = this;
+
+      var players = this.clubs[club].players,
+          max = 0,
+          i;
+
+      // find max position
+      for (i in players) {
+        if (players[i].order > max) max = players[i].order;
       }
-      
-      setTimeout(function() {
-        everyone.now.newActivePlayer(club, self.clubs[club].players[0]);
-        
-        if (!self.timeout) {
-          
-          self.timeout = true;
-          
-          setTimeout(function() {
-            if(!self.video_playing) {
-              game.rotateActivePlayer(club, false);
-              self.timeout = false;
-            }
-          }, 10000);
+
+      // get any players not in a spot yet
+      for (i in players) {
+        if (players[i].order < 0) {
+          max++;
+          players[i].order = max;
+        }
+      }
+
+      // rotate first player to end, everyone else one spot up
+      for (i in players) {
+        if (players[i].order === 1) {
+          players[i].order = max;
+        }
+        else if (players[i].order === 2) {
           
         }
-        
-      }, 1000);
+        else {
+          players[i].order--;  
+        }
+      }
+
+      console.log("new player order:");
+      console.log(players);
+
+      // find new first player and broadcast change
+      for (i in players) {
+        if (players[i].order === 1) {
+          console.log("new first player:");
+          console.log(players[i]);
+          everyone.now.newActivePlayer(club, players[i]);
+        }
+      }
+      
+      // wait 10 seconds, then choose new player
+      song_picking_timer = setTimeout(function() {
+        game.rotateActivePlayer(club);
+      }, 10000);
+
     }
   };
 };
@@ -87,9 +112,7 @@ Game.prototype.addNowjsFunctions = function() {
     }
     else {
       callback = club;
-      for(var p in game.players) {
-        players.push(game.players[p].playername);
-      }
+      players = game.players;
     }
 
     if (callback) callback(players);
@@ -97,7 +120,12 @@ Game.prototype.addNowjsFunctions = function() {
 
   // get active player
   everyone.now.getActivePlayer = function(club, callback) {
-    callback(game.clubs[club].players[0]);
+    var players = game.clubs[club].players,
+        player = null;
+    for (var p in players) {
+      if (players[p].order === 1 || player === null) player = players[p];
+    }
+    callback(player);
   };
 
   // done playing
@@ -124,7 +152,8 @@ Game.prototype.addNowjsFunctions = function() {
         id:Math.uuidFast(),
         playername:'Mr. Anonymous',
         tips: 0,
-        performances: []
+        performances: [],
+        order:-1
       };
       
       game.players[player.id] = player;
@@ -145,6 +174,8 @@ Game.prototype.addNowjsFunctions = function() {
 
   // load a song
   everyone.now.loadSong = function(player_id, song_id) {
+    song_picking_timer.clearTimeout();
+
     console.log("SERVER player_id" + player_id);
     var perf = new Performance({ player_id: player_id, numkeys: 6 });
 
@@ -187,15 +218,14 @@ Game.prototype.addNowjsFunctions = function() {
 
   // broadcast the start of the song
   everyone.now.startSong = function(player_id) {
-    game.video_playing = true;
+    song_picking_timer.clearTimeout();
     everyone.now.songStarted(player_id);
-    // song_picking_timer.clearInterval();
   };
 
   // check status
   everyone.now.status = function(player_id, ms, callback) {
     
-    console.log("logging activity");
+    // console.log("logging activity");
     game.lastUpdate = new Date();
 
     var performance = game.players[player_id].performances[game.players[player_id].performances.length-1];
@@ -230,12 +260,12 @@ Game.prototype.addNowjsFunctions = function() {
     if (game.clubs[value]) {
       
       // put player in club
-      game.clubs[value].players.push(game.players[id]);
+      game.clubs[value].players[game.players[id]] = game.players[id];
     }
     
     // not a club, remove from all clubs
     else {
-      // for (var c in game.clubs) delete game.clubs[c].players[id]
+      for (var c in game.clubs) delete game.clubs[c].players[id];
     }
     
     if (callback) callback(value);

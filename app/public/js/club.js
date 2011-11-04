@@ -1,8 +1,6 @@
 (function(game) {
   
-  function ClubController() {
-    
-  };
+  function ClubController() {}
   
   ClubController.prototype = {
     key_mappings: { 83: 0, 68: 1, 70: 2, 74: 3, 75: 4, 76: 5 },
@@ -35,6 +33,8 @@
       update();
       
       game.getActivePlayer(function(player_obj) {
+        console.log("player object");
+        console.log(player_obj);
         if (player_obj && (player_obj.id === game.player.id)) {
           game.active = true;
         }
@@ -48,25 +48,25 @@
       });
       
       setInterval(function() {
-        now.getAllPlayers(function(allPlayers) {
+        now.getAllPlayers("The Stinky Squirrel", function(allPlayers) {
           var html = '';
           _(allPlayers).each(function(p, i) {
             if (i === 0) {
-              html += '<li>' + p + ' (playing)</li>';
+              html += '<li>' + p.playername + ' (playing)</li>';
             }
             else {
-              html += '<li>' + p + '</li>';
+              html += '<li>' + p.playername + '</li>';
             }
           });
           $("#playerlist").html(html);
-        })
+        });
       }, 5000);
     },
     
     songLoaded: function(id, songdata, player_id) {
       var self = this;
       
-      $("#videoPlayer").html("")
+      $("#videoPlayer").html("");
       
       this.player = new YT.Player('videoPlayer', 
       {height: '390', width: '640', videoId: id, playerVars: {'start': 0, controls: '1'},
