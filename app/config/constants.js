@@ -10,17 +10,19 @@ exports = module.exports = function(env) {
       this.shortSession = 12 * 24 * 60 * 60 * 1000;    // We no longer have a short session option 1000 * 60 * 60 * 60         // 60 minutes
       this.reqTimeout = 30000;
       this.sessionKey = 'dueling$pianos';
-      this.host = 'http://localhost:3100';
       this.port = 3100;
+      this.labs = 'http://localhost';
+      this.host = this.labs+':'+this.port;
       this.dumpExceptions = true;
       this.showStack = true;
       this.errorToHtml = true;
       this.redis = { host: 'localhost', port: 6379, db: 'pianos' };
-      //this.mongo = { db: 'mongodb://localhost/pianos'}
-      //this.mysql = { host: 'localhost', port: 3306, user: 'root', password: 'root', database: 'pianos' }
+      this.mongo = { db: 'mongodb://localhost/pianos'};
+      
     },
     production: function() {
-      this.host = "http://173.230.134.69:3100/";
+      this.labs = "http://173.230.134.69";
+      this.host = this.labs+':'+this.port;
     }
   };
   

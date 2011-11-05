@@ -1,5 +1,7 @@
 exports = module.exports = function(server) {
-  server.dynamicHelpers({
-    messages: require('express-messages')
+  
+  server.helpers({
+    base_url: server.set('host'),
+    labs_url: server.set('labs')
   });
-}
+};
