@@ -21,7 +21,7 @@ exports = module.exports = function(env) {
       
     },
     production: function() {
-      this.labs = "http://173.230.134.69";
+      this.labs = "http://labs.skookum.com";
       this.host = this.labs+':'+this.port;
     }
   };
